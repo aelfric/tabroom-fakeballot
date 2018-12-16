@@ -49,7 +49,7 @@ function CommentBox({ id, setComments, currentComments }) {
   );
 }
 
-function BallotRow({ code, name, title, ranks, setTitle, setRank,even }) {
+function BallotRow({ code, name, title, ranks, points, setTitle, setRank,setPoints, even }) {
   const postSwitch = () => {
     // alert('hello');
   };
@@ -99,7 +99,8 @@ function BallotRow({ code, name, title, ranks, setTitle, setRank,even }) {
           size="5"
           min="1"
           max="100"
-          value=""
+          value={points}
+          onChange={setPoints}
           tabIndex="3"
         />
       </td>
@@ -154,6 +155,12 @@ export default class FakeBallot extends React.Component {
   setRank = idx => evt => {
     let entries = this.state.entries;
     entries[idx].ranks = evt.target.value;
+    this.setState({ entries: entries });
+  };
+
+  setPoints = idx => evt => {
+    let entries = this.state.entries;
+    entries[idx].points = evt.target.value;
     this.setState({ entries: entries });
   };
 
@@ -357,6 +364,7 @@ export default class FakeBallot extends React.Component {
                       even={i % 2 === 0}
                       setTitle={this.setTitle(i)}
                       setRank={this.setRank(i)}
+                      setPoints={this.setPoints(i)}
                       even={i%2===0}
                     />
                   ))}

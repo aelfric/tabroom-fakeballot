@@ -20,6 +20,7 @@ class App extends Component {
         name: 'Connor Breen',
         title: undefined,
         ranks: undefined,
+        points: undefined,
         order: "1st"
       },
       {
@@ -27,6 +28,7 @@ class App extends Component {
         name: 'Joshua Darden',
         title: undefined,
         ranks: undefined,
+        points: undefined,
         order: "2nd"
       },
       {
@@ -34,6 +36,7 @@ class App extends Component {
         name: 'Malachi Allen',
         title: undefined,
         ranks: undefined,
+        points: undefined,
         order: "3rd"
       },
     ]

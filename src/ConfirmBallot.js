@@ -73,7 +73,7 @@ export default class ConfirmSubmit extends React.Component {
               <th
                 data-column="0"
                 className="tablesorter-header sortable tablesorter-headerUnSorted"
-                tabindex="0"
+                tabIndex="0"
                 scope="col"
                 role="columnheader"
                 aria-disabled="false"
@@ -90,7 +90,7 @@ export default class ConfirmSubmit extends React.Component {
               <th
                 data-column="1"
                 className="tablesorter-header sortable tablesorter-headerUnSorted"
-                tabindex="0"
+                tabIndex="0"
                 scope="col"
                 role="columnheader"
                 aria-disabled="false"
@@ -108,7 +108,7 @@ export default class ConfirmSubmit extends React.Component {
               <th
                 data-column="2"
                 className="tablesorter-header sortable tablesorter-headerUnSorted"
-                tabindex="0"
+                tabIndex="0"
                 scope="col"
                 role="columnheader"
                 aria-disabled="false"
@@ -125,7 +125,7 @@ export default class ConfirmSubmit extends React.Component {
               <th
                 data-column="3"
                 className="tablesorter-header sortable tablesorter-headerUnSorted"
-                tabindex="0"
+                tabIndex="0"
                 scope="col"
                 role="columnheader"
                 aria-disabled="false"
@@ -141,7 +141,7 @@ export default class ConfirmSubmit extends React.Component {
               <th
                 data-column="4"
                 className="tablesorter-header sortable tablesorter-headerUnSorted"
-                tabindex="0"
+                tabIndex="0"
                 scope="col"
                 role="columnheader"
                 aria-disabled="false"
@@ -157,7 +157,7 @@ export default class ConfirmSubmit extends React.Component {
               <th
                 data-column="5"
                 className="tablesorter-header sortable tablesorter-headerUnSorted"
-                tabindex="0"
+                tabIndex="0"
                 scope="col"
                 role="columnheader"
                 aria-disabled="false"
@@ -215,9 +215,9 @@ export default class ConfirmSubmit extends React.Component {
           </span>
         </div>
       </div>
-      <div class="menu"><div class="shade openshade fa fa-forward"></div>
+      <div className="menu"><div className="shade openshade fa fa-forward"></div>
 
-		<div class="sidenote">
+		<div className="sidenote">
 
 			<h4>RFD</h4>
 
