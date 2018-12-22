@@ -15,7 +15,7 @@ class App extends Component {
     confirming: false,
     entries: [
       {
-        code: '2',
+        code: '301',
         name: 'Connor Breen',
         title: undefined,
         ranks: undefined,
@@ -23,7 +23,7 @@ class App extends Component {
         order: "1st"
       },
       {
-        code: '3',
+        code: '302',
         name: 'Joshua Darden',
         title: undefined,
         ranks: undefined,
@@ -31,7 +31,7 @@ class App extends Component {
         order: "2nd"
       },
       {
-        code: '1',
+        code: '303',
         name: 'Malachi Allen',
         title: undefined,
         ranks: undefined,

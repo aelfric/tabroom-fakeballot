@@ -4,12 +4,7 @@ import Content from './Content';
 export default class Ballot extends React.Component {
 
 render() {
-return <div id="overlay">
-		
-
-	<div id="wrapper">
-
-		<Content
+return <Content
 		menu={<>
 
 
@@ -25,11 +20,11 @@ return <div id="overlay">
 				<a className="blue full" href="/user/tourn/select.mhtml?tourn_id=10669">
 
 					<span className="fivesixth">
-						Holly Speech Festival
+						Sample Tournament
 					</span>
 
 					<span className="sixth mono smaller rightalign">
-						MA/US
+						NY/US
 					</span>
 				</a>
 
@@ -254,8 +249,5 @@ return <div id="overlay">
 
 
 	</>} />
-
-	</div>
-	</div>
-}
+		}
 }

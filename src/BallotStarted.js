@@ -33,6 +33,60 @@ const tinyMCEConfig = {
   browser_spellcheck: true
 };
 
+class CommentPanel extends React.Component{ 
+  state = {
+    currentStudent: "rfd"
+  }
+  doneSwitch(which) {
+    this.setState({ currentStudent: which });
+  }
+  setComments = (idx)=>(evt) => {
+    this.props.setComments(idx);
+  }
+
+  render(){
+    const entries = this.props.entries;
+  return <>
+  <div className="full">
+    <span className="third">
+      <h4>General Feedback</h4>
+    </span>
+  </div>
+
+  <ul id="tabnav">
+    <li id="header_rfd" className={`${this.state.currentStudent === "rfd" ? "selected" : ""} commentzing`}>
+      <a href="#rfd" onClick={() => this.doneSwitch("rfd")}>
+        Reason for Rankings
+      </a>
+    </li>
+    {entries.map((entry, idx)=>{
+      return <li id="header_12863156" key={entry.code} className={`${this.state.currentStudent === idx ? "selected" : ""} commentzing`}>
+      <a href="#header_12863156" onClick={() => this.doneSwitch(idx)}>{entry.code}</a>
+    </li>
+    })}
+  </ul>
+
+  {this.state.currentStudent === "rfd" ? (
+    <CommentBox
+      id="rfd"
+      setComments={(evt)=>this.props.setRFD(evt)}
+      currentComments={this.props.rfd}
+    />
+  ) : 
+
+    <CommentBox
+      key={entries[this.state.currentStudent].code}
+      id={entries[this.state.currentStudent]}
+      setComments={this.props.setComments(this.state.currentStudent)}
+      currentComments={entries[this.state.currentStudent].comments}
+      code={entries[this.state.currentStudent].code}
+      name={entries[this.state.currentStudent].name}
+    />
+  }
+  </>
+  }
+}
+
 function CommentBox({ id, setComments, currentComments, code, name }) {
   return (
     <div id={`box_${id}`} className="commentary">
@@ -200,9 +254,6 @@ export default class FakeBallot extends React.Component {
     }
   }
 
-  doneSwitch(which) {
-    this.setState({ currentStudent: which });
-  }
   render() {
     const sortArrows = (style, prop)=>{
       const direction = this.state.sort === prop ? "UP" : this.state.sort === "-" + prop ? "DOWN" : undefined;
@@ -377,67 +428,7 @@ export default class FakeBallot extends React.Component {
               give points outside of 75 - 100.
             </div>
 
-            <div className="full">
-              <span className="third">
-                <h4>General Feedback</h4>
-              </span>
-            </div>
-
-            <ul id="tabnav">
-              <li id="header_rfd" className={`${this.state.currentStudent === "rfd" ? "selected" : ""} commentzing`}>
-                <a href="#rfd" onClick={() => this.doneSwitch("rfd")}>
-                  Reason for Rankings
-                </a>
-              </li>
-
-              <li id="header_12863156" className={`${this.state.currentStudent === 12863156 ? "selected" : ""} commentzing`}>
-                <a href="#header_12863156" onClick={() => this.doneSwitch(12863156)}>1</a>
-              </li>
-
-              <li id="header_12863154" className={`${this.state.currentStudent === 12863154 ? "selected" : ""} commentzing`}>
-                <a href="header_12863154" onClick={() => this.doneSwitch(12863154)}>2</a>
-              </li>
-
-              <li id="header_12863155" className={`${this.state.currentStudent === 12863155 ? "selected" : ""} commentzing`}>
-                <a href="header_12863155" onClick={() => this.doneSwitch(12863155)}>3</a>
-              </li>
-            </ul>
-
-            {this.state.currentStudent === "rfd" && (
-              <CommentBox
-                id="rfd"
-                setComments={(evt)=>this.props.setRFD(evt)}
-                currentComments={this.state.rfd}
-              />
-            )}
-
-            {this.state.currentStudent === 12863156 && (
-              <CommentBox
-                id="12863156"
-                setComments={this.setComments(0)}
-                currentComments={this.state.entries[0].comments}
-                code={1}
-                name={"Malachi Allen"}
-              />
-            )}
-            {this.state.currentStudent === 12863154 && (
-              <CommentBox
-                id="12863154"
-                setComments={this.setComments(1)}
-                currentComments={this.state.entries[1].comments}
-                code={2}
-                name={"Connor Breen"}
-              />
-            )}
-            {this.state.currentStudent === 12863155 && (
-              <CommentBox
-                id="12863155"
-                setComments={this.setComments(2)}
-                currentComments={this.state.entries[2].comments}
-                code={3}
-                name={"Joshua Darden"}
-              />
-            )}
+<CommentPanel entries={this.state.entries} setComments={this.setComments} setRFD={this.props.setRFD} rfd={this.props.rfd}/>
             <div className="libl full rightalign">
               <div className="half centeralign">
                 <input
