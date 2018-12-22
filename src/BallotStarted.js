@@ -170,69 +170,57 @@ export default class FakeBallot extends React.Component {
     this.setState({ entries: entries });
   };
 
-  postSwitch = () => {
-    // alert('hello');
-  };
-
-  checkErrors = () => {
-    this.setState({
-      errors: ["You have repeated the rank 1.  All ranks must be unique"]
-    });
-  };
-
-  componentDidMount() {
-
-    window.jQuery = $;
-    window.$ = $;
-    
-    
-    $(document).ready(function() {
-      $("#sortable_buttonarea").addClass("martop");
-    });
-
-    function switchBox(selectTarget) {
-      $(".commentary").addClass("hidden");
-      $("#box_" + $(selectTarget).val()).removeClass("hidden");
+  checkErrors = (evt) => {
+    const counts = [];
+    const errors = []
+    for(var i = 0; i < this.state.entries.length; i++) {
+        if(this.state.entries[i].ranks===undefined){
+          errors.push(`You ommirtted the rank for ${this.state.entries[i].code} - ${this.state.entries[i].name}.  All speakers must be ranked`)
+        } else {
+          if(counts[this.state.entries[i].ranks] === undefined) {
+              counts[this.state.entries[i].ranks] = 1;
+          } else {
+              errors.push(`You have repeated the rank ${this.state.entries[i].ranks}.  All ranks must be unique`)
+              break;
+          }
+        }
     }
 
-    // function addMinute(label) {
-    //   $("#"+label).runner('add');
-    // }
+    evt.preventDefault();
+    this.setState({
+      errors: errors
+    });
+  
 
-    // function subtractMinute(label) {
-    //   $("#"+label).runner('subtract');
-    // }
+    return errors.length === 0;
+  };
 
-
-
-    // function resetTimer(label) {
-    //   $("#"+label).runner('reset');
-    // }
-
-    // window.$(document).ready(function() {
-    //     // $("#3209946_timer").runner({
-    //     //     milliseconds : false,
-    //     //     countdown    : true,
-    //     //     autostart	 : false,
-    //     //     startAt      : 10*60*1000,
-    //     // });
-    // });
+  handleSubmit = (evt) => {
+    if(this.checkErrors(evt)){
+      this.props.onSubmit(this.state.entries);
+    }
   }
-
-  // toggleTimer(label) {
-  //   $("#" + label).runner("toggle");
-  //   $("#" + label + "Start").toggleClass("fa-play");
-  //   $("#" + label + "Start").toggleClass("fa-pause");
-  // }
 
   doneSwitch(which) {
     this.setState({ currentStudent: which });
-    // $(".commentary").addClass("hidden");
-    // $("#box_" + which).removeClass("hidden");
-    // $("li.commentzing").removeClass("selected");
-    // $("#header_" + which).addClass("selected");
   }
   render() {
+    const sortArrows = (style, prop)=>{
+      const direction = this.state.sort === prop ? "UP" : this.state.sort === "-" + prop ? "DOWN" : undefined;
+
+      let url;
+      switch(direction){
+        case "UP":
+        url =  "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7)"
+        break;
+        case "DOWN":
+        url = "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7)"
+        break;
+        default:
+          url = "url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==)"
+      }
+      return {...style, backgroundImage: url};
+    }
     return (
       <div id="content">
         <div className="hidden shade closedshade fa fa-backward" />
@@ -277,7 +265,7 @@ export default class FakeBallot extends React.Component {
                 >
                   <th
                     data-column="0"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
+                    className="sortable"
                     tabIndex="0"
                     scope="col"
                     role="columnheader"
@@ -287,13 +275,14 @@ export default class FakeBallot extends React.Component {
                     aria-sort="none"
                     aria-label="Code: No sort applied, activate to apply an ascending sort"
                     onClick={() => this.changeSort("code")}
+                    style={sortArrows({},"code")}
                   >
                     <div className="tablesorter-header-inner">Code</div>
                   </th>
 
                   <th
                     data-column="1"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
+                    className="sortable"
                     tabIndex="0"
                     scope="col"
                     role="columnheader"
@@ -303,13 +292,14 @@ export default class FakeBallot extends React.Component {
                     aria-sort="none"
                     aria-label="Name: No sort applied, activate to apply an ascending sort"
                     onClick={() => this.changeSort("name")}
+                    style={sortArrows({},"name")}
                   >
                     <div className="tablesorter-header-inner">Name</div>
                   </th>
 
                   <th
                     data-column="2"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
+                    className="sortable"
                     tabIndex="0"
                     scope="col"
                     role="columnheader"
@@ -319,6 +309,7 @@ export default class FakeBallot extends React.Component {
                     aria-sort="none"
                     aria-label="Title/Question: No sort applied, activate to apply an ascending sort"
                     onClick={() => this.changeSort("title")}
+                    style={sortArrows({},"title")}
                   >
                     <div className="tablesorter-header-inner">
                       Title/Question
@@ -328,7 +319,7 @@ export default class FakeBallot extends React.Component {
                   <th
                     colSpan="2"
                     data-column="3"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
+                    className="sortable"
                     tabIndex="0"
                     scope="col"
                     role="columnheader"
@@ -344,6 +335,7 @@ export default class FakeBallot extends React.Component {
     
                                 Points: No sort applied, activate to apply an ascending sort"
                     onClick={() => this.changeSort("ranks")}
+                    style={sortArrows({},"ranks")}
                   >
                     <div className="tablesorter-header-inner">
                       <span className="half marno centeralign">Ranks</span>
@@ -374,143 +366,15 @@ export default class FakeBallot extends React.Component {
                 <tr className="liblrow odd" role="row">
                   <td colSpan="10" className="rightalign">
                     <input
-                      type="submit"
+                      type="button"
                       value=" Submit Ballot "
-                      onClick={() => this.props.onSubmit(this.state.entries)}
+                      onClick={this.handleSubmit}
                     />
                   </td>
                 </tr>
               </tbody>
             </table>
-            <div
-              className="tablesorter-sticky-wrapper tablesorter-sticky-hidden"
-              style={{
-                position: "fixed",
-                top: "0px",
-                left: "87.9219px",
-                visibility: "hidden",
-                zIndex: "2",
-                width: "707px"
-              }}
-            >
-              <table
-                id="sortable-sticky"
-                className="tablesorter tablesorter-default tablesorterb5b9d657ed08a containsStickyHeaders tablesorter-stickyHeader tablesorterb5b9d657ed08a_extra_table"
-                role="grid"
-                style={{
-                  height: "0px",
-                  width: "707px",
-                  margin: "0px",
-                  minWidth: "707px",
-                  maxWidth: "707px"
-                }}
-              >
-                <thead>
-                  <tr
-                    className="yellowrow smallish centeralign tablesorter-headerRow"
-                    role="row"
-                  >
-                    <th
-                      data-column="0"
-                      className="tablesorter-header sortable tablesorter-headerUnSorted tablesorterb5b9d657ed08a_extra_headers"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Code: No sort applied, activate to apply an ascending sort"
-                      style={{
-                        userSelect: "none",
-                        width: "38px",
-                        minWidth: "38px",
-                        maxWidth: "38px"
-                      }}
-                    >
-                      <div className="tablesorter-header-inner">Code</div>
-                    </th>
-
-                    <th
-                      data-column="1"
-                      className="tablesorter-header sortable tablesorter-headerUnSorted tablesorterb5b9d657ed08a_extra_headers"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Name: No sort applied, activate to apply an ascending sort"
-                      style={{
-                        userSelect: "none",
-                        width: "122px",
-                        minWidth: "122px",
-                        maxWidth: "122px"
-                      }}
-                    >
-                      <div className="tablesorter-header-inner">Name</div>
-                    </th>
-
-                    <th
-                      data-column="2"
-                      className="tablesorter-header sortable tablesorter-headerUnSorted tablesorterb5b9d657ed08a_extra_headers"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Title/Question: No sort applied, activate to apply an ascending sort"
-                      style={{
-                        userSelect: "none",
-                        width: "272px",
-                        minWidth: "272px",
-                        maxWidth: "272px"
-                      }}
-                    >
-                      <div className="tablesorter-header-inner">
-                        Title/Question
-                      </div>
-                    </th>
-
-                    <th
-                      colSpan="2"
-                      data-column="3"
-                      className="tablesorter-header sortable tablesorter-headerUnSorted tablesorterb5b9d657ed08a_extra_headers"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Ranks
-                            
-    
-    
-                            
-    
-                                Points: No sort applied, activate to apply an ascending sort"
-                      style={{
-                        userSelect: "none",
-                        width: "193px",
-                        minWidth: "193px",
-                        maxWidth: "193px"
-                      }}
-                    >
-                      <div className="tablesorter-header-inner">
-                        <span className="half marno centeralign">Ranks</span>
-
-                        <span className="half marno centeralign">Points</span>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
-
+            
             <div className="row smallish redtext semibold centeralign padvertmore even">
               * The full point range is 1 - 100 but you must ask the tab room to
               give points outside of 75 - 100.
