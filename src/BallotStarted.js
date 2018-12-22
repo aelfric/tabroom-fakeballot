@@ -50,10 +50,6 @@ function CommentBox({ id, setComments, currentComments }) {
 }
 
 function BallotRow({ code, name, title, ranks, points, setTitle, setRank,setPoints, even }) {
-  const postSwitch = () => {
-    // alert('hello');
-  };
-
   return (
     <tr className={`ballotrows ${even ? "even" : "odd"}`} role="row">
       <td className="leftalign semibold">{code}</td>
@@ -70,7 +66,6 @@ function BallotRow({ code, name, title, ranks, points, setTitle, setRank,setPoin
           value=""
           size="30"
           placeholder="Enter title or extemp question"
-          onBlur={postSwitch}
           value={title}
           onChange={setTitle}
         />
@@ -406,20 +401,6 @@ export default class FakeBallot extends React.Component {
               </li>
             </ul>
 
-            {/* <div id="box_rfd" className="commentary">
-              <p className="semibold greentext centeralign full">
-                These comments go to all participants in the round.
-              </p>
-
-              <div className="full centeralign">
-                <Editor
-                  init={tinyMCEConfig}
-                  value={this.props.rfd}
-                  onChange={this.props.setRFD}
-                />
-              </div>
-            </div> */}
-
             {this.state.currentStudent === "rfd" && (
               <CommentBox
                 id="rfd"
@@ -520,41 +501,7 @@ export default class FakeBallot extends React.Component {
             </span>
 
             <h6 className="bigger centeralign semibold" />
-
-<Timer />
-            {/* <div className="full centeralign even border">
-              <span className="tenth marno">
-                <a
-                  className="fa fa-caret-up greentext fa-2x marno padmore padbottomless inverthover"
-                  onClick="addMinute('3209946_timer')"
-                />
-
-                <a
-                  className="fa fa-caret-down greentext fa-2x marno padmore padtopless inverthover"
-                  onClick="subtractMinute('3209946_timer')"
-                />
-              </span>
-
-              <span className="half marno">
-                <span className="stopwatch" id="3209946_timer">
-                  10:00
-                </span>
-              </span>
-
-              <span className="twofifths marno">
-                <button
-                  onClick={()=>this.toggleTimer('3209946_timer')}
-                  id="3209946_timerStart"
-                  className="buttonwhite bluetext fa fa-play fa-lg"
-                />
-
-                <button
-                  onClick="resetTimer('3209946_timer')"
-                  className="buttonwhite redtext fa fa-undo fa-lg"
-                />
-              </span>
-            </div> */}
-
+            <Timer />
             <h4>Other ballots</h4>
           </div>
         </div>
