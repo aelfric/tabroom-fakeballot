@@ -28,14 +28,14 @@ const tinyMCEConfig = {
   browser_spellcheck: true
 };
 
-function CommentBox({ id, setComments, currentComments }) {
+function CommentBox({ id, setComments, currentComments, code, name }) {
   return (
     <div id={`box_${id}`} className="commentary">
     {id === "rfd" ? <p className="semibold greentext centeralign full">
                 These comments go to all participants in the round.
               </p> : 
       <p className="semibold bluetext centeralign full">
-        These comments go only to 1 – Malachi Allen – &amp; coaches
+        These comments go only to {code} – {name} – &amp; coaches
       </p>}
 
       <div className="row centeralign odd">
@@ -414,6 +414,8 @@ export default class FakeBallot extends React.Component {
                 id="12863156"
                 setComments={this.setComments(0)}
                 currentComments={this.state.entries[0].comments}
+                code={1}
+                name={"Malachi Allen"}
               />
             )}
             {this.state.currentStudent === 12863154 && (
@@ -421,6 +423,8 @@ export default class FakeBallot extends React.Component {
                 id="12863154"
                 setComments={this.setComments(1)}
                 currentComments={this.state.entries[1].comments}
+                code={2}
+                name={"Connor Breen"}
               />
             )}
             {this.state.currentStudent === 12863155 && (
@@ -428,6 +432,8 @@ export default class FakeBallot extends React.Component {
                 id="12863155"
                 setComments={this.setComments(2)}
                 currentComments={this.state.entries[2].comments}
+                code={3}
+                name={"Joshua Darden"}
               />
             )}
             <div className="libl full rightalign">
