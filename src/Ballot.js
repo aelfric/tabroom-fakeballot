@@ -1,4 +1,5 @@
 import React from 'react';
+import Content from './Content';
 
 export default class Ballot extends React.Component {
 
@@ -8,10 +9,8 @@ return <div id="overlay">
 
 	<div id="wrapper">
 
-		<div id="content"><div className="hidden shade closedshade fa fa-backward"></div>
-
-	
-		<div className="menu"><div className="shade openshade fa fa-forward"></div>
+		<Content
+		menu={<>
 
 
 			<div className="sidenote">
@@ -113,11 +112,8 @@ return <div id="overlay">
 
 		</div>
 
-		</div>
-
-
-
-	<div className="main">
+		</>}
+		main={<>
 
 		<h3>
 			Current Ballots
@@ -257,36 +253,9 @@ return <div id="overlay">
 			</table></div>
 
 
-	</div>
-
-
-		</div>
+	</>} />
 
 	</div>
-
-
-	<div id="footer">
-
-		<span className="leftlinks twothirds">
-
-			<a tabIndex="-1" href="https://www.speechanddebate.org/join">
-				Join the National Speech &amp; Debate Association
-			</a>
-
-
-			<a tabIndex="-1" href="https://www.speechanddebate.org/mission">About</a>
-
-			<a tabIndex="-1" href="https://support.tabroom.com">Help</a>
-
-			<a tabIndex="-1" href="https://www.tabroom.com/index/about.mhtml">Contact</a>
-
-
-		</span>
-
-
-	</div>
-
-
 	</div>
 }
 }

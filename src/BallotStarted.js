@@ -12,6 +12,7 @@ import tinymce from 'tinymce/tinymce';
 
 // A theme is also required
 import 'tinymce/themes/modern/theme';
+import Content from "./Content";
 
 
 const tinyMCEConfig = {
@@ -220,10 +221,8 @@ export default class FakeBallot extends React.Component {
       return {...style, backgroundImage: url};
     }
     return (
-      <div id="content">
-        <div className="hidden shade closedshade fa fa-backward" />
-
-        <div className="main">
+      <Content main={
+      <>
           <div>
             <span className="twothirds nospace">
               <h4>OBT Round 1 Ballot for Riccobono</h4>
@@ -460,11 +459,8 @@ export default class FakeBallot extends React.Component {
               </div>
             </div>
           </form>
-        </div>
-
-        <div className="menu">
-          <div className="shade openshade fa fa-forward" />
-
+        </>}
+        menu={<>
           <div className="sidenote">
             <h6 className="bluetext semibold marbottom">This round</h6>
 
@@ -513,8 +509,7 @@ export default class FakeBallot extends React.Component {
             <Timer />
             <h4>Other ballots</h4>
           </div>
-        </div>
-      </div>
+        </>} />
     );
   }
 }

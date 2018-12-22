@@ -1,5 +1,6 @@
 import React from "react";
 import $ from "jquery";
+import Content from "./Content";
 
 function EntryRow({ ranks, points, code, name, title, order, even }) {
   return (
@@ -55,8 +56,8 @@ export default class ConfirmSubmit extends React.Component {
   }
   render() {
     return (
-        <div id="content">
-      <div className="main">
+      <Content main={
+      <>
         <h4 className="marbottommore">
           Please confirm your ranking of this round:
         </h4>
@@ -214,8 +215,10 @@ export default class ConfirmSubmit extends React.Component {
             </a>
           </span>
         </div>
-      </div>
-      <div className="menu"><div className="shade openshade fa fa-forward"></div>
+      </>
+      }
+      menu={
+      <>
 
 		<div className="sidenote">
 
@@ -225,8 +228,8 @@ export default class ConfirmSubmit extends React.Component {
 
 		</div>
 
-	</div>
-      </div>
+  </>}
+  />
     );
   }
 }
