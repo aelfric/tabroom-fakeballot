@@ -8,6 +8,11 @@ import { Editor } from "@tinymce/tinymce-react";
 import Menus from "./Menus";
 import { dynamicSort } from "./ConfirmBallot";
 import Timer from './Timer';
+// Import TinyMCE
+import tinymce from 'tinymce/tinymce';
+
+// A theme is also required
+import 'tinymce/themes/modern/theme';
 
 
 const tinyMCEConfig = {
