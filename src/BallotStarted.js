@@ -92,8 +92,8 @@ function BallotRow({ code, name, title, ranks, points, setTitle, setRank,setPoin
           name="12863154_points"
           id="12863154_points"
           size="5"
-          min="1"
-          max="100"
+          min={1}
+          max={100}
           value={points}
           onChange={setPoints}
           tabIndex="3"
@@ -439,7 +439,7 @@ export default class FakeBallot extends React.Component {
             <div className="libl full rightalign">
               <div className="half centeralign">
                 <input
-                  type="submit"
+                  type="button"
                   value="Save Comments Only"
                   name="skipme"
                   className="med"
@@ -449,8 +449,8 @@ export default class FakeBallot extends React.Component {
 
               <div className="half">
                 <input
-                  onClick={() => this.props.onSubmit(this.sate.entries)}
-                  type="submit"
+                  onClick={this.handleSubmit}
+                  type="button"
                   value="Save Comments &amp; Ballot"
                   className="med"
                 />
