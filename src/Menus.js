@@ -122,7 +122,7 @@ export default function Header(){
           />
 
           <button type="submit" className="search notfirst">
-            <img src="/lib/images/search.png" />
+            <img src="/lib/images/search.png" alt="Search"/>
           </button>
         </form>
       </span>
@@ -132,8 +132,9 @@ export default function Header(){
           tabIndex="-1"
           href="http://docs.tabroom.com"
           target="_blank"
-          className="fa fa-question-circle"
-        />
+          rel="noopener noreferrer">
+          <i className="fa fa-question-circle"/>
+          </a>
       </span>
     </span>
     <Menus/>

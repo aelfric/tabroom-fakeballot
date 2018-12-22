@@ -1,9 +1,8 @@
 import React from "react";
-import $ from "jquery";
 
 // import tinymce from "tinymce/tinymce";
-// import "tinymce/tinymce";
-import alertify from "alertifyjs";
+ 
+// import alertify from "alertifyjs";
 import { Editor } from "@tinymce/tinymce-react";
 import Menus from "./Menus";
 import { dynamicSort } from "./ConfirmBallot";
@@ -68,7 +67,6 @@ function BallotRow({ code, name, title, ranks, points, setTitle, setRank,setPoin
           name="12863154"
           target_id="12863154"
           property_name="title"
-          value=""
           size="30"
           placeholder="Enter title or extemp question"
           value={title}
@@ -388,21 +386,21 @@ export default class FakeBallot extends React.Component {
 
             <ul id="tabnav">
               <li id="header_rfd" className={`${this.state.currentStudent === "rfd" ? "selected" : ""} commentzing`}>
-                <a onClick={() => this.doneSwitch("rfd")}>
+                <a href="#rfd" onClick={() => this.doneSwitch("rfd")}>
                   Reason for Rankings
                 </a>
               </li>
 
               <li id="header_12863156" className={`${this.state.currentStudent === 12863156 ? "selected" : ""} commentzing`}>
-                <a onClick={() => this.doneSwitch(12863156)}>1</a>
+                <a href="#header_12863156" onClick={() => this.doneSwitch(12863156)}>1</a>
               </li>
 
               <li id="header_12863154" className={`${this.state.currentStudent === 12863154 ? "selected" : ""} commentzing`}>
-                <a onClick={() => this.doneSwitch(12863154)}>2</a>
+                <a href="header_12863154" onClick={() => this.doneSwitch(12863154)}>2</a>
               </li>
 
               <li id="header_12863155" className={`${this.state.currentStudent === 12863155 ? "selected" : ""} commentzing`}>
-                <a onClick={() => this.doneSwitch(12863155)}>3</a>
+                <a href="header_12863155" onClick={() => this.doneSwitch(12863155)}>3</a>
               </li>
             </ul>
 
