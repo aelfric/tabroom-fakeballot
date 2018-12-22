@@ -1,19 +1,18 @@
 import React from "react";
 
 // import tinymce from "tinymce/tinymce";
- 
+
 // import alertify from "alertifyjs";
 import { Editor } from "@tinymce/tinymce-react";
 import Menus from "./Menus";
 import { dynamicSort } from "./ConfirmBallot";
-import Timer from './Timer';
+import Timer from "./Timer";
 // Import TinyMCE
-import tinymce from 'tinymce/tinymce';
+import tinymce from "tinymce/tinymce";
 
 // A theme is also required
-import 'tinymce/themes/modern/theme';
+import "tinymce/themes/modern/theme";
 import Content from "./Content";
-
 
 const tinyMCEConfig = {
   mode: "textareas",
@@ -33,69 +32,88 @@ const tinyMCEConfig = {
   browser_spellcheck: true
 };
 
-class CommentPanel extends React.Component{ 
+class CommentPanel extends React.Component {
   state = {
     currentStudent: "rfd"
-  }
+  };
   doneSwitch(which) {
     this.setState({ currentStudent: which });
   }
-  setComments = (idx)=>(evt) => {
+  setComments = idx => evt => {
     this.props.setComments(idx);
-  }
+  };
 
-  render(){
+  render() {
     const entries = this.props.entries;
-  return <>
-  <div className="full">
-    <span className="third">
-      <h4>General Feedback</h4>
-    </span>
-  </div>
+    return (
+      <>
+        <div className="full">
+          <span className="third">
+            <h4>General Feedback</h4>
+          </span>
+        </div>
 
-  <ul id="tabnav">
-    <li id="header_rfd" className={`${this.state.currentStudent === "rfd" ? "selected" : ""} commentzing`}>
-      <a href="#rfd" onClick={() => this.doneSwitch("rfd")}>
-        Reason for Rankings
-      </a>
-    </li>
-    {entries.map((entry, idx)=>{
-      return <li id="header_12863156" key={entry.code} className={`${this.state.currentStudent === idx ? "selected" : ""} commentzing`}>
-      <a href="#header_12863156" onClick={() => this.doneSwitch(idx)}>{entry.code}</a>
-    </li>
-    })}
-  </ul>
+        <ul id="tabnav">
+          <li
+            id="header_rfd"
+            className={`${
+              this.state.currentStudent === "rfd" ? "selected" : ""
+            } commentzing`}
+          >
+            <a href="#rfd" onClick={() => this.doneSwitch("rfd")}>
+              Reason for Rankings
+            </a>
+          </li>
+          {entries.map((entry, idx) => {
+            return (
+              <li
+                id="header_12863156"
+                key={entry.code}
+                className={`${
+                  this.state.currentStudent === idx ? "selected" : ""
+                } commentzing`}
+              >
+                <a href="#header_12863156" onClick={() => this.doneSwitch(idx)}>
+                  {entry.code}
+                </a>
+              </li>
+            );
+          })}
+        </ul>
 
-  {this.state.currentStudent === "rfd" ? (
-    <CommentBox
-      id="rfd"
-      setComments={(evt)=>this.props.setRFD(evt)}
-      currentComments={this.props.rfd}
-    />
-  ) : 
-
-    <CommentBox
-      key={entries[this.state.currentStudent].code}
-      id={entries[this.state.currentStudent]}
-      setComments={this.props.setComments(this.state.currentStudent)}
-      currentComments={entries[this.state.currentStudent].comments}
-      code={entries[this.state.currentStudent].code}
-      name={entries[this.state.currentStudent].name}
-    />
-  }
-  </>
+        {this.state.currentStudent === "rfd" ? (
+          <CommentBox
+            id="rfd"
+            setComments={evt => this.props.setRFD(evt)}
+            currentComments={this.props.rfd}
+          />
+        ) : (
+          <CommentBox
+            key={entries[this.state.currentStudent].code}
+            id={entries[this.state.currentStudent]}
+            setComments={this.props.setComments(this.state.currentStudent)}
+            currentComments={entries[this.state.currentStudent].comments}
+            code={entries[this.state.currentStudent].code}
+            name={entries[this.state.currentStudent].name}
+          />
+        )}
+      </>
+    );
   }
 }
 
 function CommentBox({ id, setComments, currentComments, code, name }) {
   return (
     <div id={`box_${id}`} className="commentary">
-    {id === "rfd" ? <p className="semibold greentext centeralign full">
-                These comments go to all participants in the round.
-              </p> : 
-      <p className="semibold bluetext centeralign full">
-        These comments go only to {code} – {name} – &amp; coaches
-      </p>}
+      {id === "rfd" ? (
+        <p className="semibold greentext centeralign full">
+          These comments go to all participants in the round.
+        </p>
+      ) : (
+        <p className="semibold bluetext centeralign full">
+          These comments go only to {code} – {name} – &amp; coaches
+        </p>
+      )}
 
       <div className="row centeralign odd">
         <Editor
@@ -108,7 +126,17 @@ function CommentBox({ id, setComments, currentComments, code, name }) {
   );
 }
 
-function BallotRow({ code, name, title, ranks, points, setTitle, setRank,setPoints, even }) {
+function BallotRow({
+  code,
+  name,
+  title,
+  ranks,
+  points,
+  setTitle,
+  setRank,
+  setPoints,
+  even
+}) {
   return (
     <tr className={`ballotrows ${even ? "even" : "odd"}`} role="row">
       <td className="leftalign semibold">{code}</td>
@@ -187,7 +215,6 @@ export default class FakeBallot extends React.Component {
     currentStudent: "rfd"
   };
 
-
   changeSort = value => {
     if (value === this.state.sort) {
       if (value[0] !== "-") {
@@ -223,284 +250,311 @@ export default class FakeBallot extends React.Component {
     this.setState({ entries: entries });
   };
 
-  checkErrors = (evt) => {
+  checkErrors = evt => {
     const counts = [];
-    const errors = []
-    for(var i = 0; i < this.state.entries.length; i++) {
-        if(this.state.entries[i].ranks===undefined){
-          errors.push(`You ommirtted the rank for ${this.state.entries[i].code} - ${this.state.entries[i].name}.  All speakers must be ranked`)
+    const errors = [];
+    for (var i = 0; i < this.state.entries.length; i++) {
+      if (this.state.entries[i].ranks === undefined) {
+        errors.push(
+          `You ommirtted the rank for ${this.state.entries[i].code} - ${
+            this.state.entries[i].name
+          }.  All speakers must be ranked`
+        );
+      } else {
+        if (counts[this.state.entries[i].ranks] === undefined) {
+          counts[this.state.entries[i].ranks] = 1;
         } else {
-          if(counts[this.state.entries[i].ranks] === undefined) {
-              counts[this.state.entries[i].ranks] = 1;
-          } else {
-              errors.push(`You have repeated the rank ${this.state.entries[i].ranks}.  All ranks must be unique`)
-              break;
-          }
+          errors.push(
+            `You have repeated the rank ${
+              this.state.entries[i].ranks
+            }.  All ranks must be unique`
+          );
+          break;
         }
+      }
     }
 
     evt.preventDefault();
     this.setState({
       errors: errors
     });
-  
 
     return errors.length === 0;
   };
 
-  handleSubmit = (evt) => {
-    if(this.checkErrors(evt)){
+  handleSubmit = evt => {
+    if (this.checkErrors(evt)) {
       this.props.onSubmit(this.state.entries);
     }
-  }
+  };
 
   render() {
-    const sortArrows = (style, prop)=>{
-      const direction = this.state.sort === prop ? "UP" : this.state.sort === "-" + prop ? "DOWN" : undefined;
+    const sortArrows = (style, prop) => {
+      const direction =
+        this.state.sort === prop
+          ? "UP"
+          : this.state.sort === "-" + prop
+          ? "DOWN"
+          : undefined;
 
       let url;
-      switch(direction){
+      switch (direction) {
         case "UP":
-        url =  "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7)"
-        break;
+          url =
+            "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7)";
+          break;
         case "DOWN":
-        url = "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7)"
-        break;
+          url =
+            "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7)";
+          break;
         default:
-          url = "url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==)"
+          url =
+            "url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==)";
       }
-      return {...style, backgroundImage: url};
-    }
+      return { ...style, backgroundImage: url };
+    };
     return (
-      <Content main={
-      <>
-          <div>
-            <span className="twothirds nospace">
-              <h4>OBT Round 1 Ballot for Riccobono</h4>
-            </span>
+      <Content
+        main={
+          <>
+            <div>
+              <span className="twothirds nospace">
+                <h4>OBT Round 1 Ballot for Riccobono</h4>
+              </span>
 
-            <span className="third rightalign right">
-              <h5 className="normalweight bluetext">Room: 12</h5>
-            </span>
-          </div>
-
-          {this.state.errors.length > 0 && <Error errors={this.state.errors} />}
-
-          <form action="ballot_save.mhtml" method="post">
-            <input type="hidden" name="panel_id" value="3209946" />
-
-            <input type="hidden" name="judge_id" value="961185" />
-
-            <div className="padvert marbottommore marleftmore">
-              <span className="half leftalign">
-                <span className="semibold redtext inline marright">
-                  Points:
-                </span>
-                Range: 75-100 *. Whole points only. No ties. Ranks and points
-                must agree.
+              <span className="third rightalign right">
+                <h5 className="normalweight bluetext">Room: 12</h5>
               </span>
             </div>
 
-            <table
-              id="sortable"
-              className="tablesorter tablesorter-default tablesorterb5b9d657ed08a hasStickyHeaders"
-              role="grid"
-            >
-              <thead>
-                <tr
-                  className="yellowrow smallish centeralign tablesorter-headerRow"
-                  role="row"
-                >
-                  <th
-                    data-column="0"
-                    className="sortable"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Code: No sort applied, activate to apply an ascending sort"
-                    onClick={() => this.changeSort("code")}
-                    style={sortArrows({},"code")}
-                  >
-                    <div className="tablesorter-header-inner">Code</div>
-                  </th>
+            {this.state.errors.length > 0 && (
+              <Error errors={this.state.errors} />
+            )}
 
-                  <th
-                    data-column="1"
-                    className="sortable"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Name: No sort applied, activate to apply an ascending sort"
-                    onClick={() => this.changeSort("name")}
-                    style={sortArrows({},"name")}
-                  >
-                    <div className="tablesorter-header-inner">Name</div>
-                  </th>
+            <form action="ballot_save.mhtml" method="post">
+              <input type="hidden" name="panel_id" value="3209946" />
 
-                  <th
-                    data-column="2"
-                    className="sortable"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Title/Question: No sort applied, activate to apply an ascending sort"
-                    onClick={() => this.changeSort("title")}
-                    style={sortArrows({},"title")}
-                  >
-                    <div className="tablesorter-header-inner">
-                      Title/Question
-                    </div>
-                  </th>
+              <input type="hidden" name="judge_id" value="961185" />
 
-                  <th
-                    colSpan="2"
-                    data-column="3"
-                    className="sortable"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Ranks
+              <div className="padvert marbottommore marleftmore">
+                <span className="half leftalign">
+                  <span className="semibold redtext inline marright">
+                    Points:
+                  </span>
+                  Range: 75-100 *. Whole points only. No ties. Ranks and points
+                  must agree.
+                </span>
+              </div>
+
+              <table
+                id="sortable"
+                className="tablesorter tablesorter-default tablesorterb5b9d657ed08a hasStickyHeaders"
+                role="grid"
+              >
+                <thead>
+                  <tr
+                    className="yellowrow smallish centeralign tablesorter-headerRow"
+                    role="row"
+                  >
+                    <th
+                      data-column="0"
+                      className="sortable"
+                      tabIndex="0"
+                      scope="col"
+                      role="columnheader"
+                      aria-disabled="false"
+                      aria-controls="sortable"
+                      unselectable="on"
+                      aria-sort="none"
+                      aria-label="Code: No sort applied, activate to apply an ascending sort"
+                      onClick={() => this.changeSort("code")}
+                      style={sortArrows({}, "code")}
+                    >
+                      <div className="tablesorter-header-inner">Code</div>
+                    </th>
+
+                    <th
+                      data-column="1"
+                      className="sortable"
+                      tabIndex="0"
+                      scope="col"
+                      role="columnheader"
+                      aria-disabled="false"
+                      aria-controls="sortable"
+                      unselectable="on"
+                      aria-sort="none"
+                      aria-label="Name: No sort applied, activate to apply an ascending sort"
+                      onClick={() => this.changeSort("name")}
+                      style={sortArrows({}, "name")}
+                    >
+                      <div className="tablesorter-header-inner">Name</div>
+                    </th>
+
+                    <th
+                      data-column="2"
+                      className="sortable"
+                      tabIndex="0"
+                      scope="col"
+                      role="columnheader"
+                      aria-disabled="false"
+                      aria-controls="sortable"
+                      unselectable="on"
+                      aria-sort="none"
+                      aria-label="Title/Question: No sort applied, activate to apply an ascending sort"
+                      onClick={() => this.changeSort("title")}
+                      style={sortArrows({}, "title")}
+                    >
+                      <div className="tablesorter-header-inner">
+                        Title/Question
+                      </div>
+                    </th>
+
+                    <th
+                      colSpan="2"
+                      data-column="3"
+                      className="sortable"
+                      tabIndex="0"
+                      scope="col"
+                      role="columnheader"
+                      aria-disabled="false"
+                      aria-controls="sortable"
+                      unselectable="on"
+                      aria-sort="none"
+                      aria-label="Ranks
                             
     
     
                             
     
                                 Points: No sort applied, activate to apply an ascending sort"
-                    onClick={() => this.changeSort("ranks")}
-                    style={sortArrows({},"ranks")}
-                  >
-                    <div className="tablesorter-header-inner">
-                      <span className="half marno centeralign">Ranks</span>
+                      onClick={() => this.changeSort("ranks")}
+                      style={sortArrows({}, "ranks")}
+                    >
+                      <div className="tablesorter-header-inner">
+                        <span className="half marno centeralign">Ranks</span>
 
-                      <span className="half marno centeralign">Points</span>
-                    </div>
-                  </th>
-                </tr>
-              </thead>
+                        <span className="half marno centeralign">Points</span>
+                      </div>
+                    </th>
+                  </tr>
+                </thead>
 
-              <tbody id="ballottable" aria-live="polite" aria-relevant="all">
-                {this.props.entries
-                  .sort(dynamicSort(this.state.sort))
-                  .map((entry, i) => (
-                    <BallotRow
-                      key={entry.code}
-                      {...entry}
-                      even={i % 2 === 0}
-                      setTitle={this.setTitle(i)}
-                      setRank={this.setRank(i)}
-                      setPoints={this.setPoints(i)}
-                      even={i%2===0}
-                    />
-                  ))}
-              </tbody>
+                <tbody id="ballottable" aria-live="polite" aria-relevant="all">
+                  {this.props.entries
+                    .sort(dynamicSort(this.state.sort))
+                    .map((entry, i) => (
+                      <BallotRow
+                        key={entry.code}
+                        {...entry}
+                        even={i % 2 === 0}
+                        setTitle={this.setTitle(i)}
+                        setRank={this.setRank(i)}
+                        setPoints={this.setPoints(i)}
+                        even={i % 2 === 0}
+                      />
+                    ))}
+                </tbody>
 
-              <tbody aria-live="polite" aria-relevant="all">
-                <tr className="liblrow odd" role="row">
-                  <td colSpan="10" className="rightalign">
-                    <input
-                      type="button"
-                      value=" Submit Ballot "
-                      onClick={this.handleSubmit}
-                    />
-                  </td>
-                </tr>
-              </tbody>
-            </table>
-            
-            <div className="row smallish redtext semibold centeralign padvertmore even">
-              * The full point range is 1 - 100 but you must ask the tab room to
-              give points outside of 75 - 100.
-            </div>
+                <tbody aria-live="polite" aria-relevant="all">
+                  <tr className="liblrow odd" role="row">
+                    <td colSpan="10" className="rightalign">
+                      <input
+                        type="button"
+                        value=" Submit Ballot "
+                        onClick={this.handleSubmit}
+                      />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
 
-<CommentPanel entries={this.state.entries} setComments={this.setComments} setRFD={this.props.setRFD} rfd={this.props.rfd}/>
-            <div className="libl full rightalign">
-              <div className="half centeralign">
-                <input
-                  type="button"
-                  value="Save Comments Only"
-                  name="skipme"
-                  className="med"
-                  onClick={this.checkErrors}
-                />
+              <div className="row smallish redtext semibold centeralign padvertmore even">
+                * The full point range is 1 - 100 but you must ask the tab room
+                to give points outside of 75 - 100.
               </div>
 
-              <div className="half">
-                <input
-                  onClick={this.handleSubmit}
-                  type="button"
-                  value="Save Comments &amp; Ballot"
-                  className="med"
-                />
+              <CommentPanel
+                entries={this.state.entries}
+                setComments={this.setComments}
+                setRFD={this.props.setRFD}
+                rfd={this.props.rfd}
+              />
+              <div className="libl full rightalign">
+                <div className="half centeralign">
+                  <input
+                    type="button"
+                    value="Save Comments Only"
+                    name="skipme"
+                    className="med"
+                    onClick={this.checkErrors}
+                  />
+                </div>
+
+                <div className="half">
+                  <input
+                    onClick={this.handleSubmit}
+                    type="button"
+                    value="Save Comments &amp; Ballot"
+                    className="med"
+                  />
+                </div>
               </div>
+            </form>
+          </>
+        }
+        menu={
+          <>
+            <div className="sidenote">
+              <h6 className="bluetext semibold marbottom">This round</h6>
+
+              <div className="row even">
+                <span className="quarter semibold">Round:</span>
+
+                <span className="threequarter">Round 1</span>
+              </div>
+
+              <div className="row odd">
+                <span className="quarter semibold">Room:</span>
+                <span className="threequarter">12</span>
+              </div>
+
+              <div className="row even">
+                <span className="quarter semibold">Start</span>
+                <span className="threequarter" />
+              </div>
+
+              <div className="row nospace odd">
+                <span className="quarter semibold">Panel:</span>
+
+                <span className="threequarters nospace">
+                  <div className="nowrap padless marno">Charles Sloat</div>
+                </span>
+              </div>
+
+              <a
+                href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
+                className="blue full martopmore"
+              >
+                Full Pairing/Schematic
+              </a>
             </div>
-          </form>
-        </>}
-        menu={<>
-          <div className="sidenote">
-            <h6 className="bluetext semibold marbottom">This round</h6>
 
-            <div className="row even">
-              <span className="quarter semibold">Round:</span>
-
-              <span className="threequarter">Round 1</span>
-            </div>
-
-            <div className="row odd">
-              <span className="quarter semibold">Room:</span>
-              <span className="threequarter">12</span>
-            </div>
-
-            <div className="row even">
-              <span className="quarter semibold">Start</span>
-              <span className="threequarter" />
-            </div>
-
-            <div className="row nospace odd">
-              <span className="quarter semibold">Panel:</span>
-
-              <span className="threequarters nospace">
-                <div className="nowrap padless marno">Charles Sloat</div>
+            <div className="sidenote">
+              <span className="third">
+                <h4>Timers</h4>
               </span>
+
+              <span className="twothirds explain rightalign">
+                If you refresh or navigate away, these timers will reset
+              </span>
+
+              <h6 className="bigger centeralign semibold" />
+              <Timer />
+              <h4>Other ballots</h4>
             </div>
-
-            <a
-              href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
-              className="blue full martopmore"
-            >
-              Full Pairing/Schematic
-            </a>
-          </div>
-
-          <div className="sidenote">
-            <span className="third">
-              <h4>Timers</h4>
-            </span>
-
-            <span className="twothirds explain rightalign">
-              If you refresh or navigate away, these timers will reset
-            </span>
-
-            <h6 className="bigger centeralign semibold" />
-            <Timer />
-            <h4>Other ballots</h4>
-          </div>
-        </>} />
+          </>
+        }
+      />
     );
   }
 }

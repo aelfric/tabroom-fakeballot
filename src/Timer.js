@@ -1,7 +1,7 @@
 import React from "react";
 import moment from "moment";
 export default class Timer extends React.Component {
-  initialDuration = moment.duration(10, "minutes")
+  initialDuration = moment.duration(10, "minutes");
   state = {
     started: false,
     duration: this.initialDuration
@@ -29,14 +29,14 @@ export default class Timer extends React.Component {
 
   handleReset = () => {
     clearInterval(this.timer);
-    this.setState({duration: this.initialDuration, started: false});
-  }
+    this.setState({ duration: this.initialDuration, started: false });
+  };
 
-  changeTime = (minutes) => {
-    if(!this.state.started){
-      this.setState({duration: this.state.duration.add(minutes, "minutes")});
+  changeTime = minutes => {
+    if (!this.state.started) {
+      this.setState({ duration: this.state.duration.add(minutes, "minutes") });
     }
-  }
+  };
 
   render() {
     return (
@@ -44,17 +44,22 @@ export default class Timer extends React.Component {
         <span className="tenth marno">
           <a
             className="fa fa-caret-up greentext fa-2x marno padmore padbottomless inverthover"
-            onClick={()=>this.changeTime(1)}
+            onClick={() => this.changeTime(1)}
           />
 
           <a
             className="fa fa-caret-down greentext fa-2x marno padmore padtopless inverthover"
-            onClick={()=>this.changeTime(-1)}
+            onClick={() => this.changeTime(-1)}
           />
         </span>
 
         <span className="half marno">
-          <span className={`stopwatch ${this.state.duration.seconds() < 0 ? "expired" : ""}`} id="3209946_timer">
+          <span
+            className={`stopwatch ${
+              this.state.duration.seconds() < 0 ? "expired" : ""
+            }`}
+            id="3209946_timer"
+          >
             {this.state.duration.seconds() < 0 ? "-" : ""}
             {Math.abs(this.state.duration.minutes())}:
             {Math.abs(this.state.duration.seconds()) < 10 ? "0" : ""}
@@ -63,19 +68,19 @@ export default class Timer extends React.Component {
         </span>
 
         <span className="twofifths marno">
-        {this.state.started ? 
-          <button
-            onClick={this.handleClick}
-            id="3209946_timerStart"
-            className="buttonwhite bluetext fa fa-pause fa-lg"
-          />
-          :
-          <button
-            onClick={this.handleClick}
-            id="3209946_timerStart"
-            className="buttonwhite bluetext fa fa-play fa-lg"
-          />
-        }
+          {this.state.started ? (
+            <button
+              onClick={this.handleClick}
+              id="3209946_timerStart"
+              className="buttonwhite bluetext fa fa-pause fa-lg"
+            />
+          ) : (
+            <button
+              onClick={this.handleClick}
+              id="3209946_timerStart"
+              className="buttonwhite bluetext fa fa-play fa-lg"
+            />
+          )}
           <button
             onClick={this.handleReset}
             className="buttonwhite redtext fa fa-undo fa-lg"
