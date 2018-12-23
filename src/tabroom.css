@@ -1823,7 +1823,7 @@ h4.button {
 	padding-bottom : 8px;
 }
 
-a.button { 
+.button { 
 	margin-top     : 2.5px;
 	margin-bottom  : 2px;
 	margin-left    : 4px;
@@ -1835,7 +1835,7 @@ a.button {
 	text-align     : center;
 }
 
-a.button.padless,
+.button.padless,
 .buttonwhite.padless { 
 	padding-left   : 4px !important;
 	padding-right  : 4px !important;
@@ -1857,10 +1857,10 @@ a.button.padless,
 }
 
 .sidenote .buttonwhite.full,
-.sidenote a.buttonwhite.full,
+.sidenote .buttonwhite.full,
 .buttonwhite.full,
 button.buttonwhite.full,
-a.buttonwhite.full { 
+.buttonwhite.full { 
 	width        : 84%;
 	margin-left  : 3%;
 	margin-right : 3%;
@@ -1870,16 +1870,14 @@ a.buttonwhite.full {
 }
 
 .buttonwhite.caps,
-a.buttonwhite.caps,
 button.buttonwhite.caps,
-.sidenote .buttonwhite.caps,
-.sidenote a.buttonwhite.caps { 
+.sidenote .buttonwhite.caps{ 
 	text-align     : center;
 	text-transform : uppercase;
 	font-size      : 14px;
 }
 
-a.button.narrow { 
+.button.narrow { 
 	width : 32px;
 }
 
@@ -1893,15 +1891,10 @@ button.buttonwhite {
 }
 
 .smallbutton,
-span.buttonblue,
-a.buttonblue,
-span.buttonred,
-a.buttonred,
-span.buttonorange,
-a.buttonorange,
-button.buttonwhite,
-span.buttonwhite,
-a.buttonwhite { 
+.buttonblue,
+.buttonred,
+.buttonorange,
+.buttonwhite { 
     line-height     : 1em;
 	font-weight     : 600;
 	text-decoration : none !important;
@@ -1940,7 +1933,7 @@ a.buttonwhite {
 .buttonwhite.wrap,
 .buttonwhite.full.wrap,
 .buttonwhite.full .wrap,
-a.buttonwhite.wrap { 
+.buttonwhite.wrap { 
 	white-space : normal;
 	overflow    : auto;
 }
@@ -1987,35 +1980,30 @@ tr.borderred th {
 	color : #fdfdfd;
 }
 
-span.buttonblue,
-a.buttonblue{
+.buttonblue{
     background-color : #016F94;
     color            : #fdfdfd;
     border           : 2px solid #016F94;
 }
 
-span.buttonblue:hover,
-a.buttonblue:hover{
+.buttonblue:hover{
     color            : #016F94;
     background-color : #fdfdfd;
 	text-decoration  : none;
 }
 
-span.buttonred,
-a.buttonred{
+.buttonred{
     background-color : #B60B02;
     color            : #fdfdfd;
     border           : 2px solid #B60B02;
 }
 
-span.buttonred:hover,
-a.buttonred:hover{
+.buttonred:hover{
     color            : #B60B02;
     background-color : #fdfdfd;
 	text-decoration  : none;
 }
-span.buttonorange,
-a.buttonorange{
+.buttonorange{
     background-color : #F05123;
     color            : #fdfdfd;
     border           : 2px solid #F05123;
@@ -2153,26 +2141,26 @@ h3.yellowtext {
 }
 
 span.buttonwhite.fa,
-a.buttonwhite.fa {
+.buttonwhite.fa {
 	padding: 6px;
 }
 
-.sidenote a.buttonwhite.touchsmall,
-a.buttonwhite.touchsmall { 
+.sidenote .buttonwhite.touchsmall,
+.buttonwhite.touchsmall { 
 	padding        : 4px;
 	letter-spacing : 1px;
 	font-size      : 13px;
 }
 
 .smallbutton,
-a.buttonwhite.smallish { 
+.buttonwhite.smallish { 
 	padding        : 4px;
 	letter-spacing : 1px;
 	margin         : 6px;
 	font-size      : 13px;
 }
 
-a.buttonwhite.smaller { 
+.buttonwhite.smaller { 
 	padding        : 2px;
 	letter-spacing : 1px;
 	margin         : 4px;
@@ -2324,8 +2312,8 @@ a.buttonwhite.smaller {
 }
 
 button.buttonwhite.fa-sm,
-a.buttonwhite.fa-sm,
-a.printbutton,
+.buttonwhite.fa-sm,
+.printbutton,
 .buttonwhite.fa-sm {
 	margin      : 1px;
 	padding     : 4px;
@@ -2333,8 +2321,8 @@ a.printbutton,
 }
 
 button.buttonwhite.fa-tiny,
-a.buttonwhite.fa-tiny,
-a.printbutton,
+.buttonwhite.fa-tiny,
+.printbutton,
 .buttonwhite.fa-tiny {
 	margin      : 1px;
 	padding     : 0px;
@@ -2344,7 +2332,7 @@ a.printbutton,
 }
 
 button.buttonwhite.fa-xs,
-a.buttonwhite.fa-xs,
+.buttonwhite.fa-xs,
 .buttonwhite.fa-xs {
 	margin      : 1px;
 	padding     : 2px;
@@ -3768,7 +3756,7 @@ a.block {
 	text-align		: right !important;
 }
 
-.leftalign, a.button.leftalign {
+.leftalign, .button.leftalign {
 	text-align : left;
 }
 

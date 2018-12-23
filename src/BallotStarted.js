@@ -84,12 +84,21 @@ class CommentPanel extends React.Component {
         </ul>
 
         {this.state.currentStudent === "rfd" ? (
+          <div className="commentary">
+                  <p className="semibold greentext centeralign full">
+          These comments go to all participants in the round.
+        </p>
           <CommentBox
             id="rfd"
             setComments={evt => this.props.setRFD(evt)}
             currentComments={this.props.rfd}
           />
+          </div>
         ) : (
+          <div className="commentary">
+                  <p className="semibold bluetext centeralign full">
+          These comments go only to {entries[this.state.currentStudent].code} – {entries[this.state.currentStudent].name} – &amp; coaches
+        </p>
           <CommentBox
             key={entries[this.state.currentStudent].code}
             id={entries[this.state.currentStudent]}
@@ -98,25 +107,15 @@ class CommentPanel extends React.Component {
             code={entries[this.state.currentStudent].code}
             name={entries[this.state.currentStudent].name}
           />
+          </div>
         )}
       </>
     );
   }
 }
 
-function CommentBox({ id, setComments, currentComments, code, name }) {
+export function CommentBox({ id, setComments, currentComments, code, name }) {
   return (
-    <div id={`box_${id}`} className="commentary">
-      {id === "rfd" ? (
-        <p className="semibold greentext centeralign full">
-          These comments go to all participants in the round.
-        </p>
-      ) : (
-        <p className="semibold bluetext centeralign full">
-          These comments go only to {code} – {name} – &amp; coaches
-        </p>
-      )}
-
       <div className="row centeralign odd">
         <Editor
           init={tinyMCEConfig}
@@ -124,7 +123,6 @@ function CommentBox({ id, setComments, currentComments, code, name }) {
           onChange={setComments}
         />
       </div>
-    </div>
   );
 }
 
@@ -286,7 +284,7 @@ export default class FakeBallot extends React.Component {
     }
 
     const lowPointErrors = [];
-    const sortedEntries = this.state.entries.sort(dynamicSort("rank"));
+    const sortedEntries = this.state.entries.sort(dynamicSort("ranks"));
     for(let i = 0; i<sortedEntries.length-1; i++ ){
       if(sortedEntries[i+1].points > sortedEntries[i].points){
         lowPointErrors.push(sortedEntries[i].ranks);

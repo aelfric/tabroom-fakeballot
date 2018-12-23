@@ -15,7 +15,7 @@ function Result({order, code, name, title, ranks, points}){
   </div>
 }
 
-export default function ConfirmedBallot({ entries }) {
+export default function ConfirmedBallot({ entries, editFeedback }) {
   return (
       <Content 
       menu={<DefaultMenu />}
@@ -52,12 +52,13 @@ export default function ConfirmedBallot({ entries }) {
         </span>
 
         <span className="fifth rightalign">
-          <a
+          <button type="button"
             className="bluetext buttonwhite hover smallish invert"
-            href="rfd_only.mhtml?panel_id=3214322&amp;judge_id=963334"
+            
+            onClick={editFeedback}
           >
             Edit Feedback
-          </a>
+          </button>
         </span>
       </div>
 

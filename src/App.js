@@ -9,12 +9,14 @@ import FakeBallot from "./BallotStarted";
 import ConfirmSubmit from "./ConfirmBallot";
 import Layout from "./Layout";
 import ConfirmedBallot from "./ConfirmedBallot";
+import EditFeedback from "./EditFeedback";
 
 class App extends Component {
   state = {
     started: false,
     confirming: false,
     confirmed: false,
+    editing: false,
     entries: [
       {
         code: "301",
@@ -68,10 +70,18 @@ class App extends Component {
 
   render() {
     let component;
-    if (this.state.confirmed) {
-      component = <ConfirmedBallot entries={this.state.entries}/>
-    }
-    else if (this.state.confirming) {
+    if (this.state.editing) {
+      component = (
+        <EditFeedback
+          rfd={this.state.rfd}
+          setRFD={this.setRFD}
+          entries={this.state.entries}
+          onSubmit={this.onSubmit}
+        />
+      );
+    } else if (this.state.confirmed) {
+      component = <ConfirmedBallot entries={this.state.entries} editFeedback={()=>this.setState({editing: true})}/>;
+    } else if (this.state.confirming) {
       component = (
         <ConfirmSubmit
           entries={this.state.entries}
