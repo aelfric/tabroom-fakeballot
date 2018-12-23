@@ -101,7 +101,7 @@ export default class ConfirmSubmit extends React.Component {
               </span>
 
               <span className="pagehalf centeralign">
-                <a className="greentext buttonwhite invert full confirm">
+                <a className="greentext buttonwhite invert full confirm" onClick={this.props.onSubmit}>
                   YES! CORRECT! CONFIRM IT
                 </a>
               </span>

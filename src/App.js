@@ -8,11 +8,13 @@ import Ballot from "./Ballot";
 import FakeBallot from "./BallotStarted";
 import ConfirmSubmit from "./ConfirmBallot";
 import Layout from "./Layout";
+import ConfirmedBallot from "./ConfirmedBallot";
 
 class App extends Component {
   state = {
     started: false,
     confirming: false,
+    confirmed: false,
     entries: [
       {
         code: "301",
@@ -49,6 +51,10 @@ class App extends Component {
     this.setState({ confirming: !this.state.confirming });
   };
 
+  toggleFinished = () => {
+    this.setState({ confirmed: !this.state.confirmed });
+  };
+
   setRFD = evt => {
     this.setState({ rfd: evt.target.getContent() });
   };
@@ -62,12 +68,16 @@ class App extends Component {
 
   render() {
     let component;
-    if (this.state.confirming) {
+    if (this.state.confirmed) {
+      component = <ConfirmedBallot entries={this.state.entries}/>
+    }
+    else if (this.state.confirming) {
       component = (
         <ConfirmSubmit
           entries={this.state.entries}
           confirm={this.toggleConfirm}
           rfd={this.state.rfd}
+          onSubmit={this.toggleFinished}
         />
       );
     } else if (this.state.started) {

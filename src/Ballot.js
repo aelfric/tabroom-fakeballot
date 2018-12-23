@@ -2,6 +2,86 @@ import React from "react";
 import Content from "./Content";
 import SortableTable from "./SortableTable";
 
+export function DefaultMenu(){
+	return           <>
+	<div className="sidenote">
+	  <h4>Tournaments</h4>
+
+	  <a
+		className="blue full"
+		href="/user/tourn/select.mhtml?tourn_id=10669"
+	  >
+		<span className="fivesixth">Sample Tournament</span>
+
+		<span className="sixth mono smaller rightalign">NY/US</span>
+	  </a>
+
+	  <a className="martop-half blue full" href="/user/tourn/all.mhtml">
+		See Past Tournaments
+	  </a>
+	</div>
+
+	<div className="sidenote">
+	  <h4>Judging</h4>
+
+	  <a className="yellow full" href="/user/judge/panels.mhtml">
+		Current Ballots &amp; Panels
+	  </a>
+
+	  <a className="blue half" href="/user/judge/index.mhtml">
+		Upcoming
+	  </a>
+
+	  <a
+		className="blue half"
+		href="/user/judge/history.mhtml?person_id=5820"
+	  >
+		History
+	  </a>
+
+	  <a className="blue half" href="/user/judge/conflicts.mhtml">
+		Conflicts
+	  </a>
+
+	  <a className="blue half" href="/user/judge/paradigm.mhtml">
+		Paradigm
+	  </a>
+
+	  <a
+		className="blue full"
+		href="/user/judge/hire.mhtml?person_id=5820"
+	  >
+		Offer Hired Judging Rounds
+	  </a>
+	</div>
+
+	<div className="sidenote">
+	  <h4>Your Account</h4>
+
+	  <a className="yellow full" href="/user/unfollow.mhtml">
+		Edit Live Updates/Parent Memos
+	  </a>
+
+	  <a className="yellow full" href="/user/chapter/create.mhtml">
+		Create a new school/team
+	  </a>
+
+	  <a className="yellow full" href="/user/tourn/request.mhtml">
+		Request a new tournament
+	  </a>
+
+	  <a className="yellow full" href="/user/judge/search.mhtml">
+		Link your person to a judge
+	  </a>
+
+	  <a className="yellow full" href="/user/student/search.mhtml">
+		Link your person to a student
+	  </a>
+	</div>
+  </>
+
+}
+
 export default class Ballot extends React.Component {
   render() {
     const rounds = [
@@ -14,84 +94,7 @@ export default class Ballot extends React.Component {
     ];
     return (
       <Content
-        menu={
-          <>
-            <div className="sidenote">
-              <h4>Tournaments</h4>
-
-              <a
-                className="blue full"
-                href="/user/tourn/select.mhtml?tourn_id=10669"
-              >
-                <span className="fivesixth">Sample Tournament</span>
-
-                <span className="sixth mono smaller rightalign">NY/US</span>
-              </a>
-
-              <a className="martop-half blue full" href="/user/tourn/all.mhtml">
-                See Past Tournaments
-              </a>
-            </div>
-
-            <div className="sidenote">
-              <h4>Judging</h4>
-
-              <a className="yellow full" href="/user/judge/panels.mhtml">
-                Current Ballots &amp; Panels
-              </a>
-
-              <a className="blue half" href="/user/judge/index.mhtml">
-                Upcoming
-              </a>
-
-              <a
-                className="blue half"
-                href="/user/judge/history.mhtml?person_id=5820"
-              >
-                History
-              </a>
-
-              <a className="blue half" href="/user/judge/conflicts.mhtml">
-                Conflicts
-              </a>
-
-              <a className="blue half" href="/user/judge/paradigm.mhtml">
-                Paradigm
-              </a>
-
-              <a
-                className="blue full"
-                href="/user/judge/hire.mhtml?person_id=5820"
-              >
-                Offer Hired Judging Rounds
-              </a>
-            </div>
-
-            <div className="sidenote">
-              <h4>Your Account</h4>
-
-              <a className="yellow full" href="/user/unfollow.mhtml">
-                Edit Live Updates/Parent Memos
-              </a>
-
-              <a className="yellow full" href="/user/chapter/create.mhtml">
-                Create a new school/team
-              </a>
-
-              <a className="yellow full" href="/user/tourn/request.mhtml">
-                Request a new tournament
-              </a>
-
-              <a className="yellow full" href="/user/judge/search.mhtml">
-                Link your person to a judge
-              </a>
-
-              <a className="yellow full" href="/user/student/search.mhtml">
-                Link your person to a student
-              </a>
-            </div>
-          </>
-        }
+        menu={DefaultMenu}
         main={
           <>
             <h3>Current Ballots</h3>
