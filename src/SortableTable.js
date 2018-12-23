@@ -1,6 +1,6 @@
 import React from "react";
 
-function dynamicSort(property) {
+export function dynamicSort(property) {
   var sortOrder = 1;
   if (property[0] === "-") {
     sortOrder = -1;

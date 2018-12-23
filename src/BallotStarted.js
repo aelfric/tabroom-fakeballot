@@ -5,7 +5,7 @@ import React from "react";
 // import alertify from "alertifyjs";
 import { Editor } from "@tinymce/tinymce-react";
 import Menus from "./Menus";
-import { dynamicSort } from "./ConfirmBallot";
+import { dynamicSort } from "./SortableTable";
 import Timer from "./Timer";
 // Import TinyMCE
 import tinymce from "tinymce/tinymce";
@@ -26,6 +26,7 @@ const tinyMCEConfig = {
   toolbar: [
     "undo redo | bold italic strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat emoticons | link styleselect"
   ],
+  height: "235",
   statusbar: false,
   theme: "modern",
   theme_advanced_toolbar_location: "top",
@@ -254,27 +255,48 @@ export default class FakeBallot extends React.Component {
   checkErrors = evt => {
     const counts = [];
     const errors = [];
-    for (var i = 0; i < this.state.entries.length; i++) {
-      if (this.state.entries[i].ranks === undefined) {
+    for (let i = 0; i < this.state.entries.length; i++) {
+      const points = this.state.entries[i].points || 0;
+      const rank = this.state.entries[i].ranks;
+      if (rank === undefined) {
         errors.push(
-          `You ommirtted the rank for ${this.state.entries[i].code} - ${
-            this.state.entries[i].name
-          }.  All speakers must be ranked`
+          `Rank missing for ${this.state.entries[i].code}`
         );
+      } 
+      
+      if(points < 75 || points > 100){
+        errors.push(`Points ${points} are outside of range 75 - 100`)
+      }
+      if (counts[points] === undefined) {
+        counts[points] = 1;
       } else {
-        if (counts[this.state.entries[i].ranks] === undefined) {
-          counts[this.state.entries[i].ranks] = 1;
+        errors.push(
+          `Tied points forbidden: you have two speakers with points ${points}`
+        );
+      }
+      if (rank !== undefined) {
+        if (counts[rank] === undefined) {
+          counts[rank] = 1;
         } else {
           errors.push(
-            `You have repeated the rank ${
-              this.state.entries[i].ranks
-            }.  All ranks must be unique`
+            `You have repeated the rank ${rank}.  All ranks must be unique`
           );
-          break;
         }
       }
     }
 
+    const lowPointErrors = [];
+    const sortedEntries = this.state.entries.sort(dynamicSort("rank"));
+    for(let i = 0; i<sortedEntries.length-1; i++ ){
+      if(sortedEntries[i+1].points > sortedEntries[i].points){
+        lowPointErrors.push(sortedEntries[i].ranks);
+      }
+    }
+
+    if(lowPointErrors.length>0){
+      errors.push(`Entry ranked ${lowPointErrors.join(", ")} has worse points than a lower ranked entry`)
+      errors.push("Rank order must match the order of points given.");
+    }
     evt.preventDefault();
     this.setState({
       errors: errors
