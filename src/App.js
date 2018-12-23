@@ -81,7 +81,9 @@ class App extends Component {
         />
       );
     } else {
-      component = <Ballot start={this.toggleStarted} />;
+      component = (
+        <Ballot start={this.toggleStarted} entries={this.state.entries} />
+      );
     }
 
     return <Layout>{component}</Layout>;

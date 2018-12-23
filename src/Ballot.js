@@ -1,8 +1,17 @@
 import React from "react";
 import Content from "./Content";
+import SortableTable from "./SortableTable";
 
 export default class Ballot extends React.Component {
   render() {
+    const rounds = [
+      {
+        name: "OBT Round 1",
+        time: "9:00 AM EST",
+        room: "12",
+        entries: this.props.entries
+      }
+    ];
     return (
       <Content
         menu={
@@ -106,96 +115,27 @@ export default class Ballot extends React.Component {
               />
             </span>
 
-            <table
-              id="pendingrounds"
-              className="tablesorter tablesorter-default tablesorter43d170339eef5 hasStickyHeaders"
-              role="grid"
-            >
-              <thead>
-                <tr className="yellowrow tablesorter-headerRow" role="row">
-                  <th
-                    className="smaller tablesorter-header sortable tablesorter-headerUnSorted"
-                    data-column="0"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="pendingrounds"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Round: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">Round</div>
-                  </th>
-
-                  <th
-                    className="smaller tablesorter-header sortable tablesorter-headerUnSorted"
-                    data-column="1"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="pendingrounds"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Room: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">Room</div>
-                  </th>
-
-                  <th
-                    className="smaller tablesorter-header sortable tablesorter-headerUnSorted"
-                    data-column="2"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="pendingrounds"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Starts: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">Starts</div>
-                  </th>
-
-                  <th
-                    className="smaller tablesorter-header sortable tablesorter-headerUnSorted"
-                    data-column="3"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="pendingrounds"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Entries: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">Entries</div>
-                  </th>
-
-                  <th
-                    className="smaller tablesorter-header sortable tablesorter-headerUnSorted"
-                    data-column="4"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="pendingrounds"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label=": No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner" />
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody aria-live="polite" aria-relevant="all">
+            <SortableTable
+              columns={[
+                {
+                  label: "Round"
+                },
+                {
+                  label: " Room"
+                },
+                {
+                  label: "Starts"
+                },
+                {
+                  label: "Entries"
+                },
+                {
+                  label: ""
+                }
+              ]}
+              defaultSort="name"
+              entries={rounds}
+              rowComponent={({ entry, i }) => (
                 <tr role="row" className="odd">
                   <td className="">
                     <span className="hidden">1-1</span>
@@ -204,18 +144,20 @@ export default class Ballot extends React.Component {
                       className="white padless full"
                       href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
                     >
-                      OBT Round 1
+                      {entry.name}
                     </a>
                   </td>
 
-                  <td className="">12</td>
+                  <td className="">{entry.room}</td>
 
-                  <td className="centeralign">9:00 AM EST</td>
+                  <td className="centeralign">{entry.time}</td>
 
                   <td className="centeralign">
-                    <span className="eighth leftalign">1. 2</span>
-                    <span className="eighth leftalign">2. 3</span>
-                    <span className="eighth leftalign">3. 1</span>
+                    {entry.entries.map((ent, i) => (
+                      <span key={ent.code} className="threequarter nowrap">
+                        {i + 1}. {ent.code}
+                      </span>
+                    ))}
                   </td>
 
                   <td className="centeralign padless">
@@ -228,104 +170,8 @@ export default class Ballot extends React.Component {
                     </a>
                   </td>
                 </tr>
-              </tbody>
-            </table>
-            <div
-              className="tablesorter-sticky-wrapper tablesorter-sticky-hidden"
-              style={{
-                position: "fixed",
-                top: "0px",
-                left: "87.9219px",
-                visibility: "hidden",
-                zIndex: 2,
-                width: "707px"
-              }}
-            >
-              <table
-                id="pendingrounds-sticky"
-                className="tablesorter tablesorter-default tablesorter43d170339eef5 containsStickyHeaders tablesorter-stickyHeader tablesorter43d170339eef5_extra_table"
-                role="grid"
-              >
-                <thead>
-                  <tr className="yellowrow tablesorter-headerRow" role="row">
-                    <th
-                      className="smaller tablesorter-header sortable tablesorter-headerUnSorted tablesorter43d170339eef5_extra_headers"
-                      data-column="0"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="pendingrounds"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Round: No sort applied, activate to apply an ascending sort"
-                    >
-                      <div className="tablesorter-header-inner">Round</div>
-                    </th>
-
-                    <th
-                      className="smaller tablesorter-header sortable tablesorter-headerUnSorted tablesorter43d170339eef5_extra_headers"
-                      data-column="1"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="pendingrounds"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Room: No sort applied, activate to apply an ascending sort"
-                    >
-                      <div className="tablesorter-header-inner">Room</div>
-                    </th>
-
-                    <th
-                      className="smaller tablesorter-header sortable tablesorter-headerUnSorted tablesorter43d170339eef5_extra_headers"
-                      data-column="2"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="pendingrounds"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Starts: No sort applied, activate to apply an ascending sort"
-                    >
-                      <div className="tablesorter-header-inner">Starts</div>
-                    </th>
-
-                    <th
-                      className="smaller tablesorter-header sortable tablesorter-headerUnSorted tablesorter43d170339eef5_extra_headers"
-                      data-column="3"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="pendingrounds"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Entries: No sort applied, activate to apply an ascending sort"
-                    >
-                      <div className="tablesorter-header-inner">Entries</div>
-                    </th>
-
-                    <th
-                      className="smaller tablesorter-header sortable tablesorter-headerUnSorted tablesorter43d170339eef5_extra_headers"
-                      data-column="4"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="pendingrounds"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label=": No sort applied, activate to apply an ascending sort"
-                    >
-                      <div className="tablesorter-header-inner" />
-                    </th>
-                  </tr>
-                </thead>
-              </table>
-            </div>
+              )}
+            />
           </>
         }
       />
