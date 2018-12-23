@@ -13,6 +13,7 @@ import tinymce from "tinymce/tinymce";
 // A theme is also required
 import "tinymce/themes/modern/theme";
 import Content from "./Content";
+import SortableTable from "./SortableTable";
 
 const tinyMCEConfig = {
   mode: "textareas",
@@ -289,30 +290,6 @@ export default class FakeBallot extends React.Component {
   };
 
   render() {
-    const sortArrows = (style, prop) => {
-      const direction =
-        this.state.sort === prop
-          ? "UP"
-          : this.state.sort === "-" + prop
-          ? "DOWN"
-          : undefined;
-
-      let url;
-      switch (direction) {
-        case "UP":
-          url =
-            "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7)";
-          break;
-        case "DOWN":
-          url =
-            "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7)";
-          break;
-        default:
-          url =
-            "url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==)";
-      }
-      return { ...style, backgroundImage: url };
-    };
     return (
       <Content
         main={
@@ -345,116 +322,43 @@ export default class FakeBallot extends React.Component {
                   must agree.
                 </span>
               </div>
-
-              <table
-                id="sortable"
-                className="tablesorter tablesorter-default tablesorterb5b9d657ed08a hasStickyHeaders"
-                role="grid"
+              <SortableTable
+                entries={this.state.entries}
+                defaultSort="order"
+                columns={[
+                  {
+                    label: "Code",
+                    property: "code",
+                    ariaLabel: ""
+                  },
+                  {
+                    label: "Name",
+                    property: "name",
+                    ariaLabel: ""
+                  },
+                  {
+                    label: "Title/Question",
+                    property: "title",
+                    ariaLabel: ""
+                  },
+                  {
+                    label: ["Ranks", "Points"],
+                    property: "ranks",
+                    ariaLabel: ""
+                  }
+                ]}
+                rowComponent={({ entry, i }) => (
+                  <BallotRow
+                    key={entry.code}
+                    {...entry}
+                    even={i % 2 === 0}
+                    setTitle={this.setTitle(i)}
+                    setRank={this.setRank(i)}
+                    setPoints={this.setPoints(i)}
+                    even={i % 2 === 0}
+                  />
+                )}
               >
-                <thead>
-                  <tr
-                    className="yellowrow smallish centeralign tablesorter-headerRow"
-                    role="row"
-                  >
-                    <th
-                      data-column="0"
-                      className="sortable"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Code: No sort applied, activate to apply an ascending sort"
-                      onClick={() => this.changeSort("code")}
-                      style={sortArrows({}, "code")}
-                    >
-                      <div className="tablesorter-header-inner">Code</div>
-                    </th>
-
-                    <th
-                      data-column="1"
-                      className="sortable"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Name: No sort applied, activate to apply an ascending sort"
-                      onClick={() => this.changeSort("name")}
-                      style={sortArrows({}, "name")}
-                    >
-                      <div className="tablesorter-header-inner">Name</div>
-                    </th>
-
-                    <th
-                      data-column="2"
-                      className="sortable"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Title/Question: No sort applied, activate to apply an ascending sort"
-                      onClick={() => this.changeSort("title")}
-                      style={sortArrows({}, "title")}
-                    >
-                      <div className="tablesorter-header-inner">
-                        Title/Question
-                      </div>
-                    </th>
-
-                    <th
-                      colSpan="2"
-                      data-column="3"
-                      className="sortable"
-                      tabIndex="0"
-                      scope="col"
-                      role="columnheader"
-                      aria-disabled="false"
-                      aria-controls="sortable"
-                      unselectable="on"
-                      aria-sort="none"
-                      aria-label="Ranks
-                            
-    
-    
-                            
-    
-                                Points: No sort applied, activate to apply an ascending sort"
-                      onClick={() => this.changeSort("ranks")}
-                      style={sortArrows({}, "ranks")}
-                    >
-                      <div className="tablesorter-header-inner">
-                        <span className="half marno centeralign">Ranks</span>
-
-                        <span className="half marno centeralign">Points</span>
-                      </div>
-                    </th>
-                  </tr>
-                </thead>
-
-                <tbody id="ballottable" aria-live="polite" aria-relevant="all">
-                  {this.props.entries
-                    .sort(dynamicSort(this.state.sort))
-                    .map((entry, i) => (
-                      <BallotRow
-                        key={entry.code}
-                        {...entry}
-                        even={i % 2 === 0}
-                        setTitle={this.setTitle(i)}
-                        setRank={this.setRank(i)}
-                        setPoints={this.setPoints(i)}
-                        even={i % 2 === 0}
-                      />
-                    ))}
-                </tbody>
-
                 <tbody aria-live="polite" aria-relevant="all">
                   <tr className="liblrow odd" role="row">
                     <td colSpan="10" className="rightalign">
@@ -466,7 +370,7 @@ export default class FakeBallot extends React.Component {
                     </td>
                   </tr>
                 </tbody>
-              </table>
+              </SortableTable>
 
               <div className="row smallish redtext semibold centeralign padvertmore even">
                 * The full point range is 1 - 100 but you must ask the tab room

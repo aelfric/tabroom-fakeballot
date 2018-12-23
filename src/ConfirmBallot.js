@@ -1,6 +1,7 @@
 import React from "react";
 import $ from "jquery";
 import Content from "./Content";
+import SortableTable from "./SortableTable";
 
 function EntryRow({ ranks, points, code, name, title, order, even }) {
   return (
@@ -20,40 +21,11 @@ function EntryRow({ ranks, points, code, name, title, order, even }) {
   );
 }
 
-export function dynamicSort(property) {
-  var sortOrder = 1;
-  if (property[0] === "-") {
-    sortOrder = -1;
-    property = property.substr(1);
-  }
-  return function(a, b) {
-    var result =
-      a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
-    return result * sortOrder;
-  };
-}
-
 export default class ConfirmSubmit extends React.Component {
   state = {
     sort: "ranks"
   };
 
-  changeSort = value => {
-    if (value === this.state.sort) {
-      if (value[0] !== "-") {
-        value = "-" + value;
-      } else {
-        value = value.substr(1);
-      }
-    }
-    this.setState({ sort: value });
-  };
-
-  componentDidMount() {
-    $(document).ready(function() {
-      $("#final_buttonarea").addClass("martop");
-    });
-  }
   render() {
     return (
       <Content
@@ -62,128 +34,45 @@ export default class ConfirmSubmit extends React.Component {
             <h4 className="marbottommore">
               Please confirm your ranking of this round:
             </h4>
-            <table
-              id="final"
-              className="tablesorter tablesorter-default tablesorter95ca6926f0dcf hasStickyHeaders"
-              role="grid"
-            >
-              <thead>
-                <tr
-                  className="smallish yellowrow nosort centeralign tablesorter-headerRow"
-                  role="row"
-                >
-                  <th
-                    data-column="0"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="final"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Rank: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                    onClick={() => this.changeSort("ranks")}
-                  >
-                    <div className="tablesorter-header-inner">Rank</div>
-                  </th>
-
-                  <th
-                    data-column="1"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="final"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Points: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                    onClick={() => this.changeSort("ranks")}
-                  >
-                    <div className="tablesorter-header-inner">Points</div>
-                  </th>
-
-                  <th
-                    data-column="2"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="final"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Code: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                    onClick={() => this.changeSort("code")}
-                  >
-                    <div className="tablesorter-header-inner">Code</div>
-                  </th>
-
-                  <th
-                    data-column="3"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="final"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Name: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                    onClick={() => this.changeSort("name")}
-                  >
-                    <div className="tablesorter-header-inner">Name</div>
-                  </th>
-                  <th
-                    data-column="4"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="final"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Title/Question: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                    onClick={() => this.changeSort("title")}
-                  >
-                    <div className="tablesorter-header-inner">
-                      Title/Question
-                    </div>
-                  </th>
-                  <th
-                    data-column="5"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="final"
-                    unselectable="on"
-                    aria-sort="none"
-                    aria-label="Spoke: No sort applied, activate to apply an ascending sort"
-                    style={{ userSelect: "none" }}
-                    onClick={() => this.changeSort("order")}
-                  >
-                    <div className="tablesorter-header-inner">Spoke</div>
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody aria-live="polite" aria-relevant="all">
-                {this.props.entries
-                  .sort(dynamicSort(this.state.sort))
-                  .map((entry, i) => (
-                    <EntryRow key={entry.code} {...entry} even={i % 2 === 0} />
-                  ))}
-              </tbody>
-            </table>
+            <SortableTable
+              columns={[
+                {
+                  label: "Rank",
+                  property: "ranks",
+                  ariaLabel: ""
+                },
+                {
+                  label: "Points",
+                  property: "ranks",
+                  ariaLabel: ""
+                },
+                {
+                  label: "Code",
+                  property: "code",
+                  ariaLabel: ""
+                },
+                {
+                  label: "Name",
+                  property: "name",
+                  ariaLabel: ""
+                },
+                {
+                  label: "Title/Question",
+                  property: "title",
+                  ariaLabel: ""
+                },
+                {
+                  label: "Spoke",
+                  property: "order",
+                  ariaLabel: ""
+                }
+              ]}
+              entries={this.props.entries}
+              defaultSort="ranks"
+              rowComponent={({ entry, i }) => (
+                <EntryRow key={entry.code} {...entry} even={i % 2 === 0} />
+              )}
+            />
 
             <hr />
 
