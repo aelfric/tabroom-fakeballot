@@ -1,4 +1,7 @@
 import React from "react";
+import sparky from './images/sparky.png'
+import logo from './images/nsda-header-logo.png';
+import search from './images/search.png';
 
 export function Menus(props) {
   return (
@@ -56,7 +59,7 @@ export default function Header() {
         <span className="headline">
           <span id="sparky">
             <img
-              src="/lib/images/sparky.png"
+              src={sparky}
               alt="National Speech and Debate Association"
             />
           </span>
@@ -74,7 +77,7 @@ export default function Header() {
           <span className="nsdalogo">
             <a tabIndex="-1" href="http://www.speechanddebate.org">
               <img
-                src="/lib/images/nsda-header-logo.png"
+                src={logo}
                 alt="National Speech and Debate Association"
               />
             </a>
@@ -119,7 +122,7 @@ export default function Header() {
             />
 
             <button type="submit" className="search notfirst">
-              <img src="/lib/images/search.png" alt="Search" />
+              <img src={search} alt="Search" />
             </button>
           </form>
         </span>

@@ -74,7 +74,7 @@ input[type="number"].blend {
 
 body {	
 	background-color    : #009CD4;
-	background-image    : url("/lib/images/bg-repeat.png");
+	background-image    : url("images/bg-repeat.png");
 	background-repeat   : repeat-x;
 	background-position : center top;
 	text-align          : left;
@@ -86,7 +86,7 @@ body {
 }
 
 #overlay {	
-	background-image    : url("/lib/images/lens-flair.png");
+	background-image    : url("images/lens-flair.png");
 	background-repeat   : no-repeat;
 	background-position : -256px -206px;
 	padding             : 0;
@@ -1259,7 +1259,7 @@ td.more {
 }
 
 th.sortable { 
-	background    : url("/lib/images/sort-bg.gif") no-repeat right;
+	background    : url("images/sort-bg.gif") no-repeat right;
 	padding-right : 15px;
 }
 
@@ -1330,7 +1330,7 @@ td.droppable.smallerdrop {
 	margin-top     : 4px;
 	line-height    : 16px;
 	cursor         : pointer;
-	background     : url("/lib/images/ui-bg_highlight-hard_100_eeeeee_1x100.png") repeat-x scroll 50% 50% rgb(238, 238, 238);
+	background     : url("images/ui-bg_highlight-hard_100_eeeeee_1x100.png") repeat-x scroll 50% 50% rgb(238, 238, 238);
 	z-index        : 999;
 }
 
@@ -1352,11 +1352,11 @@ td .draggable{
 }
 
 th.sortdown { 
-	background-image : url("/lib/images/sort-asc.gif");
+	background-image : url("images/sort-asc.gif");
 }
 
 th.sortup { 
-	background-image : url("/lib/images/sort-desc.gif");
+	background-image : url("images/sort-desc.gif");
 }
 
 th.nosort, th.hidesort { 
@@ -4162,10 +4162,10 @@ way to fit your requirements.
 }
  
 .preload1 { 
-	background	: url(/lib/images/selected-button.png); 
+	background	: url(images/selected-button.png); 
 } 
 .preload2 { 
-	background	: url(/lib/images/selected-button.png); 
+	background	: url(images/selected-button.png); 
 } 
  
 #nav { 
@@ -4508,7 +4508,7 @@ li.smallish {
   display    : block;
   width      : 12px;
   height     : 12px;
-  background : url('/lib/images/chosen-sprite.png') -42px 1px no-repeat;
+  background : url('images/chosen-sprite.png') -42px 1px no-repeat;
   font-size  : 1px;
 }
 .chosen-container-single .chosen-single abbr:hover {
@@ -4529,7 +4529,7 @@ li.smallish {
   display    : block;
   width      : 100%;
   height     : 100%;
-  background : url('/lib/images/chosen-sprite.png') no-repeat 0px 2px;
+  background : url('images/chosen-sprite.png') no-repeat 0px 2px;
 }
 .chosen-container-single .chosen-search {
   position    : relative;
@@ -4549,18 +4549,18 @@ li.smallish {
 	height             : auto;
 	outline            : 0;
 	border             : 1px solid #aaa;
-	background         : white url('/lib/images/chosen-sprite.png') no-repeat 100% -20px;
-	background         :  url('/lib/images/chosen-sprite.png') no-repeat 100% -20px,
+	background         : white url('images/chosen-sprite.png') no-repeat 100% -20px;
+	background         :  url('images/chosen-sprite.png') no-repeat 100% -20px,
   						-webkit-gradient(linear, 50% 0%, 50% 100%, 
 						color-stop(1%, #eeeeee), 
 						color-stop(15%, #ffffff));
-	background         : url('/lib/images/chosen-sprite.png') no-repeat 100% -20px,
+	background         : url('images/chosen-sprite.png') no-repeat 100% -20px,
   						-webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-	background         : url('/lib/images/chosen-sprite.png') no-repeat 100% -20px, 
+	background         : url('images/chosen-sprite.png') no-repeat 100% -20px, 
   						-moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-	background         : url('/lib/images/chosen-sprite.png') no-repeat 100% -20px, 
+	background         : url('images/chosen-sprite.png') no-repeat 100% -20px, 
   						-o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-	background         : url('/lib/images/chosen-sprite.png') no-repeat 100% -20px,
+	background         : url('images/chosen-sprite.png') no-repeat 100% -20px,
   						linear-gradient(#eeeeee 1%, #ffffff 15%);
 	line-height        : normal;
 	border-radius      : 0;
@@ -4702,7 +4702,7 @@ li.smallish {
   display    : block;
   width      : 12px;
   height     : 12px;
-  background : url('/lib/images/chosen-sprite.png') -42px 1px no-repeat;
+  background : url('images/chosen-sprite.png') -42px 1px no-repeat;
   font-size  : 1px;
 }
 .chosen-container-multi .chosen-choices li.search-choice .search-choice-close :hover {
@@ -4837,12 +4837,12 @@ li.smallish {
 }
 .chosen-rtl .chosen-search input[type="text"] {
   padding    : 4px 5px 4px 20px;
-  background : white url('/lib/images/chosen-sprite.png') no-repeat -30px -20px;
-  background : url('/lib/images/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
-  background : url('/lib/images/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background : url('/lib/images/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background : url('/lib/images/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
-  background : url('/lib/images/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background : white url('images/chosen-sprite.png') no-repeat -30px -20px;
+  background : url('images/chosen-sprite.png') no-repeat -30px -20px, -webkit-gradient(linear, 50% 0%, 50% 100%, color-stop(1%, #eeeeee), color-stop(15%, #ffffff));
+  background : url('images/chosen-sprite.png') no-repeat -30px -20px, -webkit-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background : url('images/chosen-sprite.png') no-repeat -30px -20px, -moz-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background : url('images/chosen-sprite.png') no-repeat -30px -20px, -o-linear-gradient(#eeeeee 1%, #ffffff 15%);
+  background : url('images/chosen-sprite.png') no-repeat -30px -20px, linear-gradient(#eeeeee 1%, #ffffff 15%);
   direction  : rtl;
 }
 .chosen-rtl.chosen-container-single .chosen-single div b {
@@ -4869,7 +4869,7 @@ li.smallish {
   .chosen-container-multi .chosen-choices .search-choice .search-choice-close,
   .chosen-container .chosen-results-scroll-down span,
   .chosen-container .chosen-results-scroll-up span {
-    background-image: url('/lib/images/chosen-sprite2x.png') !important;
+    background-image: url('images/chosen-sprite2x.png') !important;
     background-size: 52px 37px !important;
     background-repeat: no-repeat !important;
   }
