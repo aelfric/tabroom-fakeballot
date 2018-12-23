@@ -64,15 +64,15 @@
   				url('pt/pt_sans-narrow-web-regular-webfont.woff2') format('woff2');
 } 
 
-/* @font-face {
+ @font-face {
   font-family : 'PTSans';
   font-style  : normal;
   font-weight : 700;
   src         : url('pt/pt_sans-web-bold-webfont.woff') format('woff'),
   				url('pt/pt_sans-web-bold-webfont.woff2') format('woff2');
-} */
+} 
 
-/* @font-face {
+@font-face {
   font-family : 'PTSans';
   font-style  : italic;
   font-weight : 700;
@@ -94,7 +94,7 @@
   font-weight : 400;
   src         : url('pt/pt_sans-web-webfont.woff') format('woff'),
   				url('pt/pt_sans-web-webfont.woff2') format('woff2');
-} */
+}   
 
 @font-face {
   font-family : 'Bebas';
@@ -130,13 +130,13 @@
   src         : url('raleway/Raleway-Black.woff');
 }
 
-/* @font-face {
+@font-face {
     font-family : 'Inconsolata';
     src         : url('inconsolata/Inconsolata-webfont.woff') format('woff'),
 				  url('inconsolata/Inconsolata-webfont.ttf') format('truetype');
     font-weight : normal;
     font-style  : normal;
-} */
+}
 
 /*!
  *  Font Awesome 4.7.0 by @davegandy - http://fontawesome.io - @fontawesome
