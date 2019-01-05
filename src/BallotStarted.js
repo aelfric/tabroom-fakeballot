@@ -135,7 +135,8 @@ function BallotRow({
   setTitle,
   setRank,
   setPoints,
-  even
+  even,
+  row
 }) {
   return (
     <tr className={`ballotrows ${even ? "even" : "odd"}`} role="row">
@@ -146,7 +147,7 @@ function BallotRow({
       <td className="centeralign">
         <input
           type="text"
-          tabIndex="1"
+          tabIndex={3*row+1}
           name="12863154"
           target_id="12863154"
           property_name="title"
@@ -159,7 +160,7 @@ function BallotRow({
 
       <td className="centeralign">
         <input
-          tabIndex="2"
+          tabIndex={3*row+2}
           type="number"
           step="1"
           size="5"
@@ -182,7 +183,7 @@ function BallotRow({
           max={100}
           value={points}
           onChange={setPoints}
-          tabIndex="3"
+          tabIndex={3*row+3}
         />
       </td>
     </tr>
@@ -371,6 +372,7 @@ export default class FakeBallot extends React.Component {
                   <BallotRow
                     key={entry.code}
                     {...entry}
+                    row={i}
                     even={i % 2 === 0}
                     setTitle={this.setTitle(i)}
                     setRank={this.setRank(i)}
