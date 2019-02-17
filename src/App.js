@@ -11,6 +11,8 @@ import Layout from "./Layout";
 import ConfirmedBallot from "./ConfirmedBallot";
 import EditFeedback from "./EditFeedback";
 
+
+
 class App extends Component {
   state = {
     started: false,
@@ -19,28 +21,52 @@ class App extends Component {
     editing: false,
     entries: [
       {
-        code: "301",
-        name: "Connor Breen",
+        code: "2661",
+        name: "Silvia Mcbee",
         title: undefined,
         ranks: undefined,
         points: undefined,
         order: "1st"
       },
       {
-        code: "302",
-        name: "Joshua Darden",
+        code: "2940",
+        name: "Carlos Fey",
         title: undefined,
         ranks: undefined,
         points: undefined,
         order: "2nd"
       },
       {
-        code: "303",
-        name: "Malachi Allen",
+        code: "2858",
+        name: " Dulcie Torrance",
         title: undefined,
         ranks: undefined,
         points: undefined,
         order: "3rd"
+      },
+      {
+        code: "2720",
+        name: "  Fletcher Pietz",
+        title: undefined,
+        ranks: undefined,
+        points: undefined,
+        order: "4th"
+      },
+      {
+        code: "2395",
+        name: "  Joye Hinkley",
+        title: undefined,
+        ranks: undefined,
+        points: undefined,
+        order: "5th"
+      },
+      {
+        code: "2603",
+        name: "  Kristopher Kinzer",
+        title: undefined,
+        ranks: undefined,
+        points: undefined,
+        order: "6th"
       }
     ]
   };
@@ -80,7 +106,12 @@ class App extends Component {
         />
       );
     } else if (this.state.confirmed) {
-      component = <ConfirmedBallot entries={this.state.entries} editFeedback={()=>this.setState({editing: true})}/>;
+      component = (
+        <ConfirmedBallot
+          entries={this.state.entries}
+          editFeedback={() => this.setState({ editing: true })}
+        />
+      );
     } else if (this.state.confirming) {
       component = (
         <ConfirmSubmit
