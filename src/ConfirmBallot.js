@@ -3,12 +3,14 @@ import $ from "jquery";
 import Content from "./Content";
 import SortableTable from "./SortableTable";
 
+const includePoints = false;
+
 function EntryRow({ ranks, points, code, name, title, order, even }) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{ranks}</td>
 
-      <td className="centeralign">{points ? points : "ZERO"}</td>
+      {includePoints && <td className="centeralign">{points ? points : "ZERO"}</td>}
 
       <td className="centeralign">{code}</td>
 
@@ -27,6 +29,39 @@ export default class ConfirmSubmit extends React.Component {
   };
 
   render() {
+    let columns = [
+      {
+        label: "Rank",
+        property: "ranks",
+        ariaLabel: ""
+      },
+      {
+        label: "Points",
+        property: "ranks",
+        ariaLabel: ""
+      },
+      {
+        label: "Code",
+        property: "code",
+        ariaLabel: ""
+      },
+      {
+        label: "Name",
+        property: "name",
+        ariaLabel: ""
+      },
+      {
+        label: "Title/Question",
+        property: "title",
+        ariaLabel: ""
+      },
+      {
+        label: "Spoke",
+        property: "order",
+        ariaLabel: ""
+      }
+    ];
+    columns = columns.filter(c => c.label !== "Points");
     return (
       <Content
         main={
@@ -35,38 +70,7 @@ export default class ConfirmSubmit extends React.Component {
               Please confirm your ranking of this round:
             </h4>
             <SortableTable
-              columns={[
-                {
-                  label: "Rank",
-                  property: "ranks",
-                  ariaLabel: ""
-                },
-                {
-                  label: "Points",
-                  property: "ranks",
-                  ariaLabel: ""
-                },
-                {
-                  label: "Code",
-                  property: "code",
-                  ariaLabel: ""
-                },
-                {
-                  label: "Name",
-                  property: "name",
-                  ariaLabel: ""
-                },
-                {
-                  label: "Title/Question",
-                  property: "title",
-                  ariaLabel: ""
-                },
-                {
-                  label: "Spoke",
-                  property: "order",
-                  ariaLabel: ""
-                }
-              ]}
+              columns={columns}
               entries={this.props.entries}
               defaultSort="ranks"
               rowComponent={({ entry, i }) => (
