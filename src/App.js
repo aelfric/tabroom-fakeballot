@@ -11,7 +11,9 @@ import Layout from "./Layout";
 import ConfirmedBallot from "./ConfirmedBallot";
 import EditFeedback from "./EditFeedback";
 
-
+export const FakeLink = (props) => {
+  return <a className={props.className}>{props.children}</a>
+};
 
 class App extends Component {
   state = {

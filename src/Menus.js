@@ -2,48 +2,49 @@ import React from "react";
 import sparky from './images/sparky.png'
 import logo from './images/nsda-header-logo.png';
 import search from './images/search.png';
+import {FakeLink} from "./App";
 
 export function Menus(props) {
   return (
     <span id="menus">
       <ul id="nav">
         <li className="top">
-          <a className="centeralign top_link" href="/">
+          <FakeLink className="centeralign top_link" href="/">
             <span className="down">Home</span>
-          </a>
+          </FakeLink>
         </li>
 
         <li className="top">
-          <a className="centeralign top_link" href="/index/circuits.mhtml">
+          <FakeLink className="centeralign top_link" href="/index/circuits.mhtml">
             <span className="down">Circuits</span>
-          </a>
+          </FakeLink>
         </li>
 
         <li className="top">
-          <a className="centeralign top_link" href="/index/results">
+          <FakeLink className="centeralign top_link" href="/index/results">
             <span className="down">Results</span>
-          </a>
+          </FakeLink>
         </li>
 
         <li className="top">
-          <a className="centeralign top_link" href="/index/paradigm.mhtml">
+          <FakeLink className="centeralign top_link" href="/index/paradigm.mhtml">
             <span className="down">Paradigms</span>
-          </a>
+          </FakeLink>
         </li>
 
         <li className="top">
-          <a
+          <FakeLink
             className="centeralign top_link"
             href="https://support.tabroom.com"
           >
             <span className="down">Help</span>
-          </a>
+          </FakeLink>
         </li>
 
         <li className="top">
-          <a className="centeralign top_link" href="/index/about.mhtml">
+          <FakeLink className="centeralign top_link" href="/index/about.mhtml">
             <span className="down">About</span>
-          </a>
+          </FakeLink>
         </li>
       </ul>
 
@@ -65,9 +66,9 @@ export default function Header() {
           </span>
 
           <span id="sparked">
-            <a tabIndex="-1" href="/index/index.mhtml">
+            <FakeLink tabIndex="-1" href="/index/index.mhtml">
               Tabroom.com
-            </a>
+            </FakeLink>
           </span>
         </span>
 
@@ -75,31 +76,31 @@ export default function Header() {
           <span className="blurb">a project of the</span>
 
           <span className="nsdalogo">
-            <a tabIndex="-1" href="http://www.speechanddebate.org">
+            <FakeLink tabIndex="-1" href="http://www.speechanddebate.org">
               <img
                 src={logo}
                 alt="National Speech and Debate Association"
               />
-            </a>
+            </FakeLink>
           </span>
         </span>
       </span>
 
       <span id="toprow">
-        <a tabIndex="-1" href="/user/login/logout.mhtml">
+        <FakeLink tabIndex="-1" href="/user/login/logout.mhtml">
           Logout
-        </a>
+        </FakeLink>
 
-        <a tabIndex="-1" href="/user/login/profile.mhtml">
+        <FakeLink tabIndex="-1" href="/user/login/profile.mhtml">
           Profile
-        </a>
+        </FakeLink>
 
-        <a tabIndex="-1" href="/user/home.mhtml">
-          f.riccobono@gmail.com
-        </a>
+        <FakeLink tabIndex="-1" href="/user/home.mhtml">
+          email@example.com
+        </FakeLink>
 
         <span id="search" title="Search for tournaments">
-          <form action="/index/search.mhtml">
+          <form>
             <input
               type="text"
               maxLength="128"
@@ -128,14 +129,14 @@ export default function Header() {
         </span>
 
         <span id="helpbutton" title="Tabroom Help">
-          <a
+          <FakeLink
             tabIndex="-1"
             href="http://docs.tabroom.com"
             target="_blank"
             rel="noopener noreferrer"
           >
             <i className="fa fa-question-circle" />
-          </a>
+          </FakeLink>
         </span>
       </span>
       <Menus />

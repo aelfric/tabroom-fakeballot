@@ -1,82 +1,83 @@
 import React from "react";
 import Content from "./Content";
 import SortableTable from "./SortableTable";
+import {FakeLink} from "./App";
 
 export function DefaultMenu(){
 	return           <>
 	<div className="sidenote">
 	  <h4>Tournaments</h4>
 
-	  <a
+	  <FakeLink
 		className="blue full"
 		href="/user/tourn/select.mhtml?tourn_id=10669"
 	  >
 		<span className="fivesixth">Sample Tournament</span>
 
 		<span className="sixth mono smaller rightalign">NY/US</span>
-	  </a>
+	  </FakeLink>
 
-	  <a className="martop-half blue full" href="/user/tourn/all.mhtml">
+	  <FakeLink className="martop-half blue full" href="/user/tourn/all.mhtml">
 		See Past Tournaments
-	  </a>
+	  </FakeLink>
 	</div>
 
 	<div className="sidenote">
 	  <h4>Judging</h4>
 
-	  <a className="yellow full" href="/user/judge/panels.mhtml">
+	  <FakeLink className="yellow full" href="/user/judge/panels.mhtml">
 		Current Ballots &amp; Panels
-	  </a>
+	  </FakeLink>
 
-	  <a className="blue half" href="/user/judge/index.mhtml">
+	  <FakeLink className="blue half" href="/user/judge/index.mhtml">
 		Upcoming
-	  </a>
+	  </FakeLink>
 
-	  <a
+	  <FakeLink
 		className="blue half"
 		href="/user/judge/history.mhtml?person_id=5820"
 	  >
 		History
-	  </a>
+	  </FakeLink>
 
-	  <a className="blue half" href="/user/judge/conflicts.mhtml">
+	  <FakeLink className="blue half" href="/user/judge/conflicts.mhtml">
 		Conflicts
-	  </a>
+	  </FakeLink>
 
-	  <a className="blue half" href="/user/judge/paradigm.mhtml">
+	  <FakeLink className="blue half" href="/user/judge/paradigm.mhtml">
 		Paradigm
-	  </a>
+	  </FakeLink>
 
-	  <a
+	  <FakeLink
 		className="blue full"
 		href="/user/judge/hire.mhtml?person_id=5820"
 	  >
 		Offer Hired Judging Rounds
-	  </a>
+	  </FakeLink>
 	</div>
 
 	<div className="sidenote">
 	  <h4>Your Account</h4>
 
-	  <a className="yellow full" href="/user/unfollow.mhtml">
+	  <FakeLink className="yellow full" href="/user/unfollow.mhtml">
 		Edit Live Updates/Parent Memos
-	  </a>
+	  </FakeLink>
 
-	  <a className="yellow full" href="/user/chapter/create.mhtml">
+	  <FakeLink className="yellow full" href="/user/chapter/create.mhtml">
 		Create a new school/team
-	  </a>
+    </FakeLink>
 
-	  <a className="yellow full" href="/user/tourn/request.mhtml">
+	  <FakeLink className="yellow full" href="/user/tourn/request.mhtml">
 		Request a new tournament
-	  </a>
+	  </FakeLink>
 
-	  <a className="yellow full" href="/user/judge/search.mhtml">
+	  <FakeLink className="yellow full" href="/user/judge/search.mhtml">
 		Link your person to a judge
-	  </a>
+	  </FakeLink>
 
-	  <a className="yellow full" href="/user/student/search.mhtml">
+	  <FakeLink className="yellow full" href="/user/student/search.mhtml">
 		Link your person to a student
-	  </a>
+	  </FakeLink>
 	</div>
   </>
 
@@ -94,7 +95,7 @@ export default class Ballot extends React.Component {
     ];
     return (
       <Content
-        menu={DefaultMenu}
+          menu={<DefaultMenu/>}
         main={
           <>
             <h3>Current Ballots</h3>
@@ -143,12 +144,12 @@ export default class Ballot extends React.Component {
                   <td className="">
                     <span className="hidden">1-1</span>
 
-                    <a
+                    <FakeLink
                       className="white padless full"
                       href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
                     >
                       {entry.name}
-                    </a>
+                    </FakeLink>
                   </td>
 
                   <td className="">{entry.room}</td>

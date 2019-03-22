@@ -1,5 +1,6 @@
 import React from "react";
 import Headers from "./Menus";
+import {FakeLink} from "./App";
 
 export default function Layout(props) {
   return (
@@ -10,21 +11,21 @@ export default function Layout(props) {
       </div>
       <div id="footer">
         <span className="leftlinks twothirds">
-          <a tabIndex="-1" href="https://www.speechanddebate.org/join">
+          <FakeLink tabIndex="-1" href="https://www.speechanddebate.org/join">
             Join the National Speech &amp; Debate Association
-          </a>
+          </FakeLink>
 
-          <a tabIndex="-1" href="https://www.speechanddebate.org/mission">
+          <FakeLink tabIndex="-1" href="https://www.speechanddebate.org/mission">
             About
-          </a>
+          </FakeLink>
 
-          <a tabIndex="-1" href="https://support.tabroom.com">
+          <FakeLink tabIndex="-1" href="https://support.tabroom.com">
             Help
-          </a>
+          </FakeLink>
 
-          <a tabIndex="-1" href="https://www.tabroom.com/index/about.mhtml">
+          <FakeLink tabIndex="-1" href="https://www.tabroom.com/index/about.mhtml">
             Contact
-          </a>
+          </FakeLink>
         </span>
       </div>
     </div>

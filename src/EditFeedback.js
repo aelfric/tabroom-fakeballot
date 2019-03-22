@@ -2,6 +2,7 @@ import React from "react";
 import Content from "./Content";
 import { Editor } from "@tinymce/tinymce-react";
 import { CommentBox } from "./BallotStarted";
+import {FakeLink} from "./App";
 
 const editorConfig = {
   mode: "textareas",
@@ -52,12 +53,12 @@ export default class EditFeedback extends React.Component {
                 <span className="namespan">Lower Gym I</span>
               </div>
 
-              <a
+              <FakeLink
                 href="/index/tourn/postings/round.mhtml?tourn_id=12009&amp;round_id=393269"
                 className="blue block"
               >
                 Full Pairing/Schematic
-              </a>
+              </FakeLink>
             </div>
 
             <div className="sidenote">

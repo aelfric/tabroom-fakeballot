@@ -16,6 +16,7 @@ import tinymce from "tinymce/tinymce";
 import "tinymce/themes/modern/theme";
 import Content from "./Content";
 import SortableTable from "./SortableTable";
+import {FakeLink} from "./App";
 
 const includePoints = false;
 
@@ -256,12 +257,12 @@ const BallotStartedMenu = <>
           </span>
     </div>
 
-    <a
+    <FakeLink
         href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
         className="blue full martopmore"
     >
       Full Pairing/Schematic
-    </a>
+    </FakeLink>
   </div>
 
   <div className="sidenote">
