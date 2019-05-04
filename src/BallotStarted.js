@@ -229,7 +229,7 @@ export default function FakeBallot(props){
     );
 }
 
-const BallotStartedMenu = <>
+const BallotStartedMenu = ()=> <>
   <div className="sidenote">
     <h6 className="bluetext semibold marbottom">This round</h6>
 
