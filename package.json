@@ -2,7 +2,7 @@
   "name": "fakeballot",
   "version": "0.1.0",
   "private": true,
-  "homepage": "./",
+  "homepage": "http://ncflnationals.org/NCFL2019/OnlineBallot/",
   "dependencies": {
     "@tinymce/tinymce-react": "^2.4.0",
     "alertifyjs": "^1.11.2",
