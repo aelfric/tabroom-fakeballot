@@ -156,9 +156,9 @@ export default class Ballot extends React.Component {
 
                   <td className="centeralign">{entry.time}</td>
 
-                  <td className="centeralign">
+                  <td className="leftalign">
                     {entry.entries.map((ent, i) => (
-                      <span key={ent.code} className="threequarter nowrap">
+                      <span key={ent.code} className="eighth leftalign">
                         {i + 1}. {ent.code}
                       </span>
                     ))}

@@ -16,7 +16,7 @@ function EntryRow({ ranks, points, code, name, title, order, even }) {
 
       <td>{name}</td>
 
-      <td>{title}</td>
+      {/*<td>{title}</td>*/}
 
       <td className="centeralign">{order}</td>
     </tr>
@@ -50,11 +50,11 @@ export default class ConfirmSubmit extends React.Component {
         property: "name",
         ariaLabel: ""
       },
-      {
-        label: "Title/Question",
-        property: "title",
-        ariaLabel: ""
-      },
+      // {
+      //   label: "Title/Question",
+      //   property: "title",
+      //   ariaLabel: ""
+      // },
       {
         label: "Spoke",
         property: "order",

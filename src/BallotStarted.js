@@ -2,11 +2,7 @@ import React from "react";
 
 
 
-// import tinymce from "tinymce/tinymce";
-
-// import alertify from "alertifyjs";
 import { Editor } from "@tinymce/tinymce-react";
-import Menus from "./Menus";
 import { dynamicSort } from "./SortableTable";
 import Timer from "./Timer";
 // Import TinyMCE
@@ -58,36 +54,31 @@ class CommentPanel extends React.Component {
           <span className="third">
             <h4>General Feedback</h4>
           </span>
-        </div>
 
-        <ul id="tabnav">
-          <li
-            id="header_rfd"
-            className={`${
-              this.state.currentStudent === "rfd" ? "selected" : ""
-            } commentzing`}
-          >
-            <a href="#rfd" onClick={() => this.doneSwitch("rfd")}>
-              Reason for Rankings
-            </a>
-          </li>
-          {entries.map((entry, idx) => {
-            return (
-              <li
-                id="header_12863156"
-                key={entry.code}
-                className={`${
-                  this.state.currentStudent === idx ? "selected" : ""
-                } commentzing`}
+        <span className="twothirds rightalign">
+
+					<span className="half rightalign bigger semibold bluetext">
+						Comments go to:
+					</span>
+
+					<span className="half centeralign">
+
+						<select className="fixedmed" onChange={(evt)=>this.doneSwitch(evt.target.value)}
+                    // style={{display: "none"}}>
               >
-                <a href="#header_12863156" onClick={() => this.doneSwitch(idx)}>
-                  {entry.code}
-                </a>
-              </li>
-            );
-          })}
-        </ul>
 
+							<option value="rfd">Everyone (Reason for Rankings)</option>
+              {entries.map((entry, idx) => {
+                return (
+                    <option key={entry.code} value={idx}>{entry.code}&nbsp;&nbsp;{entry.name}</option>
+                );
+              })}
+            </select>
+
+					</span>
+				</span>
+        </div>
+        <ul id="tabnav" />
         {this.state.currentStudent === "rfd" ? (
           <div className="commentary">
             <p className="semibold greentext centeralign full">
@@ -152,19 +143,19 @@ function BallotRow({
 
       <td className="padleftmore">{name}</td>
 
-      <td className="centeralign">
-        <input
-          type="text"
-          tabIndex={3 * row + 1}
-          name="12863154"
-          target_id="12863154"
-          property_name="title"
-          size="30"
-          placeholder="Enter title or extemp question"
-          value={title}
-          onChange={setTitle}
-        />
-      </td>
+      {/*<td className="centeralign">*/}
+      {/*  <input*/}
+      {/*    type="text"*/}
+      {/*    tabIndex={3 * row + 1}*/}
+      {/*    name="12863154"*/}
+      {/*    target_id="12863154"*/}
+      {/*    property_name="title"*/}
+      {/*    size="30"*/}
+      {/*    placeholder="Enter title or extemp question"*/}
+      {/*    value={title}*/}
+      {/*    onChange={setTitle}*/}
+      {/*  />*/}
+      {/*</td>*/}
 
       <td className="centeralign">
         <input
@@ -401,11 +392,11 @@ class BallotStartedForm extends React.Component {
         property: "name",
         ariaLabel: ""
       },
-      {
-        label: "Title/Question",
-        property: "title",
-        ariaLabel: ""
-      },
+      // {
+      //   label: "Title/Question",
+      //   property: "title",
+      //   ariaLabel: ""
+      // },
       {
         label: includePoints ? ["Ranks", "Points"] : "Ranks",
         property: "ranks",
