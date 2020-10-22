@@ -152,7 +152,11 @@ export default class Ballot extends React.Component {
                     </FakeLink>
                   </td>
 
-                  <td className="">{entry.room}</td>
+                  <td className="">
+<form id="privateTest" action="https://campus.speechanddebate.org" method="post" target="_blank">
+  <input name="json" type="hidden" value="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzb3VyY2UiOiJ0YWJyb29tIiwicm9vbU5hbWUiOiJUZXN0IENvbXBldGl0aW9uIFJvb20iLCJyb29tSW5zdHJ1Y3Rpb25zIjoiVGhpcyBpcyBhIHRlc3Qgb2YgYW4gTlNEQSBDYW1wdXMgQ29tcGV0aXRpb24gUm9vbSAtIHRoaXMgcm9vbSBpcyBOT1QgcHJpdmF0ZS4iLCJkaXNwbGF5TmFtZSI6IlRlc3QiLCJyb2xlIjoic3R1ZGVudCIsInV1aWQiOiJOU0RBQ2FtcHVzQ29tcGV0aXRpb25UZXN0Iiwic2VydmVyIjoicHJpdmF0ZSIsInN1cHBvcnRFbWFpbCI6ImluZm9Ac3BlZWNoYW5kZGViYXRlLm9yZyIsImlhdCI6MTYwMzQwODcwMywiZXhwIjoxNjAzNDUxOTAzfQ.OxN4jFmRw89dSjf4rxOc1ShVc8FgeVzJbKaOsyCH7UY"/>
+                <button type="submit" className="invert fa fa-video-camera fa-sm buttonwhite bluetext marno"/></form>
+                </td>
 
                   <td className="centeralign">{entry.time}</td>
 
