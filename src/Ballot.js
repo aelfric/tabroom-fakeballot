@@ -139,8 +139,8 @@ export default class Ballot extends React.Component {
               ]}
               defaultSort="name"
               entries={rounds}
-              rowComponent={({ entry, i }) => (
-                <tr role="row" className="odd">
+              rowComponent={({ entry }) => (
+                <tr role="row" className="odd" key={entry.name}>
                   <td className="">
                     <span className="hidden">1-1</span>
 
@@ -169,13 +169,12 @@ export default class Ballot extends React.Component {
                   </td>
 
                   <td className="centeralign padless">
-                    <a
+                    <button
                       className="greentext buttonwhite invert"
                       onClick={this.props.start}
-                      href="#"
                     >
                       START ROUND
-                    </a>
+                    </button>
                   </td>
                 </tr>
               )}

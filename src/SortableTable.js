@@ -1,14 +1,14 @@
 import React from "react";
 
 export function dynamicSort(property) {
-  var sortOrder = 1;
+  let sortOrder = 1;
   if (property[0] === "-") {
     sortOrder = -1;
     property = property.substr(1);
   }
   return function(a, b) {
-    var result =
-      a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+    const result =
+        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
     return result * sortOrder;
   };
 }
@@ -67,9 +67,10 @@ export default class SortableTable extends React.Component {
             className="yellowrow smallish centeralign tablesorter-headerRow"
             role="row"
           >
-            {this.props.columns.map((col, idx) => {
+            {this.props.columns.map((col, i) => {
               return (
                 <th
+                  key={i}
                   className="sortable"
                   tabIndex="0"
                   scope="col"

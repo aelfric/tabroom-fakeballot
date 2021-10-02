@@ -4,7 +4,7 @@ import logo from './images/nsda-header-logo.png';
 import search from './images/search.png';
 import {FakeLink} from "./App";
 
-export function Menus(props) {
+export function Menus() {
   return (
     <span id="menus">
       <ul id="nav">
@@ -76,7 +76,7 @@ export default function Header() {
           <span className="blurb">a project of the</span>
 
           <span className="nsdalogo">
-            <FakeLink tabIndex="-1" href="http://www.speechanddebate.org">
+            <FakeLink tabIndex="-1" href="https://www.speechanddebate.org">
               <img
                 src={logo}
                 alt="National Speech and Debate Association"
@@ -131,7 +131,7 @@ export default function Header() {
         <span id="helpbutton" title="Tabroom Help">
           <FakeLink
             tabIndex="-1"
-            href="http://docs.tabroom.com"
+            href="https://docs.tabroom.com"
             target="_blank"
             rel="noopener noreferrer"
           >

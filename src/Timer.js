@@ -12,7 +12,7 @@ export default class Timer extends React.Component {
       if (state.status) {
         clearInterval(this.timer);
       } else {
-        var interval = 1000;
+        const interval = 1000;
         this.timer = setInterval(() => {
           this.setState({
             duration: moment.duration(
@@ -42,12 +42,12 @@ export default class Timer extends React.Component {
     return (
       <div className="full centeralign even border">
         <span className="tenth marno">
-          <a
+          <button
             className="fa fa-caret-up greentext fa-2x marno padmore padbottomless inverthover"
             onClick={() => this.changeTime(1)}
           />
 
-          <a
+          <button
             className="fa fa-caret-down greentext fa-2x marno padmore padtopless inverthover"
             onClick={() => this.changeTime(-1)}
           />

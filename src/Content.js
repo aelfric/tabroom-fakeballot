@@ -22,7 +22,7 @@ export default class Content extends React.Component {
         )}
 
         <div className={`main ${this.state.collapseMenu ? "mainfull" : ""}`}>
-          {this.props.main}
+          {this.props.main} 
         </div>
         <div className={`menu ${this.state.collapseMenu ? "hidden" : ""}`}>
           <div

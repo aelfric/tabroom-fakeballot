@@ -1,26 +1,7 @@
 import React from "react";
 import Content from "./Content";
-import { Editor } from "@tinymce/tinymce-react";
 import { CommentBox } from "./BallotStarted";
 import {FakeLink} from "./App";
-
-const editorConfig = {
-  mode: "textareas",
-  // external_plugins                : {
-  //     "emoticons" : "/lib/javascript/tinymce/plugins/emoticons/plugin.min.js",
-  //         "autosave"  : "/lib/javascript/tinymce/plugins/autosave/plugin.min.js",
-  //     "autolink"  : "/lib/javascript/tinymce/plugins/autolink/plugin.min.js",
-  //     "link"      : "/lib/javascript/tinymce/plugins/link/plugin.min.js",
-  // },
-  toolbar: [
-    "undo redo | bold italic strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat emoticons | link styleselect"
-  ],
-  statusbar: false,
-  theme: "modern",
-  theme_advanced_toolbar_location: "top",
-  menubar: false,
-  browser_spellcheck: true
-};
 export default class EditFeedback extends React.Component {
   state = {
     entries: JSON.parse(JSON.stringify(this.props.entries))
@@ -98,7 +79,7 @@ export default class EditFeedback extends React.Component {
               &amp; coaches
             </p>
             {this.state.entries.map((e, i) => (
-              <>
+              <React.Fragment key={e.code}>
                 <h4>
                   Comments for {e.code} – {e.name} – "{e.title}"
                 </h4>
@@ -111,7 +92,7 @@ export default class EditFeedback extends React.Component {
                   code={e.code}
                   name={e.name}
                 />
-              </>
+              </React.Fragment>
             ))}
             <div className="liblrow rightalign">
               <input

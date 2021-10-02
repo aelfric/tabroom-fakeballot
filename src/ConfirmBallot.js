@@ -1,5 +1,4 @@
 import React from "react";
-import $ from "jquery";
 import Content from "./Content";
 import SortableTable from "./SortableTable";
 
@@ -16,7 +15,7 @@ function EntryRow({ ranks, points, code, name, title, order, even }) {
 
       <td>{name}</td>
 
-      {/*<td>{title}</td>*/}
+      <td>{title}</td>
 
       <td className="centeralign">{order}</td>
     </tr>
@@ -50,11 +49,11 @@ export default class ConfirmSubmit extends React.Component {
         property: "name",
         ariaLabel: ""
       },
-      // {
-      //   label: "Title/Question",
-      //   property: "title",
-      //   ariaLabel: ""
-      // },
+      {
+        label: "Title/Question",
+        property: "title",
+        ariaLabel: ""
+      },
       {
         label: "Spoke",
         property: "order",
@@ -96,18 +95,18 @@ export default class ConfirmSubmit extends React.Component {
 
             <div className="full martopmuchmore">
               <span className="pagehalf centeralign">
-                <a
+                <button
                   className="redtext buttonwhite invert full confirm"
                   onClick={this.props.confirm}
                 >
                   NO! RE-ENTER BALLOT
-                </a>
+                </button>
               </span>
 
               <span className="pagehalf centeralign">
-                <a className="greentext buttonwhite invert full confirm" onClick={this.props.onSubmit}>
+                <button className="greentext buttonwhite invert full confirm" onClick={this.props.onSubmit}>
                   YES! CORRECT! CONFIRM IT
-                </a>
+                </button>
               </span>
             </div>
           </>

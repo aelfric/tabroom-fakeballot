@@ -6,10 +6,16 @@ import { Editor } from "@tinymce/tinymce-react";
 import { dynamicSort } from "./SortableTable";
 import Timer from "./Timer";
 // Import TinyMCE
+// eslint-disable-next-line no-unused-vars
 import tinymce from "tinymce/tinymce";
 
 // A theme is also required
-import "tinymce/themes/modern/theme";
+import "tinymce/themes/silver";
+// Toolbar icons
+import 'tinymce/icons/default';
+// Editor styles
+import 'tinymce/skins/ui/oxide/skin.min.css';
+
 import Content from "./Content";
 import SortableTable from "./SortableTable";
 import {FakeLink} from "./App";
@@ -17,22 +23,18 @@ import {FakeLink} from "./App";
 const includePoints = true  ;
 
 const tinyMCEConfig = {
-  mode: "textareas",
+  mode: "textarea",
   external_plugins: {
-    // emoticons: "/lib/javascript/tinymce/plugins/emoticons/plugin.min.js",
-    // autosave: "/lib/javascript/tinymce/plugins/autosave/plugin.min.js",
-    // autolink: "/lib/javascript/tinymce/plugins/autolink/plugin.min.js",
-    // link: "/lib/javascript/tinymce/plugins/link/plugin.min.js"
   },
   toolbar: [
     "undo redo | bold italic strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat emoticons | link styleselect"
   ],
   height: "235",
   statusbar: false,
-  theme: "modern",
-  theme_advanced_toolbar_location: "top",
+  // theme_advanced_toolbar_location: "top",
   menubar: false,
-  browser_spellcheck: true
+  browser_spellcheck: true,
+  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
 };
 
 class CommentPanel extends React.Component {
@@ -42,7 +44,7 @@ class CommentPanel extends React.Component {
   doneSwitch(which) {
     this.setState({ currentStudent: which });
   }
-  setComments = idx => evt => {
+  setComments = idx => () => {
     this.props.setComments(idx);
   };
 
@@ -112,13 +114,13 @@ class CommentPanel extends React.Component {
   }
 }
 
-export function CommentBox({ id, setComments, currentComments, code, name }) {
+export function CommentBox({setComments, currentComments}) {
   return (
     <div className="row centeralign odd">
       <Editor
         init={tinyMCEConfig}
-        value={currentComments}
-        onChange={setComments}
+        initialValue={currentComments}
+        onBlur={setComments}
       />
     </div>
   );
@@ -189,16 +191,16 @@ function BallotRow({
 
 function Error(props) {
   return (
-    <div class="borderred centeralign martopmore marbottommore">
-      <h6 class="bluetext semibold">Oh, drat. Your ballot had errors.</h6>
+    <div className="borderred centeralign martopmore marbottommore">
+      <h6 className="bluetext semibold">Oh, drat. Your ballot had errors.</h6>
 
-      <span class="semibold redtext bigger">
+      <span className="semibold redtext bigger">
         {props.errors.map((e, i) => (
           <p key={i}>{e}</p>
         ))}
       </span>
 
-      <p class="bigger semibold bluetext">
+      <p className="bigger semibold bluetext">
         Please correct these before continuing.
       </p>
     </div>
@@ -212,7 +214,7 @@ export default function FakeBallot(props){
           <BallotStartedForm {...props} />
         }
         menu={
-          BallotStartedMenu
+          <BallotStartedMenu />
         }
       />
     );
@@ -263,7 +265,7 @@ const BallotStartedMenu = ()=> <>
           If you refresh or navigate away, these timers will reset
         </span>
 
-    <h6 className="bigger centeralign semibold"/>
+    <div className="bigger centeralign semibold"/>
     <Timer/>
     <h4>Other ballots</h4>
   </div>
@@ -442,7 +444,6 @@ class BallotStartedForm extends React.Component {
                     key={entry.code}
                     {...entry}
                     row={i}
-                    even={i % 2 === 0}
                     setTitle={this.setTitle(i)}
                     setRank={this.setRank(i)}
                     setPoints={this.setPoints(i)}
