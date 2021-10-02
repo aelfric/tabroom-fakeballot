@@ -14,7 +14,7 @@ import Content from "./Content";
 import SortableTable from "./SortableTable";
 import {FakeLink} from "./App";
 
-const includePoints = false;
+const includePoints = true  ;
 
 const tinyMCEConfig = {
   mode: "textareas",
@@ -143,19 +143,17 @@ function BallotRow({
 
       <td className="padleftmore">{name}</td>
 
-      {/*<td className="centeralign">*/}
-      {/*  <input*/}
-      {/*    type="text"*/}
-      {/*    tabIndex={3 * row + 1}*/}
-      {/*    name="12863154"*/}
-      {/*    target_id="12863154"*/}
-      {/*    property_name="title"*/}
-      {/*    size="30"*/}
-      {/*    placeholder="Enter title or extemp question"*/}
-      {/*    value={title}*/}
-      {/*    onChange={setTitle}*/}
-      {/*  />*/}
-      {/*</td>*/}
+      <td className="centeralign">
+        <input
+          type="text"
+          tabIndex={3 * row + 1}
+          name="12863154"
+          size="30"
+          placeholder="Enter title or extemp question"
+          value={title}
+          onChange={setTitle}
+        />
+      </td>
 
       <td className="centeralign">
         <input
@@ -392,11 +390,11 @@ class BallotStartedForm extends React.Component {
         property: "name",
         ariaLabel: ""
       },
-      // {
-      //   label: "Title/Question",
-      //   property: "title",
-      //   ariaLabel: ""
-      // },
+      {
+        label: "Title/Question",
+        property: "title",
+        ariaLabel: ""
+      },
       {
         label: includePoints ? ["Ranks", "Points"] : "Ranks",
         property: "ranks",
