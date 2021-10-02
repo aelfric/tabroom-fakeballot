@@ -98,6 +98,15 @@ export default class Ballot extends React.Component {
           menu={<DefaultMenu/>}
         main={
           <>
+              <p><strong>
+                  NOTE: This page is provided as an example of the Tabroom Online Ballot experience. No information
+                  entered
+                  on this page will be saved. If you refresh the page, everything will reset.</strong></p>
+              <p><strong>
+                  Tabroom is a constantly evolving
+                  piece of software. There may be minor differences between this example and the actual Tabroom
+                  interface.
+              </strong></p>
             <h3>Current Ballots</h3>
             <span className="half">
               <h4>Pending Rounds</h4>
