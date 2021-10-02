@@ -6,16 +6,16 @@ export function dynamicSort(property) {
     sortOrder = -1;
     property = property.substr(1);
   }
-  return function(a, b) {
+  return function (a, b) {
     const result =
-        a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
+      a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
     return result * sortOrder;
   };
 }
 
 export default class SortableTable extends React.Component {
   state = {
-    sort: this.props.defaultSort
+    sort: this.props.defaultSort,
   };
 
   sortArrows = (style, prop) => {
@@ -43,7 +43,7 @@ export default class SortableTable extends React.Component {
     return { ...style, backgroundImage: url };
   };
 
-  changeSort = value => {
+  changeSort = (value) => {
     if (value === this.state.sort) {
       if (value[0] !== "-") {
         value = "-" + value;
@@ -86,7 +86,7 @@ export default class SortableTable extends React.Component {
                 >
                   <div className="tablesorter-header-inner">
                     {Array.isArray(col.label)
-                      ? col.label.map(label => (
+                      ? col.label.map((label) => (
                           <span key={label} className="half marno centeralign">
                             {label}
                           </span>

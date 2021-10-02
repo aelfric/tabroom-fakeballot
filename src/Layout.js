@@ -1,6 +1,6 @@
 import React from "react";
 import Headers from "./Menus";
-import {FakeLink} from "./App";
+import { FakeLink } from "./App";
 
 export default function Layout(props) {
   return (
@@ -15,7 +15,10 @@ export default function Layout(props) {
             Join the National Speech &amp; Debate Association
           </FakeLink>
 
-          <FakeLink tabIndex="-1" href="https://www.speechanddebate.org/mission">
+          <FakeLink
+            tabIndex="-1"
+            href="https://www.speechanddebate.org/mission"
+          >
             About
           </FakeLink>
 
@@ -23,7 +26,10 @@ export default function Layout(props) {
             Help
           </FakeLink>
 
-          <FakeLink tabIndex="-1" href="https://www.tabroom.com/index/about.mhtml">
+          <FakeLink
+            tabIndex="-1"
+            href="https://www.tabroom.com/index/about.mhtml"
+          >
             Contact
           </FakeLink>
         </span>

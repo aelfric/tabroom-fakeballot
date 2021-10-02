@@ -4,11 +4,11 @@ export default class Timer extends React.Component {
   initialDuration = moment.duration(10, "minutes");
   state = {
     started: false,
-    duration: this.initialDuration
+    duration: this.initialDuration,
   };
 
   handleClick = () => {
-    this.setState(state => {
+    this.setState((state) => {
       if (state.status) {
         clearInterval(this.timer);
       } else {
@@ -19,7 +19,7 @@ export default class Timer extends React.Component {
               this.state.duration - interval,
               "milliseconds"
             ),
-            started: true
+            started: true,
           });
         }, interval);
       }
@@ -32,7 +32,7 @@ export default class Timer extends React.Component {
     this.setState({ duration: this.initialDuration, started: false });
   };
 
-  changeTime = minutes => {
+  changeTime = (minutes) => {
     if (!this.state.started) {
       this.setState({ duration: this.state.duration.add(minutes, "minutes") });
     }

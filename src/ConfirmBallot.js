@@ -9,7 +9,9 @@ function EntryRow({ ranks, points, code, name, title, order, even }) {
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{ranks}</td>
 
-      {includePoints && <td className="centeralign">{points ? points : "ZERO"}</td>}
+      {includePoints && (
+        <td className="centeralign">{points ? points : "ZERO"}</td>
+      )}
 
       <td className="centeralign">{code}</td>
 
@@ -24,7 +26,7 @@ function EntryRow({ ranks, points, code, name, title, order, even }) {
 
 export default class ConfirmSubmit extends React.Component {
   state = {
-    sort: "ranks"
+    sort: "ranks",
   };
 
   render() {
@@ -32,35 +34,35 @@ export default class ConfirmSubmit extends React.Component {
       {
         label: "Rank",
         property: "ranks",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Points",
         property: "ranks",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Code",
         property: "code",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Name",
         property: "name",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Title/Question",
         property: "title",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Spoke",
         property: "order",
-        ariaLabel: ""
-      }
+        ariaLabel: "",
+      },
     ];
-    columns = columns.filter(c => c.label !== "Points");
+    columns = columns.filter((c) => c.label !== "Points");
     return (
       <Content
         main={
@@ -104,7 +106,10 @@ export default class ConfirmSubmit extends React.Component {
               </span>
 
               <span className="pagehalf centeralign">
-                <button className="greentext buttonwhite invert full confirm" onClick={this.props.onSubmit}>
+                <button
+                  className="greentext buttonwhite invert full confirm"
+                  onClick={this.props.onSubmit}
+                >
                   YES! CORRECT! CONFIRM IT
                 </button>
               </span>

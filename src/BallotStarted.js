@@ -1,7 +1,5 @@
 import React from "react";
 
-
-
 import { Editor } from "@tinymce/tinymce-react";
 import { dynamicSort } from "./SortableTable";
 import Timer from "./Timer";
@@ -12,39 +10,39 @@ import tinymce from "tinymce/tinymce";
 // A theme is also required
 import "tinymce/themes/silver";
 // Toolbar icons
-import 'tinymce/icons/default';
+import "tinymce/icons/default";
 // Editor styles
-import 'tinymce/skins/ui/oxide/skin.min.css';
+import "tinymce/skins/ui/oxide/skin.min.css";
 
 import Content from "./Content";
 import SortableTable from "./SortableTable";
-import {FakeLink} from "./App";
+import { FakeLink } from "./App";
 
-const includePoints = true  ;
+const includePoints = true;
 
 const tinyMCEConfig = {
   mode: "textarea",
-  external_plugins: {
-  },
+  external_plugins: {},
   toolbar: [
-    "undo redo | bold italic strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat emoticons | link styleselect"
+    "undo redo | bold italic strikethrough | alignleft aligncenter alignright | bullist numlist outdent indent | removeformat emoticons | link styleselect",
   ],
   height: "235",
   statusbar: false,
   // theme_advanced_toolbar_location: "top",
   menubar: false,
   browser_spellcheck: true,
-  content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+  content_style:
+    "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
 };
 
 class CommentPanel extends React.Component {
   state = {
-    currentStudent: "rfd"
+    currentStudent: "rfd",
   };
   doneSwitch(which) {
     this.setState({ currentStudent: which });
   }
-  setComments = idx => () => {
+  setComments = (idx) => () => {
     this.props.setComments(idx);
   };
 
@@ -57,28 +55,28 @@ class CommentPanel extends React.Component {
             <h4>General Feedback</h4>
           </span>
 
-        <span className="twothirds rightalign">
+          <span className="twothirds rightalign">
+            <span className="half rightalign bigger semibold bluetext">
+              Comments go to:
+            </span>
 
-					<span className="half rightalign bigger semibold bluetext">
-						Comments go to:
-					</span>
-
-					<span className="half centeralign">
-
-						<select className="fixedmed" onChange={(evt)=>this.doneSwitch(evt.target.value)}
-                    // style={{display: "none"}}>
+            <span className="half centeralign">
+              <select
+                className="fixedmed"
+                onChange={(evt) => this.doneSwitch(evt.target.value)}
+                // style={{display: "none"}}>
               >
-
-							<option value="rfd">Everyone (Reason for Rankings)</option>
-              {entries.map((entry, idx) => {
-                return (
-                    <option key={entry.code} value={idx}>{entry.code}&nbsp;&nbsp;{entry.name}</option>
-                );
-              })}
-            </select>
-
-					</span>
-				</span>
+                <option value="rfd">Everyone (Reason for Rankings)</option>
+                {entries.map((entry, idx) => {
+                  return (
+                    <option key={entry.code} value={idx}>
+                      {entry.code}&nbsp;&nbsp;{entry.name}
+                    </option>
+                  );
+                })}
+              </select>
+            </span>
+          </span>
         </div>
         <ul id="tabnav" />
         {this.state.currentStudent === "rfd" ? (
@@ -88,7 +86,7 @@ class CommentPanel extends React.Component {
             </p>
             <CommentBox
               id="rfd"
-              setComments={evt => this.props.setRFD(evt)}
+              setComments={(evt) => this.props.setRFD(evt)}
               currentComments={this.props.rfd}
             />
           </div>
@@ -114,7 +112,7 @@ class CommentPanel extends React.Component {
   }
 }
 
-export function CommentBox({setComments, currentComments}) {
+export function CommentBox({ setComments, currentComments }) {
   return (
     <div className="row centeralign odd">
       <Editor
@@ -137,7 +135,7 @@ function BallotRow({
   setPoints,
   even,
   row,
-  includePoints
+  includePoints,
 }) {
   return (
     <tr className={`ballotrows ${even ? "even" : "odd"}`} role="row">
@@ -170,21 +168,23 @@ function BallotRow({
         />
       </td>
 
-      {includePoints && <td className="centeralign">
-        <input
-          className="2108733"
-          type="number"
-          step="1"
-          name="12863154_points"
-          id="12863154_points"
-          size="5"
-          min={1}
-          max={100}
-          value={points}
-          onChange={setPoints}
-          tabIndex={3 * row + 3}
-        />
-      </td>}
+      {includePoints && (
+        <td className="centeralign">
+          <input
+            className="2108733"
+            type="number"
+            step="1"
+            name="12863154_points"
+            id="12863154_points"
+            size="5"
+            min={1}
+            max={100}
+            value={points}
+            onChange={setPoints}
+            tabIndex={3 * row + 3}
+          />
+        </td>
+      )}
     </tr>
   );
 }
@@ -207,79 +207,77 @@ function Error(props) {
   );
 }
 
-export default function FakeBallot(props){
-    return (
-      <Content
-        main={
-          <BallotStartedForm {...props} />
-        }
-        menu={
-          <BallotStartedMenu />
-        }
-      />
-    );
+export default function FakeBallot(props) {
+  return (
+    <Content
+      main={<BallotStartedForm {...props} />}
+      menu={<BallotStartedMenu />}
+    />
+  );
 }
 
-const BallotStartedMenu = ()=> <>
-  <div className="sidenote">
-    <h6 className="bluetext semibold marbottom">This round</h6>
+const BallotStartedMenu = () => (
+  <>
+    <div className="sidenote">
+      <h6 className="bluetext semibold marbottom">This round</h6>
 
-    <div className="row even">
-      <span className="quarter semibold">Round:</span>
+      <div className="row even">
+        <span className="quarter semibold">Round:</span>
 
-      <span className="threequarter">Round 1</span>
-    </div>
+        <span className="threequarter">Round 1</span>
+      </div>
 
-    <div className="row odd">
-      <span className="quarter semibold">Room:</span>
-      <span className="threequarter">12</span>
-    </div>
+      <div className="row odd">
+        <span className="quarter semibold">Room:</span>
+        <span className="threequarter">12</span>
+      </div>
 
-    <div className="row even">
-      <span className="quarter semibold">Start</span>
-      <span className="threequarter"/>
-    </div>
+      <div className="row even">
+        <span className="quarter semibold">Start</span>
+        <span className="threequarter" />
+      </div>
 
-    <div className="row nospace odd">
-      <span className="quarter semibold">Panel:</span>
+      <div className="row nospace odd">
+        <span className="quarter semibold">Panel:</span>
 
-      <span className="threequarters nospace">
-            <div className="nowrap padless marno">Charles Sloat</div>
-          </span>
-    </div>
+        <span className="threequarters nospace">
+          <div className="nowrap padless marno">Charles Sloat</div>
+        </span>
+      </div>
 
-    <FakeLink
+      <FakeLink
         href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
         className="blue full martopmore"
-    >
-      Full Pairing/Schematic
-    </FakeLink>
-  </div>
+      >
+        Full Pairing/Schematic
+      </FakeLink>
+    </div>
 
-  <div className="sidenote">
-        <span className="third">
-          <h4>Timers</h4>
-        </span>
+    <div className="sidenote">
+      <span className="third">
+        <h4>Timers</h4>
+      </span>
 
-    <span className="twothirds explain rightalign">
-          If you refresh or navigate away, these timers will reset
-        </span>
+      <span className="twothirds explain rightalign">
+        If you refresh or navigate away, these timers will reset
+      </span>
 
-    <div className="bigger centeralign semibold"/>
-    <Timer/>
-    <h4>Other ballots</h4>
-  </div>
-</>;
+      <div className="bigger centeralign semibold" />
+      <Timer />
+      <h4>Other ballots</h4>
+    </div>
+  </>
+);
 
 class BallotStartedForm extends React.Component {
   state = {
     entries: this.props.entries,
     errors: [],
     sort: "order",
-    currentStudent: "rfd"
+    currentStudent: "rfd",
   };
 
-  changeSort = value => {
+  changeSort = (value) => {
     if (value === this.state.sort) {
       if (value[0] !== "-") {
         value = "-" + value;
@@ -290,31 +288,31 @@ class BallotStartedForm extends React.Component {
     this.setState({ sort: value });
   };
 
-  setTitle = idx => evt => {
+  setTitle = (idx) => (evt) => {
     let entries = this.state.entries;
     entries[idx].title = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setRank = idx => evt => {
+  setRank = (idx) => (evt) => {
     let entries = this.state.entries;
     entries[idx].ranks = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setPoints = idx => evt => {
+  setPoints = (idx) => (evt) => {
     let entries = this.state.entries;
     entries[idx].points = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setComments = idx => evt => {
+  setComments = (idx) => (evt) => {
     let entries = this.state.entries;
     entries[idx].comments = evt.target.getContent();
     this.setState({ entries: entries });
   };
 
-  checkErrors = evt => {
+  checkErrors = (evt) => {
     const counts = [];
     const errors = [];
     for (let i = 0; i < this.state.entries.length; i++) {
@@ -324,7 +322,7 @@ class BallotStartedForm extends React.Component {
         errors.push(`Rank missing for ${this.state.entries[i].code}`);
       }
 
-      if(includePoints) {
+      if (includePoints) {
         if (points < 75 || points > 100) {
           errors.push(`Points ${points} are outside of range 75 - 100`);
         }
@@ -332,7 +330,7 @@ class BallotStartedForm extends React.Component {
           counts[points] = 1;
         } else {
           errors.push(
-              `Tied points forbidden: you have two speakers with points ${points}`
+            `Tied points forbidden: you have two speakers with points ${points}`
           );
         }
       }
@@ -341,13 +339,13 @@ class BallotStartedForm extends React.Component {
           counts[rank] = 1;
         } else {
           errors.push(
-              `You have repeated the rank ${rank}.  All ranks must be unique`
+            `You have repeated the rank ${rank}.  All ranks must be unique`
           );
         }
       }
     }
 
-    if(includePoints) {
+    if (includePoints) {
       const lowPointErrors = [];
       const sortedEntries = this.state.entries.sort(dynamicSort("ranks"));
       for (let i = 0; i < sortedEntries.length - 1; i++) {
@@ -358,145 +356,140 @@ class BallotStartedForm extends React.Component {
 
       if (lowPointErrors.length > 0) {
         errors.push(
-            `Entry ranked ${lowPointErrors.join(
-                ", "
-            )} has worse points than a lower ranked entry`
+          `Entry ranked ${lowPointErrors.join(
+            ", "
+          )} has worse points than a lower ranked entry`
         );
         errors.push("Rank order must match the order of points given.");
       }
     }
     evt.preventDefault();
     this.setState({
-      errors: errors
+      errors: errors,
     });
 
     return errors.length === 0;
   };
 
-  handleSubmit = evt => {
+  handleSubmit = (evt) => {
     if (this.checkErrors(evt)) {
       this.props.onSubmit(this.state.entries);
     }
   };
-
 
   render() {
     const columns = [
       {
         label: "Code",
         property: "code",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Name",
         property: "name",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: "Title/Question",
         property: "title",
-        ariaLabel: ""
+        ariaLabel: "",
       },
       {
         label: includePoints ? ["Ranks", "Points"] : "Ranks",
         property: "ranks",
-        ariaLabel: ""
-      }
-
+        ariaLabel: "",
+      },
     ];
 
-    return <>
-      <div>
-        <span className="twothirds nospace">
-          <h4>OBT Round 1 Ballot for Riccobono</h4>
-        </span>
+    return (
+      <>
+        <div>
+          <span className="twothirds nospace">
+            <h4>OBT Round 1 Ballot for Riccobono</h4>
+          </span>
 
-        <span className="third rightalign right">
-          <h5 className="normalweight bluetext">Room: 12</h5>
-        </span>
-      </div>
-
-      {this.state.errors.length > 0 && (
-          <Error errors={this.state.errors}/>
-      )}
-
-      <form action="ballot_save.mhtml" method="post">
-        <input type="hidden" name="panel_id" value="3209946"/>
-
-        <input type="hidden" name="judge_id" value="961185"/>
-
-        <div className="padvert marbottommore marleftmore">
-          <span className="half leftalign">
-            <span className="semibold redtext inline marright">
-              Points:
-            </span>
-            Range: 75-100 *. Whole points only. No ties. Ranks and points
-            must agree.
+          <span className="third rightalign right">
+            <h5 className="normalweight bluetext">Room: 12</h5>
           </span>
         </div>
-        <SortableTable
+
+        {this.state.errors.length > 0 && <Error errors={this.state.errors} />}
+
+        <form action="ballot_save.mhtml" method="post">
+          <input type="hidden" name="panel_id" value="3209946" />
+
+          <input type="hidden" name="judge_id" value="961185" />
+
+          <div className="padvert marbottommore marleftmore">
+            <span className="half leftalign">
+              <span className="semibold redtext inline marright">Points:</span>
+              Range: 75-100 *. Whole points only. No ties. Ranks and points must
+              agree.
+            </span>
+          </div>
+          <SortableTable
             entries={this.state.entries}
             defaultSort="order"
             columns={columns}
-            rowComponent={({entry, i}) => (
-                <BallotRow
-                    includePoints={includePoints}
-                    key={entry.code}
-                    {...entry}
-                    row={i}
-                    setTitle={this.setTitle(i)}
-                    setRank={this.setRank(i)}
-                    setPoints={this.setPoints(i)}
-                    even={i % 2 === 0}
-                />
-            )}
-        >
-          <tbody aria-live="polite" aria-relevant="all">
-          <tr className="liblrow odd" role="row">
-            <td colSpan="10" className="rightalign">
-              <input
-                  type="button"
-                  value=" Submit Ballot "
-                  onClick={this.handleSubmit}
+            rowComponent={({ entry, i }) => (
+              <BallotRow
+                includePoints={includePoints}
+                key={entry.code}
+                {...entry}
+                row={i}
+                setTitle={this.setTitle(i)}
+                setRank={this.setRank(i)}
+                setPoints={this.setPoints(i)}
+                even={i % 2 === 0}
               />
-            </td>
-          </tr>
-          </tbody>
-        </SortableTable>
+            )}
+          >
+            <tbody aria-live="polite" aria-relevant="all">
+              <tr className="liblrow odd" role="row">
+                <td colSpan="10" className="rightalign">
+                  <input
+                    type="button"
+                    value=" Submit Ballot "
+                    onClick={this.handleSubmit}
+                  />
+                </td>
+              </tr>
+            </tbody>
+          </SortableTable>
 
-        <div
-            className="row smallish redtext semibold centeralign padvertmore even">
-          * The full point range is 1 - 100 but you must ask the tab room
-          to give points outside of 75 - 100.
-        </div>
+          <div className="row smallish redtext semibold centeralign padvertmore even">
+            * The full point range is 1 - 100 but you must ask the tab room to
+            give points outside of 75 - 100.
+          </div>
 
-        <CommentPanel
+          <CommentPanel
             entries={this.state.entries}
             setComments={this.setComments}
             setRFD={this.props.setRFD}
             rfd={this.props.rfd}
-        />
-        <div className="libl full rightalign">
-          <div className="half centeralign">
-            <input
+          />
+          <div className="libl full rightalign">
+            <div className="half centeralign">
+              <input
                 type="button"
                 value="Save Comments Only"
                 name="skipme"
                 className="med"
                 onClick={this.checkErrors}
-            />
-          </div>
+              />
+            </div>
 
-          <div className="half">
-            <input
+            <div className="half">
+              <input
                 onClick={this.handleSubmit}
                 type="button"
                 value="Save Comments &amp; Ballot"
                 className="med"
-            />
+              />
+            </div>
           </div>
-        </div>
-      </form>
-    </>;
+        </form>
+      </>
+    );
   }
 }

@@ -2,12 +2,12 @@ import React from "react";
 
 export default class Content extends React.Component {
   state = {
-    collapseMenu: false
+    collapseMenu: false,
   };
 
   toggleCollapse = () => {
-    this.setState(prevState => ({
-      collapseMenu: !prevState.collapseMenu
+    this.setState((prevState) => ({
+      collapseMenu: !prevState.collapseMenu,
     }));
   };
 
@@ -22,7 +22,7 @@ export default class Content extends React.Component {
         )}
 
         <div className={`main ${this.state.collapseMenu ? "mainfull" : ""}`}>
-          {this.props.main} 
+          {this.props.main}
         </div>
         <div className={`menu ${this.state.collapseMenu ? "hidden" : ""}`}>
           <div

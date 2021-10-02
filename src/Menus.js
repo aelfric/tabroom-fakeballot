@@ -1,8 +1,8 @@
 import React from "react";
-import sparky from './images/sparky.png'
-import logo from './images/nsda-header-logo.png';
-import search from './images/search.png';
-import {FakeLink} from "./App";
+import sparky from "./images/sparky.png";
+import logo from "./images/nsda-header-logo.png";
+import search from "./images/search.png";
+import { FakeLink } from "./App";
 
 export function Menus() {
   return (
@@ -15,7 +15,10 @@ export function Menus() {
         </li>
 
         <li className="top">
-          <FakeLink className="centeralign top_link" href="/index/circuits.mhtml">
+          <FakeLink
+            className="centeralign top_link"
+            href="/index/circuits.mhtml"
+          >
             <span className="down">Circuits</span>
           </FakeLink>
         </li>
@@ -27,7 +30,10 @@ export function Menus() {
         </li>
 
         <li className="top">
-          <FakeLink className="centeralign top_link" href="/index/paradigm.mhtml">
+          <FakeLink
+            className="centeralign top_link"
+            href="/index/paradigm.mhtml"
+          >
             <span className="down">Paradigms</span>
           </FakeLink>
         </li>
@@ -59,10 +65,7 @@ export default function Header() {
       <span id="logo">
         <span className="headline">
           <span id="sparky">
-            <img
-              src={sparky}
-              alt="National Speech and Debate Association"
-            />
+            <img src={sparky} alt="National Speech and Debate Association" />
           </span>
 
           <span id="sparked">
@@ -77,10 +80,7 @@ export default function Header() {
 
           <span className="nsdalogo">
             <FakeLink tabIndex="-1" href="https://www.speechanddebate.org">
-              <img
-                src={logo}
-                alt="National Speech and Debate Association"
-              />
+              <img src={logo} alt="National Speech and Debate Association" />
             </FakeLink>
           </span>
         </span>

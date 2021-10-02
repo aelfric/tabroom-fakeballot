@@ -12,7 +12,11 @@ import ConfirmedBallot from "./ConfirmedBallot";
 import EditFeedback from "./EditFeedback";
 
 export const FakeLink = (props) => {
-  return <a href={"#"} className={props.className}>{props.children}</a>
+  return (
+    <a href={"#"} className={props.className}>
+      {props.children}
+    </a>
+  );
 };
 
 class App extends Component {
@@ -28,7 +32,7 @@ class App extends Component {
         title: undefined,
         ranks: undefined,
         points: undefined,
-        order: "1st"
+        order: "1st",
       },
       {
         code: "2940",
@@ -36,7 +40,7 @@ class App extends Component {
         title: undefined,
         ranks: undefined,
         points: undefined,
-        order: "2nd"
+        order: "2nd",
       },
       {
         code: "2858",
@@ -44,7 +48,7 @@ class App extends Component {
         title: undefined,
         ranks: undefined,
         points: undefined,
-        order: "3rd"
+        order: "3rd",
       },
       {
         code: "2720",
@@ -52,7 +56,7 @@ class App extends Component {
         title: undefined,
         ranks: undefined,
         points: undefined,
-        order: "4th"
+        order: "4th",
       },
       {
         code: "2395",
@@ -60,7 +64,7 @@ class App extends Component {
         title: undefined,
         ranks: undefined,
         points: undefined,
-        order: "5th"
+        order: "5th",
       },
       {
         code: "2603",
@@ -68,9 +72,9 @@ class App extends Component {
         title: undefined,
         ranks: undefined,
         points: undefined,
-        order: "6th"
-      }
-    ]
+        order: "6th",
+      },
+    ],
   };
 
   toggleStarted = () => {
@@ -85,14 +89,14 @@ class App extends Component {
     this.setState({ confirmed: !this.state.confirmed });
   };
 
-  setRFD = evt => {
+  setRFD = (evt) => {
     this.setState({ rfd: evt.target.getContent() });
   };
 
-  onSubmit = entries => {
+  onSubmit = (entries) => {
     this.setState({
       entries: entries,
-      confirming: true
+      confirming: true,
     });
   };
 

@@ -1,13 +1,13 @@
 import React from "react";
 import Content from "./Content";
 import { CommentBox } from "./BallotStarted";
-import {FakeLink} from "./App";
+import { FakeLink } from "./App";
 export default class EditFeedback extends React.Component {
   state = {
-    entries: JSON.parse(JSON.stringify(this.props.entries))
+    entries: JSON.parse(JSON.stringify(this.props.entries)),
   };
 
-  setComments = idx => evt => {
+  setComments = (idx) => (evt) => {
     let entries = this.state.entries;
     entries[idx].comments = evt.target.getContent();
     this.setState({ entries: entries });
@@ -43,7 +43,7 @@ export default class EditFeedback extends React.Component {
             </div>
 
             <div className="sidenote">
-              {this.state.entries.map(e => (
+              {this.state.entries.map((e) => (
                 <a
                   className="yellow block"
                   href="ballot_comments.mhtml?judge_id=963334&amp;ballot_id=12883649"
@@ -71,7 +71,7 @@ export default class EditFeedback extends React.Component {
             <h4>Reason for Rankings</h4>
             <CommentBox
               id="rfd"
-              setComments={evt => this.props.setRFD(evt)}
+              setComments={(evt) => this.props.setRFD(evt)}
               currentComments={this.props.rfd}
             />
             <p className="explain">
