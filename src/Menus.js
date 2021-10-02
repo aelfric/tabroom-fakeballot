@@ -66,7 +66,7 @@ export default function Header() {
           </span>
 
           <span id="sparked">
-            <FakeLink tabIndex="-1" href="/index/index.mhtml">
+            <FakeLink tabIndex="-1" href="index.mhtml">
               Tabroom.com
             </FakeLink>
           </span>

@@ -12,7 +12,7 @@ import ConfirmedBallot from "./ConfirmedBallot";
 import EditFeedback from "./EditFeedback";
 
 export const FakeLink = (props) => {
-  return <a href={props.href} className={props.className}>{props.children}</a>
+  return <a href={"#"} className={props.className}>{props.children}</a>
 };
 
 class App extends Component {
