@@ -564,7 +564,7 @@ p {
 	margin-right  : 8px;
 	margin-bottom : 8px;
 	line-height   : 1.4em;
-	font-size     : 1.em;
+	font-size     : 1.00em;
 }
 
 ol {
@@ -592,7 +592,7 @@ ul.bigger li,
 ol.bigger li { 
 	margin-top    : 12px;
 	margin-bottom : 12px;
-	line-height   : 1.em;
+	line-height   : 1.0em;
 }
 
 li {	
@@ -4273,11 +4273,11 @@ way to fit your requirements.
 	background		: #00394d;
 	color			: #fec92e;
 	border-color	: #444; 
-	margin-bottom   : 0px;
-	margin-top      : 0px;
+	margin-bottom   : 0;
+	margin-top      : 0;
 } 
  
-#nav * ul,  {
+#nav * ul  {
 	left			: 150px; 
 	top				: -1px; 
 	background		: #DFEDF9; 
@@ -4289,7 +4289,7 @@ way to fit your requirements.
 	height			: auto; 
 	border-top		: 1px solid #004; 
 	border-bottom	: 1px solid #004; 
-	margin-bottom   : 0px;
+	margin-bottom   : 0;
 } 
 
 #nav ul { 
@@ -4409,7 +4409,6 @@ li.smallish {
 	display             : inline-block;
 	vertical-align      : top;
 	zoom                : 1;
-	*display            : inline;
 	-webkit-user-select : none;
 	-moz-user-select    : none;
 	user-select         : none;
