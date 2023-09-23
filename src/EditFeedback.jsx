@@ -47,6 +47,7 @@ export default class EditFeedback extends React.Component {
                 <a
                   className="yellow block"
                   href="ballot_comments.mhtml?judge_id=963334&amp;ballot_id=12883649"
+                  key={e.code}
                 >
                   For {e.code}
                 </a>

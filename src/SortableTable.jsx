@@ -13,7 +13,7 @@ export function dynamicSort(property) {
   };
 }
 
-export default class SortableTable extends React.Component {
+export class SortableTable extends React.Component {
   state = {
     sort: this.props.defaultSort,
   };
@@ -70,7 +70,7 @@ export default class SortableTable extends React.Component {
             {this.props.columns.map((col, i) => {
               return (
                 <th
-                  key={i}
+                  key={col.label}
                   className="sortable"
                   tabIndex="0"
                   scope="col"

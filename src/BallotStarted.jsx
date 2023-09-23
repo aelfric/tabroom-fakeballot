@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Editor } from "@tinymce/tinymce-react";
-import { dynamicSort } from "./SortableTable";
+import { dynamicSort, SortableTable } from "./SortableTable";
 import Timer from "./Timer";
 // Import TinyMCE
 // eslint-disable-next-line no-unused-vars
@@ -15,7 +15,6 @@ import "tinymce/icons/default";
 import "tinymce/skins/ui/oxide/skin.min.css";
 
 import Content from "./Content";
-import SortableTable from "./SortableTable";
 import { FakeLink } from "./App";
 
 const includePoints = true;
@@ -42,9 +41,6 @@ class CommentPanel extends React.Component {
   doneSwitch(which) {
     this.setState({ currentStudent: which });
   }
-  setComments = (idx) => () => {
-    this.props.setComments(idx);
-  };
 
   render() {
     const entries = this.props.entries;
@@ -315,11 +311,11 @@ class BallotStartedForm extends React.Component {
   checkErrors = (evt) => {
     const counts = [];
     const errors = [];
-    for (let i = 0; i < this.state.entries.length; i++) {
-      const points = this.state.entries[i].points || 0;
-      const rank = this.state.entries[i].ranks;
+    for (const element of this.state.entries) {
+      const points = element.points || 0;
+      const rank = element.ranks;
       if (rank === undefined) {
-        errors.push(`Rank missing for ${this.state.entries[i].code}`);
+        errors.push(`Rank missing for ${element.code}`);
       }
 
       if (includePoints) {
