@@ -1,6 +1,6 @@
 import React from "react";
 import Content from "./Content";
-import SortableTable from "./SortableTable";
+import {SortableTable} from "./SortableTable";
 
 const includePoints = false;
 

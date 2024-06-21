@@ -1,6 +1,6 @@
 import React from "react";
 import Content from "./Content";
-import SortableTable from "./SortableTable";
+import {SortableTable} from "./SortableTable";
 import { FakeLink } from "./App";
 
 export function DefaultMenu() {
