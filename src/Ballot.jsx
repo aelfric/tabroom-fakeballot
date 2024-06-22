@@ -1,7 +1,7 @@
 import React from "react";
 import Content from "./Content";
-import {SortableTable} from "./SortableTable";
-import {FakeLink} from "./App";
+import { SortableTable } from "./SortableTable";
+import { FakeLink } from "./App";
 
 export function DefaultMenu() {
   return (
@@ -88,114 +88,112 @@ export function DefaultMenu() {
 }
 
 export default function Ballot(props) {
-    const rounds = [
-        {
-            name: "OBT Round 1",
-            time: "9:00 AM EST",
-            room: "12",
-            entries: props.entries,
-        },
-    ];
-    return (
-        <Content
-            menu={<DefaultMenu/>}
-            main={
-                <>
-                    <p>
-                        <strong>
-                            NOTE: This page is provided as an example of the Tabroom Online
-                            Ballot experience. No information entered on this page will be
-                            saved. If you refresh the page, everything will reset.
-                        </strong>
-                    </p>
-                    <p>
-                        <strong>
-                            Tabroom is a constantly evolving piece of software. There may be
-                            minor differences between this example and the actual Tabroom
-                            interface.
-                        </strong>
-                    </p>
-                    <h3>Current Ballots</h3>
-                    <span className="half">
-              <h4>Pending Rounds</h4>
-            </span>
+  const rounds = [
+    {
+      name: "OBT Round 1",
+      time: "9:00 AM EST",
+      room: "12",
+      entries: props.entries,
+    },
+  ];
+  return (
+    <Content
+      menu={<DefaultMenu />}
+      main={
+        <>
+          <p>
+            <strong>
+              NOTE: This page is provided as an example of the Tabroom Online
+              Ballot experience. No information entered on this page will be
+              saved. If you refresh the page, everything will reset.
+            </strong>
+          </p>
+          <p>
+            <strong>
+              Tabroom is a constantly evolving piece of software. There may be
+              minor differences between this example and the actual Tabroom
+              interface.
+            </strong>
+          </p>
+          <h3>Current Ballots</h3>
+          <span className="half">
+            <h4>Pending Rounds</h4>
+          </span>
 
-                    <span
-                        id="pendingrounds_buttonarea"
-                        className="half rightalign martop"
-                    >
-              <button
-                  id="print_pendingrounds"
-                  tabIndex="-1"
-                  className="notfirst printbutton buttonwhite redtext fa fa-sm fa-print marleft"
-              />
-              <button
-                  id="output_pendingrounds"
-                  tabIndex="-1"
-                  className="notfirst printbutton buttonwhite greentext fa fa-sm fa-file-excel-o marleft"
-              />
-            </span>
+          <span
+            id="pendingrounds_buttonarea"
+            className="half rightalign martop"
+          >
+            <button
+              id="print_pendingrounds"
+              tabIndex="-1"
+              className="notfirst printbutton buttonwhite redtext fa fa-sm fa-print marleft"
+            />
+            <button
+              id="output_pendingrounds"
+              tabIndex="-1"
+              className="notfirst printbutton buttonwhite greentext fa fa-sm fa-file-excel-o marleft"
+            />
+          </span>
 
-                    <SortableTable
-                        columns={[
-                            {
-                                label: "Round",
-                            },
-                            {
-                                label: " Room",
-                            },
-                            {
-                                label: "Starts",
-                            },
-                            {
-                                label: "Entries",
-                            },
-                            {
-                                label: "",
-                            },
-                        ]}
-                        defaultSort="name"
-                        entries={rounds}
-                        rowComponent={({entry}) => (
-                            <tr role="row" className="odd" key={entry.name}>
-                                <td className="">
-                                    <span className="hidden">1-1</span>
+          <SortableTable
+            columns={[
+              {
+                label: "Round",
+              },
+              {
+                label: " Room",
+              },
+              {
+                label: "Starts",
+              },
+              {
+                label: "Entries",
+              },
+              {
+                label: "",
+              },
+            ]}
+            defaultSort="name"
+            entries={rounds}
+            rowComponent={({ entry }) => (
+              <tr role="row" className="odd" key={entry.name}>
+                <td className="">
+                  <span className="hidden">1-1</span>
 
-                                    <FakeLink
-                                        className="white padless full"
-                                        href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
-                                    >
-                                        {entry.name}
-                                    </FakeLink>
-                                </td>
+                  <FakeLink
+                    className="white padless full"
+                    href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
+                  >
+                    {entry.name}
+                  </FakeLink>
+                </td>
 
-                                <td className="">
-                                    12
-                                </td>
+                <td className="">12</td>
 
-                                <td className="centeralign">{entry.time}</td>
+                <td className="centeralign">{entry.time}</td>
 
-                                <td className="leftalign">
-                                    {entry.entries.map((ent, i) => (
-                                        <span key={ent.code} className="eighth leftalign">
-                        {i + 1}. {ent.code}
-                      </span>
-                                    ))}
-                                </td>
+                <td className="leftalign">
+                  {entry.entries.map((ent, i) => (
+                    <span key={ent.code} className="eighth leftalign">
+                      {i + 1}. {ent.code}
+                    </span>
+                  ))}
+                </td>
 
-                                <td className="centeralign padless">
-                                    <button
-                                        className="greentext buttonwhite invert"
-                                        onClick={props.start}
-                                    >
-                                        START ROUND
-                                    </button>
-                                </td>
-                            </tr>
-                        )}
-                    />
-                </>
-            }
-        />
-    );
+                <td className="centeralign padless">
+                  <button
+                    className="greentext buttonwhite invert"
+                    onClick={props.start}
+                  >
+                    START ROUND
+                  </button>
+                </td>
+              </tr>
+            )}
+          />
+        </>
+      }
+    />
+  );
 }

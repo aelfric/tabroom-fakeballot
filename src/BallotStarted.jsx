@@ -1,11 +1,11 @@
 import React from "react";
-import {dynamicSort, SortableTable} from "./SortableTable";
+import { dynamicSort, SortableTable } from "./SortableTable";
 
 import Content from "./Content";
-import {CommentPanel} from "./CommentPanel";
-import {BallotRow} from "./BallotRow";
-import {TabroomError} from "./TabroomError";
-import {BallotStartedMenu} from "./BallotStartedMenu";
+import { CommentPanel } from "./CommentPanel";
+import { BallotRow } from "./BallotRow";
+import { TabroomError } from "./TabroomError";
+import { BallotStartedMenu } from "./BallotStartedMenu";
 
 const includePoints = true;
 export default function FakeBallot(props) {
@@ -161,7 +161,9 @@ class BallotStartedForm extends React.Component {
           </span>
         </div>
 
-        {this.state.errors.length > 0 && <TabroomError errors={this.state.errors} />}
+        {this.state.errors.length > 0 && (
+          <TabroomError errors={this.state.errors} />
+        )}
 
         <form action="ballot_save.mhtml" method="post">
           <input type="hidden" name="panel_id" value="3209946" />

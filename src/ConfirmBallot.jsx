@@ -1,6 +1,6 @@
 import React from "react";
 import Content from "./Content";
-import {SortableTable} from "./SortableTable";
+import { SortableTable } from "./SortableTable";
 
 const includePoints = false;
 
@@ -117,11 +117,11 @@ export default class ConfirmSubmit extends React.Component {
           </>
         }
         menu={
-            <div className="sidenote">
-              <h4>RFD</h4>
+          <div className="sidenote">
+            <h4>RFD</h4>
 
-              <div dangerouslySetInnerHTML={{ __html: this.props.rfd }} />
-            </div>
+            <div dangerouslySetInnerHTML={{ __html: this.props.rfd }} />
+          </div>
         }
       />
     );

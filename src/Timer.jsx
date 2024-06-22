@@ -1,5 +1,6 @@
 import React from "react";
 import moment from "moment";
+
 export default class Timer extends React.Component {
   initialDuration = moment.duration(10, "minutes");
   state = {
@@ -14,11 +15,8 @@ export default class Timer extends React.Component {
       } else {
         const interval = 1000;
         this.timer = setInterval(() => {
-          this.setState(({duration})=>({
-            duration: moment.duration(
-              duration - interval,
-              "milliseconds"
-            ),
+          this.setState(({ duration }) => ({
+            duration: moment.duration(duration - interval, "milliseconds"),
             started: true,
           }));
         }, interval);
@@ -34,7 +32,9 @@ export default class Timer extends React.Component {
 
   changeTime = (minutes) => {
     if (!this.state.started) {
-      this.setState(({duration}) => ({ duration: duration.add(minutes, "minutes") }));
+      this.setState(({ duration }) => ({
+        duration: duration.add(minutes, "minutes"),
+      }));
     }
   };
 

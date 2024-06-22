@@ -52,7 +52,7 @@ class App extends Component {
       },
       {
         code: "2720",
-        name: "  Fletcher Pietz",
+        name: "Fletcher Pietz",
         title: undefined,
         ranks: undefined,
         points: undefined,
@@ -60,7 +60,7 @@ class App extends Component {
       },
       {
         code: "2395",
-        name: "  Joye Hinkley",
+        name: "Joye Hinkley",
         title: undefined,
         ranks: undefined,
         points: undefined,
@@ -68,7 +68,7 @@ class App extends Component {
       },
       {
         code: "2603",
-        name: "  Kristopher Kinzer",
+        name: "Kristopher Kinzer",
         title: undefined,
         ranks: undefined,
         points: undefined,
@@ -78,15 +78,15 @@ class App extends Component {
   };
 
   toggleStarted = () => {
-    this.setState({ started: !this.state.started });
+    this.setState(({ started }) => ({ started: !started }));
   };
 
   toggleConfirm = () => {
-    this.setState({ confirming: !this.state.confirming });
+    this.setState(({ confirming }) => ({ confirming: !confirming }));
   };
 
   toggleFinished = () => {
-    this.setState({ confirmed: !this.state.confirmed });
+    this.setState(({ confirmed }) => ({ confirmed: !confirmed }));
   };
 
   setRFD = (evt) => {
