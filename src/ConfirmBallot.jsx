@@ -117,13 +117,11 @@ export default class ConfirmSubmit extends React.Component {
           </>
         }
         menu={
-          <>
             <div className="sidenote">
               <h4>RFD</h4>
 
               <div dangerouslySetInnerHTML={{ __html: this.props.rfd }} />
             </div>
-          </>
         }
       />
     );

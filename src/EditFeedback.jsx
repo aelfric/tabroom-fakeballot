@@ -1,7 +1,7 @@
 import React from "react";
 import Content from "./Content";
-import { CommentBox } from "./BallotStarted";
 import { FakeLink } from "./App";
+import {CommentBox} from "./CommentBox";
 export default class EditFeedback extends React.Component {
   state = {
     entries: JSON.parse(JSON.stringify(this.props.entries)),

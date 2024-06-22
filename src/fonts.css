@@ -1,53 +1,5 @@
 /*Fonts*/
 
-/* @font-face {
-    font-family: 'open_sans';
-    src: url('opensans/fonts/opensans-bold-webfont.woff') format ('woff'),
-         url('opensans/opensans-bold-webfont.ttf') format('truetype');
-    font-weight: 700;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'open_sans';
-    src: url('opensans/opensans-extrabold-webfont.woff') format('woff'),
-         url('opensans/opensans-extrabold-webfont.ttf') format('truetype');
-    font-weight : 900;
-    font-style  : normal;
-}
-
-@font-face {
-    font-family: 'open_sans';
-    src: url('opensans/opensans-italic-webfont.woff') format('woff'),
-         url('opensans/opensans-italic-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: italic;
-}
-
-@font-face {
-    font-family: 'open_sans';
-    src: url('opensans/opensans-light-webfont.woff') format('woff'),
-         url('opensans/opensans-light-webfont.ttf') format('truetype');
-    font-weight: lighter;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'open_sans';
-    src: url('opensans/opensans-regular-webfont.woff') format('woff'),
-         url('opensans/opensans-regular-webfont.ttf') format('truetype');
-    font-weight: normal;
-    font-style: normal;
-}
-
-@font-face {
-    font-family: 'open_sans';
-    src: url('opensans/opensans-semibold-webfont.woff') format('woff'),
-         url('opensans/opensans-semibold-webfont.ttf') format('truetype');
-    font-weight: 600;
-    font-style: normal;
-} */
-
  @font-face {
   font-family : 'PTNarrow';
   font-style  : normal;
@@ -62,7 +14,7 @@
   font-weight : 400;
   src         : url('pt/pt_sans-narrow-web-regular-webfont.woff') format('woff'),
   				url('pt/pt_sans-narrow-web-regular-webfont.woff2') format('woff2');
-} 
+}
 
  @font-face {
   font-family : 'PTSans';
@@ -70,7 +22,7 @@
   font-weight : 700;
   src         : url('pt/pt_sans-web-bold-webfont.woff') format('woff'),
   				url('pt/pt_sans-web-bold-webfont.woff2') format('woff2');
-} 
+}
 
 @font-face {
   font-family : 'PTSans';
@@ -94,7 +46,7 @@
   font-weight : 400;
   src         : url('pt/pt_sans-web-webfont.woff') format('woff'),
   				url('pt/pt_sans-web-webfont.woff2') format('woff2');
-}   
+}
 
 @font-face {
   font-family : 'Bebas';

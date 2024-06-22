@@ -14,13 +14,13 @@ export default class Timer extends React.Component {
       } else {
         const interval = 1000;
         this.timer = setInterval(() => {
-          this.setState({
+          this.setState(({duration})=>({
             duration: moment.duration(
-              this.state.duration - interval,
+              duration - interval,
               "milliseconds"
             ),
             started: true,
-          });
+          }));
         }, interval);
       }
       return { status: !state.status };
@@ -34,7 +34,7 @@ export default class Timer extends React.Component {
 
   changeTime = (minutes) => {
     if (!this.state.started) {
-      this.setState({ duration: this.state.duration.add(minutes, "minutes") });
+      this.setState(({duration}) => ({ duration: duration.add(minutes, "minutes") }));
     }
   };
 
