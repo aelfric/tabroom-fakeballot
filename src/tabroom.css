@@ -1,3 +1,40 @@
+:root {
+    --background-white: #fefefe;
+    --background-blue: #009CD4;
+    --lightest-blue: #DFEFF6;
+    --light-blue: #8AD7F1;
+    --medium-blue: #08A9DE;
+    --dark-blue: #016F94;
+    --darker-blue: #004359;
+    --lightest-red: #FFC8BD;
+    --light-red: #FF9F8E;
+    --medium-red: #FF5131;
+    --dark-red: #BA1D00;
+    --darker-red: #8E1600;
+    --lightest-yellow: #FFECBD;
+    --light-yellow: #FFDB84;
+    --medium-yellow: #FFD267;
+    --dark-yellow: #FFB400;
+    --lightest-gray: #fafafa;
+    --light-gray: #eaeaea;
+    --border-gray: #ddd;
+    --medium-gray: #aaa;
+    --neutral-gray: #666;
+    --dark-gray: #333333;
+    --darker-gray: #111;
+    --lightest-cool-gray: #e5ebed;
+    --light-cool-gray: #c3d1d5;
+    --light-green: #C4DFA0;
+    --medium-green: #578415;
+    --dark-green: #365E00;
+    --dark-orange: #C76804;
+    --medium-orange: #ED7A00;
+    --light-orange: #F8AD5F;
+    --light-purple: 350144;
+    --medium-purple: #76278C;
+    --dark-purple: #350144;
+    --dark-bluegreen: #159090;
+}
 /* Common page layouts */
 
 textarea,
@@ -5929,4 +5966,12 @@ input:checked + .slider:before {
 
 }
 
+.darkscreen {
+    min-height: 100vh;
+    background-color: var(--light-gray);
+    padding-left: 8px;
+    padding-right: 8px;
+    border-left: 1px solid var(--light-cool-gray);
+    border-right: 1px solid var(--light-cool-gray);
+}
 

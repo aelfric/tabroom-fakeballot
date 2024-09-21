@@ -115,83 +115,94 @@ export default function Ballot(props) {
               interface.
             </strong>
           </p>
-          <h3>Current Ballots</h3>
-          <span className="half">
-            <h4>Pending Rounds</h4>
-          </span>
+          <ul id="tabnav" className="marvertno">
+            <li
+              id="button_current_ballots"
+              className="tabs selected_dark invert"
+              onClick="updateTab('current_ballots')"
+            >
+              Current ballots
+            </li>
 
-          <span
-            id="pendingrounds_buttonarea"
-            className="half rightalign martop"
-          >
-            <button
-              id="print_pendingrounds"
-              tabIndex="-1"
-              className="notfirst printbutton buttonwhite redtext fa fa-sm fa-print marleft"
-            />
-            <button
-              id="output_pendingrounds"
-              tabIndex="-1"
-              className="notfirst printbutton buttonwhite greentext fa fa-sm fa-file-excel-o marleft"
-            />
-          </span>
+            <li
+              id="button_past_scores_and_feedback"
+              className="tabs"
+              onClick="updateTab('past_scores_and_feedback')"
+            >
+              Past scores and feedback
+            </li>
+          </ul>
+          <div className="screens darkscreen current_ballots padleft padright marno">
+            <span className="pagehalf">
+              <h5>Current Assignments</h5>
 
-          <SortableTable
-            columns={[
-              {
-                label: "Round",
-              },
-              {
-                label: " Room",
-              },
-              {
-                label: "Starts",
-              },
-              {
-                label: "Entries",
-              },
-              {
-                label: "",
-              },
-            ]}
-            defaultSort="name"
-            entries={rounds}
-            rowComponent={({ entry }) => (
-              <tr role="row" className="odd" key={entry.name}>
-                <td className="">
-                  <span className="hidden">1-1</span>
-
-                  <FakeLink
-                    className="white padless full"
-                    href="/index/tourn/postings/round.mhtml?tourn_id=11542&amp;round_id=373544"
-                  >
-                    {entry.name}
-                  </FakeLink>
-                </td>
-
-                <td className="">12</td>
-
-                <td className="centeralign">{entry.time}</td>
-
-                <td className="leftalign">
-                  {entry.entries.map((ent, i) => (
-                    <span key={ent.code} className="eighth leftalign">
-                      {i + 1}. {ent.code}
+              <div
+                className="bluebordertop odd marbottom "
+                id="7146353"
+                title="Round at 49th University of Pennsylvania Tournament in Speech for Riccobono"
+              >
+                <div className="full">
+                  <span className="quarter semibold">Round</span>
+                  <span className="threequarters nospace">
+                    <span className="fourfifths true nospace padvertless">
+                      {rounds[0].name}
                     </span>
-                  ))}
-                </td>
+                    <span className="fifth rightalign padvertless">
+                      <a
+                        className="buttonwhite bluetext fa fa-table fa-sm"
+                        target="_blank"
+                        title="Public Round Schematic"
+                        href="https://www.tabroom.com/index/tourn/postings/round.mhtml?tourn_id=&amp;round_id=1095808"
+                      ></a>
+                    </span>
+                  </span>
+                </div>
 
-                <td className="centeralign padless">
-                  <button
-                    className="greentext buttonwhite invert"
-                    onClick={props.start}
-                  >
-                    START ROUND
-                  </button>
-                </td>
-              </tr>
-            )}
-          />
+                <div className="full ltbordertop">
+                  <span className="quarter semibold padvert">Room</span>
+
+                  <span className="threequarters nospace">{rounds[0].room}</span>
+                </div>
+
+                <div className="full ltbordertop">
+                  <span className="quarter semibold padvert">Start</span>
+
+                  <span className="threequarters nospace">{rounds[0].time}</span>
+                </div>
+
+                <div className="full ltborderbottom ltbordertop">
+                  <span className="quarter semibold">Entries</span>
+
+                  <span className="threequarters nospace padvertless">
+                    {rounds[0].entries.map((ent, i) => (
+                      <span className="threetenths marno padno padvertless padvertless smallish" key={ent.code}>
+                        <span className="fifth semibold nospace">{i + 1}</span>
+                        <span className="fourfifths nospace">{ent.code}</span>
+                      </span>
+                    ))}
+                  </span>
+                </div>
+
+                <div className="full ltbordertop">
+                  <div className="full padvertless nospace explain semibold centeralign graytext padbottom">
+                    Press the Button!
+                  </div>
+                  <span className="fifth centeralign"></span>
+
+                  <span className="fourfifths rightalign">
+                    <button
+                      className="greentext invert buttonwhite"
+                      onClick={props.start}
+                    >
+                      ON MY WAY!
+                    </button>
+
+                    <span className="quarterspacer"></span>
+                  </span>
+                </div>
+              </div>
+            </span>
+          </div>
         </>
       }
     />

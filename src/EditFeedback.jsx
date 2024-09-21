@@ -9,9 +9,10 @@ export default class EditFeedback extends React.Component {
   };
 
   setComments = (idx) => (evt) => {
-    let entries = this.state.entries;
-    entries[idx].comments = evt.target.getContent();
-    this.setState({ entries: entries });
+    this.setState(({entries})=>{
+      entries[idx].comments = evt.target.getContent();
+      return ({ entries: entries })
+    });
   };
 
   render() {

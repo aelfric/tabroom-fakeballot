@@ -15,7 +15,7 @@ export default class Content extends React.Component {
     return (
       <div id="content">
         {this.state.collapseMenu && (
-          <div
+          <button
             className="shade closedshade fa fa-backward"
             onClick={this.toggleCollapse}
           />
@@ -25,7 +25,7 @@ export default class Content extends React.Component {
           {this.props.main}
         </div>
         <div className={`menu ${this.state.collapseMenu ? "hidden" : ""}`}>
-          <div
+          <button
             className="shade openshade fa fa-forward"
             onClick={this.toggleCollapse}
           />
