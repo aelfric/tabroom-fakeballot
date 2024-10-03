@@ -1,7 +1,8 @@
 import React from "react";
 import Content from "./Content";
-import { SortableTable } from "./SortableTable";
 import { FakeLink } from "./App";
+import { SpeechBallot } from "./SpeechBallot";
+import { CongressBallot } from "./CongressBallot";
 
 export function DefaultMenu() {
   return (
@@ -95,6 +96,12 @@ export default function Ballot(props) {
       room: "12",
       entries: props.entries,
     },
+    {
+      name: "CON Session 1",
+      time: "9:00 AM EST",
+      room: "405",
+      entries: props.entries,
+    },
   ];
   return (
     <Content
@@ -135,72 +142,8 @@ export default function Ballot(props) {
           <div className="screens darkscreen current_ballots padleft padright marno">
             <span className="pagehalf">
               <h5>Current Assignments</h5>
-
-              <div
-                className="bluebordertop odd marbottom "
-                id="7146353"
-                title="Round at 49th University of Pennsylvania Tournament in Speech for Riccobono"
-              >
-                <div className="full">
-                  <span className="quarter semibold">Round</span>
-                  <span className="threequarters nospace">
-                    <span className="fourfifths true nospace padvertless">
-                      {rounds[0].name}
-                    </span>
-                    <span className="fifth rightalign padvertless">
-                      <a
-                        className="buttonwhite bluetext fa fa-table fa-sm"
-                        target="_blank"
-                        title="Public Round Schematic"
-                        href="https://www.tabroom.com/index/tourn/postings/round.mhtml?tourn_id=&amp;round_id=1095808"
-                      ></a>
-                    </span>
-                  </span>
-                </div>
-
-                <div className="full ltbordertop">
-                  <span className="quarter semibold padvert">Room</span>
-
-                  <span className="threequarters nospace">{rounds[0].room}</span>
-                </div>
-
-                <div className="full ltbordertop">
-                  <span className="quarter semibold padvert">Start</span>
-
-                  <span className="threequarters nospace">{rounds[0].time}</span>
-                </div>
-
-                <div className="full ltborderbottom ltbordertop">
-                  <span className="quarter semibold">Entries</span>
-
-                  <span className="threequarters nospace padvertless">
-                    {rounds[0].entries.map((ent, i) => (
-                      <span className="threetenths marno padno padvertless padvertless smallish" key={ent.code}>
-                        <span className="fifth semibold nospace">{i + 1}</span>
-                        <span className="fourfifths nospace">{ent.code}</span>
-                      </span>
-                    ))}
-                  </span>
-                </div>
-
-                <div className="full ltbordertop">
-                  <div className="full padvertless nospace explain semibold centeralign graytext padbottom">
-                    Press the Button!
-                  </div>
-                  <span className="fifth centeralign"></span>
-
-                  <span className="fourfifths rightalign">
-                    <button
-                      className="greentext invert buttonwhite"
-                      onClick={props.start}
-                    >
-                      ON MY WAY!
-                    </button>
-
-                    <span className="quarterspacer"></span>
-                  </span>
-                </div>
-              </div>
+              <SpeechBallot round={rounds[0]} start={props.start} />
+              <CongressBallot round={rounds[1]} start={props.start} />
             </span>
           </div>
         </>

@@ -25,17 +25,6 @@ class BallotStartedForm extends React.Component {
     currentStudent: "rfd",
   };
 
-  changeSort = (value) => {
-    if (value === this.state.sort) {
-      if (value[0] !== "-") {
-        value = "-" + value;
-      } else {
-        value = value.substr(1);
-      }
-    }
-    this.setState({ sort: value });
-  };
-
   setTitle = (idx) => (evt) => {
     let entries = this.state.entries;
     entries[idx].title = evt.target.value;
