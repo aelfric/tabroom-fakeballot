@@ -2,11 +2,15 @@ import React from "react";
 import moment from "moment";
 
 export default class Timer extends React.Component {
-  initialDuration = moment.duration(10, "minutes");
-  state = {
-    started: false,
-    duration: this.initialDuration,
-  };
+
+  constructor(props) {
+    super(props);
+    this.initialDuration = moment.duration(props.initialDuration, "minutes")
+    this.state = {
+      started: false,
+      duration: this.initialDuration,
+    };
+  }
 
   handleClick = () => {
     this.setState((state) => {

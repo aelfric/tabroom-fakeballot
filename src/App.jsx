@@ -5,11 +5,12 @@ import "./fonts.css";
 
 import Ballot from "./Ballot";
 
-import FakeBallot from "./BallotStarted";
-import ConfirmSubmit from "./ConfirmBallot";
+import FakeSpeechBallot from "./speech/BallotStarted";
+import ConfirmSubmit from "./speech/ConfirmBallot";
 import Layout from "./Layout";
-import ConfirmedBallot from "./ConfirmedBallot";
+import ConfirmedBallot from "./speech/ConfirmedBallot";
 import EditFeedback from "./EditFeedback";
+import {CongressBallotStarted} from "./congress/CongressBallotStarted";
 
 export const FakeLink = (props) => {
   return (
@@ -21,6 +22,7 @@ export const FakeLink = (props) => {
 
 class App extends Component {
   state = {
+    congressStarted: false,
     started: false,
     confirming: false,
     confirmed: false,
@@ -81,6 +83,10 @@ class App extends Component {
     this.setState(({ started }) => ({ started: !started }));
   };
 
+  toggleCongressStarted = () => {
+    this.setState(({ congressStarted }) => ({ congressStarted: !congressStarted }));
+  };
+
   toggleConfirm = () => {
     this.setState(({ confirming }) => ({ confirming: !confirming }));
   };
@@ -129,17 +135,21 @@ class App extends Component {
       );
     } else if (this.state.started) {
       component = (
-        <FakeBallot
-          entries={this.state.entries}
-          confirm={this.toggleConfirm}
-          onSubmit={this.onSubmit}
-          setRFD={this.setRFD}
-          rfd={this.state.rfd}
-        />
+          <FakeSpeechBallot
+              entries={this.state.entries}
+              confirm={this.toggleConfirm}
+              onSubmit={this.onSubmit}
+              setRFD={this.setRFD}
+              rfd={this.state.rfd}
+          />
       );
+    } else if (this.state.congressStarted){
+      component = (
+          <CongressBallotStarted />
+      )
     } else {
       component = (
-        <Ballot start={this.toggleStarted} entries={this.state.entries} />
+        <Ballot start={this.toggleStarted} congressStart={this.toggleCongressStarted} entries={this.state.entries} />
       );
     }
 

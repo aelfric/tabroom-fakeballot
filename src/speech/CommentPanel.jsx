@@ -1,6 +1,6 @@
 import React from "react";
 
-import { CommentBox } from "./CommentBox";
+import { CommentBox } from "../CommentBox";
 
 export class CommentPanel extends React.Component {
   state = {

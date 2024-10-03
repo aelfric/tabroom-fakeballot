@@ -1,14 +1,14 @@
 import React from "react";
-import { dynamicSort, SortableTable } from "./SortableTable";
+import { dynamicSort, SortableTable } from "../SortableTable";
 
-import Content from "./Content";
+import Content from "../Content";
 import { CommentPanel } from "./CommentPanel";
 import { BallotRow } from "./BallotRow";
-import { TabroomError } from "./TabroomError";
+import { TabroomError } from "../TabroomError";
 import { BallotStartedMenu } from "./BallotStartedMenu";
 
 const includePoints = true;
-export default function FakeBallot(props) {
+export default function FakeSpeechBallot(props) {
   return (
     <Content
       main={<BallotStartedForm {...props} />}

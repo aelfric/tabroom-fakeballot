@@ -1,6 +1,6 @@
 import React from "react";
-import Content from "./Content";
-import { DefaultMenu } from "./Ballot";
+import Content from "../Content";
+import { DefaultMenu } from "../Ballot";
 
 function Result({ order, code, name, title, ranks, points }) {
   return (

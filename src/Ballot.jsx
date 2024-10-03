@@ -1,8 +1,8 @@
 import React from "react";
 import Content from "./Content";
 import { FakeLink } from "./App";
-import { SpeechBallot } from "./SpeechBallot";
-import { CongressBallot } from "./CongressBallot";
+import { SpeechBallot } from "./speech/SpeechBallot";
+import { CongressBallot } from "./congress/CongressBallot";
 
 export function DefaultMenu() {
   return (
@@ -143,7 +143,7 @@ export default function Ballot(props) {
             <span className="pagehalf">
               <h5>Current Assignments</h5>
               <SpeechBallot round={rounds[0]} start={props.start} />
-              <CongressBallot round={rounds[1]} start={props.start} />
+              <CongressBallot round={rounds[1]} start={props.congressStart} />
             </span>
           </div>
         </>

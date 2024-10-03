@@ -1,5 +1,5 @@
-import { FakeLink } from "./App";
-import Timer from "./Timer";
+import { FakeLink } from "../App";
+import Timer from "../Timer";
 import React from "react";
 
 export const BallotStartedMenu = () => (
@@ -49,7 +49,7 @@ export const BallotStartedMenu = () => (
       </span>
 
       <div className="bigger centeralign semibold" />
-      <Timer />
+      <Timer initialDuration={10}/>
       <h4>Other ballots</h4>
     </div>
   </>
