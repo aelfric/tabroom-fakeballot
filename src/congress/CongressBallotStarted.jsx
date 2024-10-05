@@ -1,6 +1,6 @@
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
-import React from "react";
+import React, { useState } from "react";
 import { CommentBox } from "../CommentBox";
 
 export function CongressBallotStarted() {
@@ -8,6 +8,19 @@ export function CongressBallotStarted() {
 }
 
 function CongressBallotMain() {
+  const [selected, setSelected] = useState(0);
+  const [round, setRound] = useState({
+    entries: [
+      { name: "Alannah Meadows", speeches: [] },
+      { name: "Casper Howard", speeches: [] },
+      { name: "Cory McDonald", speeches: [] },
+      { name: "Farah Petersen", speeches: [] },
+      { name: "Kirsten Arias", speeches: [] },
+      { name: "Siobhan Wang", speeches: [] },
+      { name: "Zain Swanson", speeches: [] },
+    ],
+  });
+
   return (
     <div className="main ballotmain" data-select2-id="select2-data-83-i6m2">
       <div className="ltborderbottom flexrow">
@@ -60,7 +73,8 @@ function CongressBallotMain() {
               <select
                 id="speaker"
                 className="fixedmost select2-hidden-accessible"
-                onChange="showSpeaker(); saveComments(false);"
+                onChange={(evt) => setSelected(Number(evt.target.value))}
+                value={selected}
                 tabIndex="-1"
                 aria-hidden="true"
                 data-select2-id="select2-data-speaker"
@@ -69,14 +83,13 @@ function CongressBallotMain() {
                   value=""
                   data-select2-id="select2-data-68-p39t"
                 ></option>
-                <option value="5922949">Alannah Meadows</option>
-                <option value="5922947">Casper Howard</option>
-                <option value="5922948">Cory McDonald</option>
-                <option value="5922936">Farah Petersen</option>
-                <option value="5922946">Kirsten Arias</option>
-                <option value="5922951">Siobhan Wang</option>
-                <option value="5922950">Zain Swanson</option>
+                {round.entries.map((e, i) => (
+                  <option value={i} key={e.name}>
+                    {e.name}
+                  </option>
+                ))}
               </select>
+              {selected}
               <span
                 className="select2 select2-container select2-container--default"
                 dir="ltr"
@@ -148,7 +161,7 @@ function CongressBallotMain() {
 
           <div id="5922949" className="ballot full nospace hidden">
             <span className="half leftalign">
-              <h6 className="semibold">Alannah Meadows</h6>
+              <h6 className="semibold">{round.entries[selected].name}</h6>
             </span>
 
             <span className="half rightalign">
@@ -472,11 +485,9 @@ function CongressBallotMain() {
             </span>
           </div>
         </div>
-
       </div>
 
       <div className="speeches screens" data-select2-id="select2-data-82-5nzn">
-
         <div className="full" data-select2-id="select2-data-81-12wv">
           <form
             action="https://www.tabroom.com/user/judge/ballot.mhtml"
@@ -500,7 +511,8 @@ function CongressBallotMain() {
               <select
                 name="entry_id"
                 className="fixedbig select2-hidden-accessible"
-                onChange="this.form.submit();"
+                onChange={(evt) => setSelected(Number(evt.target.value))}
+                value={selected}
                 tabIndex="-1"
                 aria-hidden="true"
                 data-select2-id="select2-data-76-q41r"
@@ -509,31 +521,11 @@ function CongressBallotMain() {
                   value=""
                   data-select2-id="select2-data-86-kqdt"
                 ></option>
-                <option
-                  value="5922949"
-                  selected="true"
-                  data-select2-id="select2-data-78-mpf2"
-                >
-                  Alannah Meadows
-                </option>
-                <option value="5922947" data-select2-id="select2-data-87-seqm">
-                  Casper Howard
-                </option>
-                <option value="5922948" data-select2-id="select2-data-88-epd6">
-                  Cory McDonald
-                </option>
-                <option value="5922936" data-select2-id="select2-data-89-9w7j">
-                  Farah Petersen
-                </option>
-                <option value="5922946" data-select2-id="select2-data-90-ql1r">
-                  Kirsten Arias
-                </option>
-                <option value="5922951" data-select2-id="select2-data-91-2mei">
-                  Siobhan Wang
-                </option>
-                <option value="5922950" data-select2-id="select2-data-92-wwkg">
-                  Zain Swanson
-                </option>
+                {round.entries.map((e, i) => (
+                  <option value={i} key={e.name}>
+                    {e.name}
+                  </option>
+                ))}
               </select>
             </span>
           </form>
@@ -541,7 +533,7 @@ function CongressBallotMain() {
 
         <div className="martop ltbordertop padvert">
           <span className="half nospace">
-            <h5 className="nospace">Alannah Meadows</h5>
+            <h5 className="nospace">{round.entries[selected].name}</h5>
           </span>
 
           <span className="half nospace rightalign">
@@ -1082,6 +1074,8 @@ function CongressBallotMain() {
           </div>
         </form>
       </div>
+
+      <pre>{JSON.stringify(round, null, 2)}</pre>
     </div>
   );
 }
