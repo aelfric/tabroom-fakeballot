@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Content from "./Content";
 import { FakeLink } from "./App";
 import { SpeechBallot } from "./speech/SpeechBallot";
@@ -88,6 +88,21 @@ export function DefaultMenu() {
   );
 }
 
+/**
+ * @typedef {Object} BallotProps
+ * @property {import("./congress/types").CongressEntry[]} entries
+ * @property {()=>void} start
+ * @property {()=>void} congressStart
+ */
+
+
+/**
+ *
+ * @param {BallotProps} props
+ * @returns {JSX.Element}
+ * @constructor
+ */
+
 export default function Ballot(props) {
   const rounds = [
     {
@@ -103,6 +118,9 @@ export default function Ballot(props) {
       entries: props.entries,
     },
   ];
+
+  const [tab, setTab] = useState("current");
+
   return (
     <Content
       menu={<DefaultMenu />}
@@ -122,28 +140,30 @@ export default function Ballot(props) {
               interface.
             </strong>
           </p>
-          <ul id="tabnav" className="marvertno">
+
+          <ul id="tabnav" className="marbottom">
             <li
-              id="button_current_ballots"
-              className="tabs selected_dark invert"
-              onClick="updateTab('current_ballots')"
+                id="button_speeches"
+                className={tab === "current" ? "tabs selected invert" : "tabs"}
+                onClick={() => setTab("current")}
             >
               Current ballots
             </li>
 
             <li
-              id="button_past_scores_and_feedback"
-              className="tabs"
-              onClick="updateTab('past_scores_and_feedback')"
+                id="button_rankings"
+                className={tab === "past" ? "tabs selected invert" : "tabs"}
+                onClick={() => setTab("past")}
             >
               Past scores and feedback
             </li>
           </ul>
+
           <div className="screens darkscreen current_ballots padleft padright marno">
             <span className="pagehalf">
               <h5>Current Assignments</h5>
-              <SpeechBallot round={rounds[0]} start={props.start} />
-              <CongressBallot round={rounds[1]} start={props.congressStart} />
+              <SpeechBallot round={rounds[0]} start={props.start}/>
+              <CongressBallot round={rounds[1]} start={props.congressStart}/>
             </span>
           </div>
         </>

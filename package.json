@@ -9,8 +9,8 @@
     "jquery": "^3.7.1",
     "jquery.runner": "^2.3.0",
     "moment": "^2.29.4",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
+    "react": "18.3.0-canary-e373190fa-20240325",
+    "react-dom": "18.3.0-canary-c3048aab4-20240326",
     "tinymce": "^5.10.7"
   },
   "scripts": {
