@@ -695,8 +695,6 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
           </form>
         </div>
       )}
-
-      <pre>{JSON.stringify(round, null, 2)}</pre>
     </div>
   );
 }
