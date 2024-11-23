@@ -2,16 +2,32 @@ import React from "react";
 import Content from "./Content";
 import { FakeLink } from "./App";
 import { CommentBox } from "./CommentBox";
+import { SpeechEntry } from "./speech/types";
+import { Events } from "tinymce";
 
-export default class EditFeedback extends React.Component {
+interface EditFeedbackProps {
+  entries: SpeechEntry[];
+  rfd?: string;
+  setRFD: (evt: Events.EditorEventMap["blur"]) => unknown;
+  onSubmit: (e: SpeechEntry[]) => unknown;
+}
+
+interface EditFeedbackState {
+  entries: SpeechEntry[];
+}
+
+export default class EditFeedback extends React.Component<
+  EditFeedbackProps,
+  EditFeedbackState
+> {
   state = {
     entries: JSON.parse(JSON.stringify(this.props.entries)),
   };
 
-  setComments = (idx) => (evt) => {
-    this.setState(({entries})=>{
-      entries[idx].comments = evt.target.getContent();
-      return ({ entries: entries })
+  setComments = (idx: number) => (evt: Events.EditorEventMap["blur"]) => {
+    this.setState(({ entries }) => {
+      entries[idx].comments = evt.focusedEditor.getContent();
+      return { entries: entries };
     });
   };
 
@@ -45,14 +61,14 @@ export default class EditFeedback extends React.Component {
             </div>
 
             <div className="sidenote">
-              {this.state.entries.map((e) => (
-                <a
+              {this.state.entries.map((e: SpeechEntry) => (
+                <FakeLink
                   className="yellow block"
                   href="ballot_comments.mhtml?judge_id=963334&amp;ballot_id=12883649"
                   key={e.code}
                 >
                   For {e.code}
-                </a>
+                </FakeLink>
               ))}
             </div>
 
@@ -63,12 +79,12 @@ export default class EditFeedback extends React.Component {
         }
         main={
           <>
-            <span className="hugespan nowrap padno" datastyle="width: 450px;">
+            <span className="hugespan nowrap padno" data-style="width: 450px;">
               <h3>OBT Round 1 RFD/Comments for Riccobono</h3>
             </span>
 
             <span className="medbigspan nowrap right">
-              <h4 datastyle="text-align: right;">In Lower Gym I</h4>
+              <h4 data-style="text-align: right;">In Lower Gym I</h4>
             </span>
 
             <h4>Reason for Rankings</h4>
@@ -81,7 +97,7 @@ export default class EditFeedback extends React.Component {
               RFDs are sent to everyone in the round; comments only to the entry
               &amp; coaches
             </p>
-            {this.state.entries.map((e, i) => (
+            {this.state.entries.map((e: SpeechEntry, i: number) => (
               <React.Fragment key={e.code}>
                 <h4>
                   Comments for {e.code} – {e.name} – "{e.title}"

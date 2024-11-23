@@ -1,11 +1,23 @@
+// @ts-nocheck
 import React from "react";
 import moment from "moment";
 
-export default class Timer extends React.Component {
+interface TimerProps {
+  initialDuration: number
+}
 
-  constructor(props) {
+interface TimerState {
+  duration: moment.Duration;
+  started: boolean;
+  status?: boolean;
+}
+
+export default class Timer extends React.Component<TimerProps, TimerState> {
+  private readonly initialDuration: moment.Duration;
+  private timer?: number;
+  constructor(props: TimerProps) {
     super(props);
-    this.initialDuration = moment.duration(props.initialDuration, "minutes")
+    this.initialDuration = moment.duration(props.initialDuration, "minutes");
     this.state = {
       started: false,
       duration: this.initialDuration,
@@ -34,7 +46,7 @@ export default class Timer extends React.Component {
     this.setState({ duration: this.initialDuration, started: false });
   };
 
-  changeTime = (minutes) => {
+  changeTime = (minutes: number) => {
     if (!this.state.started) {
       this.setState(({ duration }) => ({
         duration: duration.add(minutes, "minutes"),

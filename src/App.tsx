@@ -1,27 +1,41 @@
-import React, { Component } from "react";
+import React, { AnchorHTMLAttributes, Component } from "react";
 import "./App.css";
 import "./tabroom.css";
 import "./fonts.css";
 
 import Ballot from "./Ballot";
 
-import FakeSpeechBallot from "./speech/BallotStarted";
 import ConfirmSubmit from "./speech/ConfirmBallot";
 import Layout from "./Layout";
 import ConfirmedBallot from "./speech/ConfirmedBallot";
 import EditFeedback from "./EditFeedback";
-import {CongressBallotStarted} from "./congress/CongressBallotStarted";
+import { CongressBallotStarted } from "./congress/CongressBallotStarted";
+import { SpeechEntry } from "./speech/types";
+import { Events } from "tinymce";
+import FakeSpeechBallot from "./speech/FakeSpeechBallot";
 
-export const FakeLink = (props) => {
+export function FakeLink<T>(props: AnchorHTMLAttributes<T>) {
   return (
     <a href={"#"} className={props.className}>
       {props.children}
     </a>
   );
-};
+}
 
-class App extends Component {
-  state = {
+interface AppProps {}
+
+interface AppState {
+  entries: SpeechEntry[];
+  rfd?: string;
+  congressStarted: boolean;
+  started: boolean;
+  confirming: boolean;
+  confirmed: boolean;
+  editing: boolean;
+}
+
+class App extends Component<AppProps, AppState> {
+  state: AppState = {
     congressStarted: false,
     started: false,
     confirming: false,
@@ -83,10 +97,6 @@ class App extends Component {
     this.setState(({ started }) => ({ started: !started }));
   };
 
-  toggleCongressStarted = () => {
-    this.setState(({ congressStarted }) => ({ congressStarted: !congressStarted }));
-  };
-
   toggleConfirm = () => {
     this.setState(({ confirming }) => ({ confirming: !confirming }));
   };
@@ -95,11 +105,11 @@ class App extends Component {
     this.setState(({ confirmed }) => ({ confirmed: !confirmed }));
   };
 
-  setRFD = (evt) => {
-    this.setState({ rfd: evt.target.getContent() });
+  setRFD = (evt: Events.EditorEventMap["blur"]) => {
+    this.setState({ rfd: evt.focusedEditor.getContent() });
   };
 
-  onSubmit = (entries) => {
+  onSubmit = (entries: SpeechEntry[]) => {
     this.setState({
       entries: entries,
       confirming: true,
@@ -135,21 +145,16 @@ class App extends Component {
       );
     } else if (this.state.started) {
       component = (
-          <FakeSpeechBallot
-              entries={this.state.entries}
-              confirm={this.toggleConfirm}
-              onSubmit={this.onSubmit}
-              setRFD={this.setRFD}
-              rfd={this.state.rfd}
-          />
+        <FakeSpeechBallot/>
       );
-    } else if (this.state.congressStarted){
-      component = (
-          <CongressBallotStarted />
-      )
+    } else if (this.state.congressStarted) {
+      component = <CongressBallotStarted />;
     } else {
       component = (
-        <Ballot start={this.toggleStarted} congressStart={this.toggleCongressStarted} entries={this.state.entries} />
+        <Ballot
+          start={this.toggleStarted}
+          entries={this.state.entries}
+        />
       );
     }
 

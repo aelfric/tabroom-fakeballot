@@ -1,6 +1,6 @@
 import React from "react";
 
-export function TabroomError(props) {
+export function TabroomError(props: { errors: string[] }) {
   return (
     <div className="borderred centeralign martopmore marbottommore">
       <h6 className="bluetext semibold">Oh, drat. Your ballot had errors.</h6>

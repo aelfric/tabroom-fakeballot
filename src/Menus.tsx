@@ -69,7 +69,7 @@ export default function Header() {
           </span>
 
           <span id="sparked">
-            <FakeLink tabIndex="-1" href="index.mhtml">
+            <FakeLink tabIndex={-1} href="index.mhtml">
               Tabroom.com
             </FakeLink>
           </span>
@@ -79,7 +79,7 @@ export default function Header() {
           <span className="blurb">a project of the</span>
 
           <span className="nsdalogo">
-            <FakeLink tabIndex="-1" href="https://www.speechanddebate.org">
+            <FakeLink tabIndex={-1} href="https://www.speechanddebate.org">
               <img src={logo} alt="National Speech and Debate Association" />
             </FakeLink>
           </span>
@@ -87,15 +87,15 @@ export default function Header() {
       </span>
 
       <span id="toprow">
-        <FakeLink tabIndex="-1" href="/user/login/logout.mhtml">
+        <FakeLink tabIndex={-1} href="/user/login/logout.mhtml">
           Logout
         </FakeLink>
 
-        <FakeLink tabIndex="-1" href="/user/login/profile.mhtml">
+        <FakeLink tabIndex={-1} href="/user/login/profile.mhtml">
           Profile
         </FakeLink>
 
-        <FakeLink tabIndex="-1" href="/user/home.mhtml">
+        <FakeLink tabIndex={-1} href="/user/home.mhtml">
           email@example.com
         </FakeLink>
 
@@ -103,8 +103,8 @@ export default function Header() {
           <form>
             <input
               type="text"
-              maxLength="128"
-              size="15"
+              maxLength={128}
+              size={15}
               name="search"
               placeholder="SEARCH"
               autoComplete="off"
@@ -113,7 +113,7 @@ export default function Header() {
               spellCheck="false"
               id="searchtext"
               className="notfirst"
-              tabIndex="-1"
+              tabIndex={-1}
             />
 
             <input
@@ -130,7 +130,7 @@ export default function Header() {
 
         <span id="helpbutton" title="Tabroom Help">
           <FakeLink
-            tabIndex="-1"
+            tabIndex={-1}
             href="https://docs.tabroom.com"
             target="_blank"
             rel="noopener noreferrer"

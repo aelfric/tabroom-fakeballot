@@ -3,9 +3,13 @@ import { BallotStartedMenu } from "./BallotStartedMenu";
 import React, { useCallback, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
+import { CongressEntry, Speech } from "./types";
 
 export function CongressBallotStarted() {
-  const [round, setRound] = useState({
+  const [round, setRound] = useState<{
+    entries: CongressEntry[];
+    errors: string[];
+  }>({
     entries: [
       "Alannah Meadows",
       "Casper Howard",
@@ -25,28 +29,36 @@ export function CongressBallotStarted() {
   });
 
   const [confirming, setConfirming] = useState(false);
-  return (
-    <Content
-      main={
-        confirming ? (
-          <ConfirmSubmit entries={round.entries} confirm={()=>setConfirming(false)}/>
-        ) : (
-          <CongressBallotMain round={round} setRound={setRound} onSubmit={()=>setConfirming(true)} />
-        )
-      }
-      menu={<BallotStartedMenu />}
-    />
-  );
+  if (confirming) {
+    return (
+      <ConfirmSubmit
+        entries={round.entries}
+        confirm={() => setConfirming(false)}
+      />
+    );
+  } else {
+    return (
+      <Content
+        main={
+          <CongressBallotMain
+            round={round}
+            setRound={setRound}
+            onSubmit={() => setConfirming(true)}
+          />
+        }
+        menu={<BallotStartedMenu />}
+      />
+    );
+  }
 }
 
-/**
- *
- * @param {import("./types").Speech} speech
- * @param { (FormData) => void } onSave
- * @returns {JSX.Element}
- * @constructor
- */
-function CongressSpeech({ speech, onSave }) {
+function CongressSpeech({
+  speech,
+  onSave,
+}: {
+  speech: Speech;
+  onSave: (f: FormData) => void;
+}) {
   const [comments, setComments] = useState(speech.comments || "");
   return (
     <form action={onSave}>
@@ -66,7 +78,7 @@ function CongressSpeech({ speech, onSave }) {
             <input
               type="text"
               name="topic"
-              size="32"
+              size={32}
               data-style={{ width: "190.313px" }}
               defaultValue={speech.topic}
             />
@@ -110,7 +122,7 @@ function CongressSpeech({ speech, onSave }) {
           <CommentBox
             key={speech.comments}
             currentComments={comments}
-            setComments={(evt) => {
+            setComments={(evt: any) => {
               setComments(evt.target.getContent());
             }}
           />
@@ -149,14 +161,13 @@ function CongressSpeech({ speech, onSave }) {
   );
 }
 
-/**
- *
- * @param {import("./types").Speech} speech
- * @param { (FormData) => void } onSave
- * @returns {JSX.Element}
- * @constructor
- */
-function CongressPoSession({ speech, onSave }) {
+function CongressPoSession({
+  speech,
+  onSave,
+}: {
+  speech: Speech;
+  onSave: (f: FormData) => void;
+}) {
   const [comments, setComments] = useState(speech.comments || "");
   return (
     <form action={onSave}>
@@ -179,7 +190,7 @@ function CongressPoSession({ speech, onSave }) {
           <CommentBox
             key={speech.comments}
             currentComments={comments}
-            setComments={(evt) => {
+            setComments={(evt: any) => {
               setComments(evt.target.getContent());
             }}
           />
@@ -218,12 +229,7 @@ function CongressPoSession({ speech, onSave }) {
   );
 }
 
-/**
- *
- * @param {string} name
- * @type {import("./types").CongressEntry}
- */
-function generateEntry(name) {
+function generateEntry(name: string): CongressEntry {
   let hash = 0;
   for (let i = 0; i < name.length; i++) {
     const chr = name.charCodeAt(i);
@@ -237,20 +243,35 @@ function generateEntry(name) {
   };
 }
 
-function CongressBallotMain({ round, setRound, onSubmit }) {
+function CongressBallotMain({
+  round,
+  setRound,
+  onSubmit,
+}: {
+  round: {
+    errors: string[];
+    entries: CongressEntry[];
+  };
+  setRound: (
+    a: (p: { entries: CongressEntry[]; errors: string[] }) => {
+      entries: CongressEntry[];
+      errors: string[];
+    }
+  ) => void;
+  onSubmit: () => unknown;
+}) {
   const [po, setPo] = useState(-1);
   const [selected, setSelected] = useState(0);
   const [tab, setTab] = useState("speeches");
 
   const addSpeech = useCallback(
-    (formData) => {
-      let topic = formData.get("topic");
-      let points = formData.get("points");
-      let side = formData.get("side");
-      let comments = formData.get("comments");
-      debugger;
+    (formData: FormData) => {
+      let topic = String(formData.get("topic"));
+      let points = Number(formData.get("points"));
+      let side = String(formData.get("side")) as "1" | "2";
+      let comments = String(formData.get("comments"));
       setRound((oldState) => {
-        let speeches = oldState.entries[selected].speeches;
+        let speeches: Speech[] = oldState.entries[selected].speeches;
         oldState.entries[selected].speeches = [
           ...speeches,
           {
@@ -268,11 +289,11 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
   );
 
   const addPoSession = useCallback(
-    (formData) => {
-      const points = formData.get("points");
-      const comments = formData.get("comments");
+    (formData: FormData) => {
+      const points = Number(formData.get("points"));
+      const comments = String(formData.get("comments"));
       debugger;
-      setRound((oldState) => {
+      setRound((oldState: { entries: CongressEntry[]; errors: string[] }) => {
         let speeches = oldState.entries[selected].speeches;
         oldState.entries[selected].speeches = [
           ...speeches,
@@ -289,17 +310,12 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
     [selected]
   );
 
-  /**
-   *
-   * @param {number} idx
-   * @returns { (FormData) => void }
-   */
-  function updateSpeech(idx) {
-    return function (formData) {
-      const topic = formData.get("topic");
-      const points = formData.get("points");
-      const side = formData.get("side");
-      const comments = formData.get("comments");
+  function updateSpeech(idx: number) {
+    return function (formData: FormData) {
+      const topic = String(formData.get("topic"));
+      const points = Number(formData.get("points"));
+      const side = formData.get("side") as "1" | "2";
+      const comments = String(formData.get("comments"));
       setRound((oldState) => {
         let speeches = oldState.entries[selected].speeches;
         oldState.entries[selected].speeches = [...speeches].map((s, i) => {
@@ -320,15 +336,10 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
     };
   }
 
-  /**
-   *
-   * @param {number} idx
-   * @returns { (FormData) => void }
-   */
-  function updatePoSession(idx) {
-    return function (formData) {
-      const points = formData.get("points");
-      const comments = formData.get("comments");
+  function updatePoSession(idx: number) {
+    return function (formData: FormData) {
+      const points = Number(formData.get("points"));
+      const comments = String(formData.get("comments"));
       setRound((oldState) => {
         let speeches = oldState.entries[selected].speeches;
         oldState.entries[selected].speeches = [...speeches].map((s, i) => {
@@ -348,14 +359,10 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
     };
   }
 
-  /**
-   *
-   * @param {FormData} formData
-   */
-  function saveRankings(formData) {
-    let errors = [];
+  function saveRankings(formData: FormData) {
+    let errors: string[] = [];
 
-    const rankings = [...formData.entries()]
+    const rankings: number[] = [...formData.entries()]
       .filter((e) => e[0].endsWith("_ranks"))
       .map((e) => Number(e[1]));
 
@@ -365,11 +372,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
       }
     }
 
-    /**
-     *
-     * @type {Record<number, number>}
-     */
-    const counts = {};
+    const counts: Record<number, number> = {};
     for (let ranking of rankings) {
       counts[ranking] = (counts[ranking] || 0) + 1;
     }
@@ -381,7 +384,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
     }
 
     setRound((oldState) => {
-      const entries = oldState.entries.map((e) => {
+      const entries = oldState.entries.map((e: CongressEntry) => {
         return {
           ...e,
           rank: Number(formData.get(`${e.id}_ranks`) || 9),
@@ -393,7 +396,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
         errors,
       };
     });
-    if(errors.length === 0){
+    if (errors.length === 0) {
       onSubmit();
     }
   }
@@ -455,7 +458,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
                 className="fixedbig select2-hidden-accessible"
                 onChange={(evt) => setSelected(Number(evt.target.value))}
                 value={selected}
-                tabIndex="-1"
+                tabIndex={-1}
                 aria-hidden="true"
                 data-select2-id="select2-data-76-q41r"
               >
@@ -580,7 +583,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
                   <th
                     data-column="0"
                     className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
+                    tabIndex={0}
                     scope="col"
                     role="columnheader"
                     aria-disabled="false"
@@ -596,7 +599,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
                   <th
                     data-column="1"
                     className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
+                    tabIndex={0}
                     scope="col"
                     role="columnheader"
                     aria-disabled="false"
@@ -614,7 +617,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
                   <th
                     data-column="2"
                     className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
+                    tabIndex={0}
                     scope="col"
                     role="columnheader"
                     aria-disabled="false"
@@ -630,7 +633,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
                   <th
                     data-column="3"
                     className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex="0"
+                    tabIndex={0}
                     scope="col"
                     role="columnheader"
                     aria-disabled="false"
@@ -648,7 +651,7 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
               <tbody id="ballottable" aria-live="polite" aria-relevant="all">
                 {round.entries.map((entry, i) => (
                   <tr
-                      key={entry.id}
+                    key={entry.id}
                     className={i % 2 === 0 ? "ballotrows even" : "ballotrows"}
                   >
                     <td
@@ -673,10 +676,10 @@ function CongressBallotMain({ round, setRound, onSubmit }) {
                     </td>
                     <td className="centeralign">
                       <input
-                        tabIndex="1"
+                        tabIndex={1}
                         type="number"
                         step="1"
-                        size="5"
+                        size={5}
                         name={`${entry.id}_ranks`}
                         id={`${entry.id}_ranks`}
                         max="9"

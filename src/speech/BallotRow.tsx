@@ -1,5 +1,19 @@
 import React from "react";
 
+type BallotRowProps = {
+    code: string,
+    name: string,
+    title?: string
+    ranks?: string
+    points?: string,
+    setTitle: any,
+    setPoints: any,
+    setRank: any
+    even: boolean,
+    row: any
+    includePoints: boolean
+}
+
 export function BallotRow({
   code,
   name,
@@ -12,7 +26,7 @@ export function BallotRow({
   even,
   row,
   includePoints,
-}) {
+}: BallotRowProps) {
   return (
     <tr className={`ballotrows ${even ? "even" : "odd"}`} role="row">
       <td className="leftalign semibold">{code}</td>
@@ -24,7 +38,7 @@ export function BallotRow({
           type="text"
           tabIndex={3 * row + 1}
           name="12863154"
-          size="30"
+          size={30}
           placeholder="Enter title or extemp question"
           value={title}
           onChange={setTitle}
@@ -36,7 +50,7 @@ export function BallotRow({
           tabIndex={3 * row + 2}
           type="number"
           step="1"
-          size="5"
+          size={5}
           name="12863154_ranks"
           max="3"
           value={ranks}
@@ -52,7 +66,7 @@ export function BallotRow({
             step="1"
             name="12863154_points"
             id="12863154_points"
-            size="5"
+            size={5}
             min={1}
             max={100}
             value={points}

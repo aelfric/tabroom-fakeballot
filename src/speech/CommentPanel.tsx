@@ -1,13 +1,29 @@
+// @ts-nocheck
 import React from "react";
 
 import { CommentBox } from "../CommentBox";
+import {SpeechEntry} from "./types";
 
-export class CommentPanel extends React.Component {
+interface CommentPanelProps {
+  entries: SpeechEntry[];
+  rfd?: string;
+  setRFD?: any;
+  setComments: (i: number) => unknown
+}
+
+interface CommentPanelState {
+  currentStudent: number | `${number}` | "rfd"
+}
+
+export class CommentPanel extends React.Component<
+  CommentPanelProps,
+  CommentPanelState
+> {
   state = {
     currentStudent: "rfd",
   };
 
-  doneSwitch(which) {
+  doneSwitch(which: number | `${number}`) {
     this.setState({ currentStudent: which });
   }
 

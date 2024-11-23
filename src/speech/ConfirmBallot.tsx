@@ -1,10 +1,11 @@
 import React from "react";
 import Content from "../Content";
 import { SortableTable } from "../SortableTable";
+import {SpeechEntry} from "./types";
 
 const includePoints = false;
 
-function EntryRow({ ranks, points, code, name, title, order, even }) {
+function EntryRow({ ranks, points, code, name, title, order, even }: SpeechEntry & {even: boolean}) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{ranks}</td>
@@ -24,7 +25,19 @@ function EntryRow({ ranks, points, code, name, title, order, even }) {
   );
 }
 
-export default class ConfirmSubmit extends React.Component {
+interface ConfirmSubmitProps {
+  entries: SpeechEntry[];
+  rfd?: string;
+  confirm: any;
+  onSubmit: any;
+}
+
+interface ConfirmSubmitState {}
+
+export default class ConfirmSubmit extends React.Component<
+  ConfirmSubmitProps,
+  ConfirmSubmitState
+> {
   state = {
     sort: "ranks",
   };
@@ -70,7 +83,7 @@ export default class ConfirmSubmit extends React.Component {
             <h4 className="marbottommore">
               Please confirm your ranking of this round:
             </h4>
-            <SortableTable
+            <SortableTable<SpeechEntry>
               columns={columns}
               entries={this.props.entries}
               defaultSort="ranks"
@@ -120,7 +133,7 @@ export default class ConfirmSubmit extends React.Component {
           <div className="sidenote">
             <h4>RFD</h4>
 
-            <div dangerouslySetInnerHTML={{ __html: this.props.rfd }} />
+            <div dangerouslySetInnerHTML={{ __html: this.props.rfd || ""}} />
           </div>
         }
       />

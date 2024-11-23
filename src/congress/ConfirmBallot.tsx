@@ -1,8 +1,9 @@
 import React from "react";
 import Content from "../Content";
 import { SortableTable } from "../SortableTable";
+import {CongressEntry} from "./types";
 
-function EntryRow({ rank, name, even }) {
+function EntryRow({ rank, name, even }: {rank?: number, name: string, even: boolean}) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{rank}</td>
@@ -11,21 +12,15 @@ function EntryRow({ rank, name, even }) {
   );
 }
 
-/**
- * @typedef {Object} ConfirmSubmitProps
- * @property {import("./types").CongressEntry[]} entries
- * @property {()=>void} confirm
- * @property {()=>void} onSubmit
- *
- */
+interface ConfirmSubmitProps {
+  entries: CongressEntry[];
+  confirm: () => void;
+  rfd?: string;
+}
 
-/**
- *
- * @param {ConfirmSubmitProps} props
- * @returns {JSX.Element}
- * @constructor
- */
-export function ConfirmSubmit(props) {
+export function ConfirmSubmit(props: ConfirmSubmitProps) {
+  const onSubmit = () => undefined;
+
   let columns = [
     {
       label: "Rank",
@@ -45,7 +40,7 @@ export function ConfirmSubmit(props) {
           <h4 className="marbottommore">
             Please confirm your ranking of this round:
           </h4>
-          <SortableTable
+          <SortableTable<CongressEntry>
             columns={columns}
             entries={props.entries}
             defaultSort="rank"
@@ -83,7 +78,7 @@ export function ConfirmSubmit(props) {
             <span className="pagehalf centeralign">
               <button
                 className="greentext buttonwhite invert full confirm"
-                onClick={props.onSubmit}
+                onClick={onSubmit}
               >
                 YES! CORRECT! CONFIRM IT
               </button>
@@ -95,7 +90,7 @@ export function ConfirmSubmit(props) {
         <div className="sidenote">
           <h4>RFD</h4>
 
-          <div dangerouslySetInnerHTML={{ __html: props.rfd }} />
+          <div dangerouslySetInnerHTML={{ __html: props.rfd || "" }} />
         </div>
       }
     />

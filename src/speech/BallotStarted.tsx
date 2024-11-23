@@ -1,23 +1,31 @@
-import React from "react";
-import { dynamicSort, SortableTable } from "../SortableTable";
-
-import Content from "../Content";
+import React, { ChangeEvent, MouseEvent, MouseEventHandler } from "react";
+import { Column, dynamicSort, SortableTable } from "../SortableTable";
 import { CommentPanel } from "./CommentPanel";
 import { BallotRow } from "./BallotRow";
 import { TabroomError } from "../TabroomError";
-import { BallotStartedMenu } from "./BallotStartedMenu";
+import { SpeechEntry } from "./types";
+import { Events } from "tinymce";
 
 const includePoints = true;
-export default function FakeSpeechBallot(props) {
-  return (
-    <Content
-      main={<BallotStartedForm {...props} />}
-      menu={<BallotStartedMenu />}
-    />
-  );
+
+interface BallotStartedFormProps {
+  entries: SpeechEntry[];
+  onSubmit: (a: any[]) => any;
+  setRFD: unknown;
+  rfd?: string;
 }
 
-class BallotStartedForm extends React.Component {
+interface BallotStartedFormState {
+  entries: SpeechEntry[];
+  errors: string[];
+  sort: string;
+  currentStudent: string;
+}
+
+export class BallotStartedForm extends React.Component<
+  BallotStartedFormProps,
+  BallotStartedFormState
+> {
   state = {
     entries: this.props.entries,
     errors: [],
@@ -25,36 +33,36 @@ class BallotStartedForm extends React.Component {
     currentStudent: "rfd",
   };
 
-  setTitle = (idx) => (evt) => {
+  setTitle = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
     let entries = this.state.entries;
     entries[idx].title = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setRank = (idx) => (evt) => {
+  setRank = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
     let entries = this.state.entries;
     entries[idx].ranks = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setPoints = (idx) => (evt) => {
+  setPoints = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
     let entries = this.state.entries;
     entries[idx].points = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setComments = (idx) => (evt) => {
+  setComments = (idx: number) => (evt: Events.EditorEventMap["blur"]) => {
     let entries = this.state.entries;
-    entries[idx].comments = evt.target.getContent();
+    entries[idx].comments = evt.focusedEditor.getContent();
     this.setState({ entries: entries });
   };
 
-  checkErrors = (evt) => {
+  checkErrors = (evt: MouseEvent<HTMLInputElement>) => {
     const counts = [];
     const errors = [];
     for (const element of this.state.entries) {
-      const points = element.points || 0;
-      const rank = element.ranks;
+      const points = Number(element.points) || 0;
+      const rank = Number(element.ranks);
       if (rank === undefined) {
         errors.push(`Rank missing for ${element.code}`);
       }
@@ -86,6 +94,7 @@ class BallotStartedForm extends React.Component {
       const lowPointErrors = [];
       const sortedEntries = this.state.entries.sort(dynamicSort("ranks"));
       for (let i = 0; i < sortedEntries.length - 1; i++) {
+        // @ts-ignore
         if (sortedEntries[i + 1].points > sortedEntries[i].points) {
           lowPointErrors.push(sortedEntries[i].ranks);
         }
@@ -108,14 +117,16 @@ class BallotStartedForm extends React.Component {
     return errors.length === 0;
   };
 
-  handleSubmit = (evt) => {
+  handleSubmit: MouseEventHandler<HTMLInputElement> = (
+    evt: MouseEvent<HTMLInputElement>
+  ) => {
     if (this.checkErrors(evt)) {
       this.props.onSubmit(this.state.entries);
     }
   };
 
   render() {
-    const columns = [
+    const columns: Column[] = [
       {
         label: "Code",
         property: "code",
@@ -154,7 +165,7 @@ class BallotStartedForm extends React.Component {
           <TabroomError errors={this.state.errors} />
         )}
 
-        <form action="ballot_save.mhtml" method="post">
+        <form method="post">
           <input type="hidden" name="panel_id" value="3209946" />
 
           <input type="hidden" name="judge_id" value="961185" />
@@ -166,7 +177,7 @@ class BallotStartedForm extends React.Component {
               agree.
             </span>
           </div>
-          <SortableTable
+          <SortableTable<SpeechEntry>
             entries={this.state.entries}
             defaultSort="order"
             columns={columns}
@@ -185,7 +196,7 @@ class BallotStartedForm extends React.Component {
           >
             <tbody aria-live="polite" aria-relevant="all">
               <tr className="liblrow odd" role="row">
-                <td colSpan="10" className="rightalign">
+                <td colSpan={10} className="rightalign">
                   <input
                     type="button"
                     value=" Submit Ballot "

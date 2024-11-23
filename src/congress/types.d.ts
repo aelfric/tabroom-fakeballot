@@ -1,3 +1,4 @@
+
 export type CongressEntry = {
   name: string;
   id: number;

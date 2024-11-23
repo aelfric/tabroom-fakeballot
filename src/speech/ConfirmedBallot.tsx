@@ -1,10 +1,19 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Content from "../Content";
 import { DefaultMenu } from "../Ballot";
+import { SpeechEntry } from "./types";
 
-function Result({ order, code, name, title, ranks, points }) {
+function Result({
+  order,
+  code,
+  name,
+  title,
+  ranks,
+  points,
+  even,
+}: SpeechEntry & { even: boolean }) {
   return (
-    <div className="row even">
+    <div className={`row ${even ? "even" : "odd"}`}>
       <span className="sixth padvert smaller">{order} Speaker</span>
 
       <span className="third semibold bluetext">
@@ -19,7 +28,13 @@ function Result({ order, code, name, title, ranks, points }) {
   );
 }
 
-export default function ConfirmedBallot({ entries, editFeedback }) {
+export default function ConfirmedBallot({
+  entries,
+  editFeedback,
+}: {
+  entries: SpeechEntry[];
+  editFeedback: MouseEventHandler<HTMLButtonElement>;
+}) {
   return (
     <Content
       menu={<DefaultMenu />}
@@ -69,7 +84,7 @@ export default function ConfirmedBallot({ entries, editFeedback }) {
           </div>
 
           {entries.map((e, i) => (
-            <Result {...e} className={`row ${i % 2 === 0 ? "even" : "odd"}`} />
+            <Result {...e} even={i % 2 === 0} />
           ))}
         </>
       }
