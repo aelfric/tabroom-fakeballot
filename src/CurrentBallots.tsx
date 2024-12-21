@@ -1,9 +1,10 @@
 import React, {useState} from "react";
 import Content from "./Content";
-import { FakeLink } from "./App";
+import { FakeLink } from "./FakeLink";
 import { SpeechBallot } from "./speech/SpeechBallot";
 import { CongressBallot } from "./congress/CongressBallot";
-import {SpeechEntry} from "./speech/types";
+import {DebateBallot} from "./debate/DebateBallot";
+import {SPEECH_ENTRIES} from "./speech/FakeSpeechBallot";
 
 export function DefaultMenu() {
   return (
@@ -88,26 +89,25 @@ export function DefaultMenu() {
     </>
   );
 }
-
-interface BallotProps {
-  entries: SpeechEntry[];
-  start: () => void;
-}
-
-export default function Ballot(props: BallotProps) {
+export default function CurrentBallots() {
   const rounds = [
     {
       name: "OBT Round 1",
       time: "9:00 AM EST",
       room: "12",
-      entries: props.entries,
+      entries: SPEECH_ENTRIES,
     },
     {
       name: "CON Session 1",
       time: "9:00 AM EST",
       room: "405",
-      entries: props.entries,
-    },
+      entries: []
+    },{
+      name: "PF Round 1",
+      time: "9:00 AM EST",
+      room: "109",
+      entries: []
+    }
   ];
 
   const [tab, setTab] = useState("current");
@@ -155,6 +155,7 @@ export default function Ballot(props: BallotProps) {
               <h5>Current Assignments</h5>
               <SpeechBallot round={rounds[0]} />
               <CongressBallot round={rounds[1]} />
+              <DebateBallot round={rounds[2]}/>
             </span>
           </div>
         </>

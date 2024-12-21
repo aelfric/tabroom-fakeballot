@@ -1,12 +1,11 @@
 import React from "react";
-import {FakeLink} from "../App";
+import { FakeLink } from "../FakeLink";
+import {Link} from "@tanstack/react-router";
 
 export function DebateBallot({
-  round = {name: "", room: "", time: ""},
-  start,
+  round = { name: "", room: "", time: "" },
 }: {
-  round: { name: string; room: string, time: string };
-  start: () => unknown;
+  round: { name: string; room: string; time: string };
 }) {
   return (
     <div
@@ -41,15 +40,27 @@ export function DebateBallot({
 
         <span className="threequarters flexrow">{round.time}</span>
       </div>
+      <div className="full ltborderbottom ltbordertop flexrow">
+        <span className="quarter semibold padleft">Entries</span>
+
+        <span className="threequarters flexrow padvertless wrap">
+          <span className="full flexrow wrap padvertless smallish">
+            <span className="fifth semibold nospace">Aff</span>
+            <span className="fourfifths nospace">Williams Prep GB</span>
+          </span>
+          <span className="full flexrow wrap padvertless smallish">
+            <span className="fifth semibold nospace">Neg</span>
+            <span className="fourfifths nospace">Academy NB</span>
+          </span>
+        </span>
+      </div>
 
       <div className="full ltbordertop flexrow">
         <div className="full flexrow">
           <span className="half centeralign"></span>
 
           <span className="fourfifths rightalign">
-            <button className="greentext invert buttonwhite" onClick={start}>
-              ON MY WAY!
-            </button>
+            <Link to={"/debate"} className="greentext invert buttonwhite">ON MY WAY!</Link>
 
             <span className="quarterspacer"></span>
           </span>

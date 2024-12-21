@@ -1,11 +1,23 @@
 // @ts-nocheck
 import { describe, expect, it } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
-import App from "./App";
+import CurrentBallots from "./CurrentBallots";
+import {
+  createMemoryHistory,
+  createRootRoute,
+  createRouter,
+  RouterContextProvider,
+  RouterProvider,
+} from "@tanstack/react-router";
+import { routeTree } from "./routeTree.gen";
 
 describe("Landing Page", () => {
   it("can open a speech ballot", () => {
-    render(<App />);
+    const rootRoute = createRootRoute();
+    let router = createRouter({ routeTree: rootRoute });
+    render(
+      <RouterProvider router={router} defaultComponent={CurrentBallots} />
+    );
     const startButtons = screen.getAllByText("ON MY WAY!");
     fireEvent.click(startButtons[0]);
 

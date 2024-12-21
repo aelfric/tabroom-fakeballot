@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 import Content from "../Content";
-import { DefaultMenu } from "../Ballot";
+import { DefaultMenu } from "../CurrentBallots";
 import { SpeechEntry } from "./types";
 
 function Result({

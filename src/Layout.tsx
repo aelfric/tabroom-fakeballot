@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 import Headers from "./Menus";
-import { FakeLink } from "./App";
+import { FakeLink } from "./FakeLink";
 
 export default function Layout(props: { children: ReactNode }) {
   return (

@@ -1,6 +1,6 @@
 import React from "react";
 import Content from "./Content";
-import { FakeLink } from "./App";
+import { FakeLink } from "./FakeLink";
 import { CommentBox } from "./CommentBox";
 import { SpeechEntry } from "./speech/types";
 import { Events } from "tinymce";

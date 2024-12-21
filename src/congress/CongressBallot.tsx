@@ -1,5 +1,5 @@
 import React from "react";
-import { FakeLink } from "../App";
+import { FakeLink } from "../FakeLink";
 import { Link } from "@tanstack/react-router";
 
 export function CongressBallot({

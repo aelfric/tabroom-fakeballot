@@ -1,6 +1,6 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import {DebateBallot} from "../debate/DebateBallot";
+import {DebateBallotStarted} from "../debate/DebateBallotStarted";
 
 export const Route = createLazyFileRoute('/debate')({
-    component: DebateBallot,
+    component: DebateBallotStarted,
 })

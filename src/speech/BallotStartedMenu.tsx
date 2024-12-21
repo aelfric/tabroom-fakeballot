@@ -1,4 +1,4 @@
-import { FakeLink } from "../App";
+import { FakeLink } from "../FakeLink";
 import Timer from "../Timer";
 import React from "react";
 

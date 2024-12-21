@@ -1,5 +1,5 @@
 import { createLazyFileRoute } from '@tanstack/react-router'
-import Ballot from "../Ballot";
+import CurrentBallots from "../CurrentBallots";
 import React from "react";
 
 export const Route = createLazyFileRoute('/')({
@@ -8,6 +8,6 @@ export const Route = createLazyFileRoute('/')({
 
 function Index() {
     return (
-        <Ballot start={()=>undefined} entries={[]} />
+        <CurrentBallots />
     )
 }

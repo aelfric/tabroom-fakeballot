@@ -1,13 +1,14 @@
 import React from "react";
 import {Link} from "@tanstack/react-router";
-import {FakeLink} from "../App";
+import {FakeLink} from "../FakeLink";
+import {SpeechEntry} from "./types";
 
 type SpeechBallotProps = {
   round: {
     name: string;
     room: string;
     time: string;
-    entries: any[];
+    entries: SpeechEntry[];
   };
 };
 
