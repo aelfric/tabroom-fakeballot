@@ -4,10 +4,12 @@ export function ConfirmBallot({
   entries,
   confirm,
   winningEntry,
+  rfd,
 }: {
   entries: TeamDebateEntry[];
   confirm: () => void;
   winningEntry?: number | undefined;
+  rfd?: string;
 }) {
   return (
     <Content
@@ -77,7 +79,12 @@ export function ConfirmBallot({
           </div>
         </div>
       }
-      menu={null}
+      menu={
+        <div className="sidenote">
+          <h4>RFD</h4>
+          <div dangerouslySetInnerHTML={{__html: rfd || ""}} />
+        </div>
+      }
     />
   );
 }

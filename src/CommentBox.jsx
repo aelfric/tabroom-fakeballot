@@ -26,6 +26,11 @@ const tinyMCEConfig = {
     "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
 };
 
+/**
+ *
+ * @param { {setComments: (evt: import("tinymcr").Events.EditorEventMap["blur"]) => unknown, currentComments?: string} } props
+ * @returns {ReactNode}
+ */
 export function CommentBox({ setComments, currentComments }) {
   return (
     <div className="row centeralign odd">

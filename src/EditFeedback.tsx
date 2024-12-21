@@ -89,7 +89,6 @@ export default class EditFeedback extends React.Component<
 
             <h4>Reason for Rankings</h4>
             <CommentBox
-              id="rfd"
               setComments={(evt) => this.props.setRFD(evt)}
               currentComments={this.props.rfd}
             />
@@ -105,11 +104,8 @@ export default class EditFeedback extends React.Component<
 
                 <CommentBox
                   key={e.code}
-                  id={i}
                   setComments={this.setComments(i)}
                   currentComments={e.comments}
-                  code={e.code}
-                  name={e.name}
                 />
               </React.Fragment>
             ))}

@@ -44,6 +44,7 @@ export function DebateBallotStarted() {
         entries={round.entries}
         winningEntry={round.winningEntry}
         confirm={() => setConfirming(false)}
+        rfd={round.rfd}
       />
     );
   } else {
