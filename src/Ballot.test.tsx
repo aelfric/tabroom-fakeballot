@@ -22,7 +22,7 @@ describe("Landing Page", () => {
     fireEvent.click(startButtons[0]);
 
     expect(
-      screen.queryByText("OBT Round 1 Ballot for Riccobono")
+      screen.queryByText("OBT Round 1")
     ).toBeInTheDocument();
   });
 });
