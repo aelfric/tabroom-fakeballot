@@ -21,7 +21,6 @@ describe("Landing Page", () => {
     const startButtons = screen.getAllByText("ON MY WAY!");
     fireEvent.click(startButtons[0]);
 
-    screen.debug();
     expect(
       screen.queryByText("OBT Round 1")
     ).toBeInTheDocument();
