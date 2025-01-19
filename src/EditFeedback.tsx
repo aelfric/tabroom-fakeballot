@@ -1,9 +1,9 @@
-import React from "react";
+import React, { FocusEvent } from "react";
 import Content from "./Content";
 import { FakeLink } from "./FakeLink";
 import { CommentBox } from "./CommentBox";
 import { SpeechEntry } from "./speech/types";
-import { Events } from "tinymce";
+import {Events, Editor} from "tinymce";
 
 interface EditFeedbackProps {
   entries: SpeechEntry[];
@@ -24,9 +24,9 @@ export default class EditFeedback extends React.Component<
     entries: JSON.parse(JSON.stringify(this.props.entries)),
   };
 
-  setComments = (idx: number) => (evt: Events.EditorEventMap["blur"]) => {
+  setComments = (idx: number) => (evt: FocusEvent<Editor>) => {
     this.setState(({ entries }) => {
-      entries[idx].comments = evt.focusedEditor.getContent();
+      entries[idx].comments = evt.target.getContent();
       return { entries: entries };
     });
   };

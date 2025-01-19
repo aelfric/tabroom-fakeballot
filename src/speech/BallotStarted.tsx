@@ -1,10 +1,15 @@
-import React, { ChangeEvent, MouseEvent, MouseEventHandler } from "react";
+import React, {
+  ChangeEvent,
+  MouseEvent,
+  MouseEventHandler,
+  FocusEvent,
+} from "react";
 import { Column, dynamicSort, SortableTable } from "../SortableTable";
 import { CommentPanel } from "./CommentPanel";
 import { BallotRow } from "./BallotRow";
 import { TabroomError } from "../TabroomError";
 import { SpeechEntry } from "./types";
-import { Events } from "tinymce";
+import { Editor } from "tinymce";
 
 const includePoints = true;
 
@@ -51,9 +56,9 @@ export class BallotStartedForm extends React.Component<
     this.setState({ entries: entries });
   };
 
-  setComments = (idx: number) => (evt: Events.EditorEventMap["blur"]) => {
+  setComments = (idx: number) => (evt: FocusEvent<Editor>) => {
     let entries = this.state.entries;
-    entries[idx].comments = evt.focusedEditor.getContent();
+    entries[idx].comments = evt.target.getContent();
     this.setState({ entries: entries });
   };
 
