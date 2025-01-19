@@ -1,18 +1,18 @@
 import React from "react";
 
 type BallotRowProps = {
-    code: string,
-    name: string,
-    title?: string
-    ranks?: string
-    points?: string,
-    setTitle: any,
-    setPoints: any,
-    setRank: any
-    even: boolean,
-    row: any
-    includePoints: boolean
-}
+  code: string;
+  name: string;
+  title?: string;
+  ranks?: string;
+  points?: string;
+  setTitle: any;
+  setPoints: any;
+  setRank: any;
+  even: boolean;
+  row: any;
+  includePoints: boolean;
+};
 
 export function BallotRow({
   code,

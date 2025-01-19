@@ -1,7 +1,7 @@
 import React from "react";
-import {Link} from "@tanstack/react-router";
-import {FakeLink} from "../FakeLink";
-import {SpeechEntry} from "./types";
+import { Link } from "@tanstack/react-router";
+import { FakeLink } from "../FakeLink";
+import { SpeechEntry } from "./types";
 
 type SpeechBallotProps = {
   round: {
@@ -12,7 +12,7 @@ type SpeechBallotProps = {
   };
 };
 
-export function SpeechBallot({ round}: SpeechBallotProps) {
+export function SpeechBallot({ round }: SpeechBallotProps) {
   return (
     <div
       className="bluebordertop odd marbottom "
@@ -70,7 +70,7 @@ export function SpeechBallot({ round}: SpeechBallotProps) {
         <span className="fifth centeralign"></span>
 
         <span className="fourfifths rightalign">
-          <Link  to="/speech" className="greentext invert buttonwhite">
+          <Link to="/speech" className="greentext invert buttonwhite">
             ON MY WAY!
           </Link>
         </span>

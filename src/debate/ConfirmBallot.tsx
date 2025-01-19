@@ -82,7 +82,7 @@ export function ConfirmBallot({
       menu={
         <div className="sidenote">
           <h4>RFD</h4>
-          <div dangerouslySetInnerHTML={{__html: rfd || ""}} />
+          <div dangerouslySetInnerHTML={{ __html: rfd || "" }} />
         </div>
       }
     />

@@ -16,13 +16,11 @@ describe("Landing Page", () => {
     const rootRoute = createRootRoute();
     let router = createRouter({ routeTree: rootRoute });
     render(
-      <RouterProvider router={router} defaultComponent={CurrentBallots} />
+      <RouterProvider router={router} defaultComponent={CurrentBallots} />,
     );
     const startButtons = screen.getAllByText("ON MY WAY!");
     fireEvent.click(startButtons[0]);
 
-    expect(
-      screen.queryByText("OBT Round 1")
-    ).toBeInTheDocument();
+    expect(screen.queryByText("OBT Round 1")).toBeInTheDocument();
   });
 });

@@ -1,2 +1,2 @@
-declare module '*.png';
-declare module "CommentBox.jsx"
+declare module "*.png";
+declare module "CommentBox.jsx";

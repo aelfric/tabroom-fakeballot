@@ -1,6 +1,6 @@
 import React from "react";
 import { FakeLink } from "../FakeLink";
-import {Link} from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 export function DebateBallot({
   round = { name: "", room: "", time: "" },
@@ -60,7 +60,9 @@ export function DebateBallot({
           <span className="half centeralign"></span>
 
           <span className="fourfifths rightalign">
-            <Link to={"/debate"} className="greentext invert buttonwhite">ON MY WAY!</Link>
+            <Link to={"/debate"} className="greentext invert buttonwhite">
+              ON MY WAY!
+            </Link>
 
             <span className="quarterspacer"></span>
           </span>

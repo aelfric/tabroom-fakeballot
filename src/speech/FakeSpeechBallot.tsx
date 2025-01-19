@@ -3,7 +3,7 @@ import ConfirmSubmit from "./ConfirmBallot";
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
 import { BallotStartedForm } from "./BallotStarted";
-import {SpeechEntry} from "./types";
+import { SpeechEntry } from "./types";
 
 export const SPEECH_ENTRIES: SpeechEntry[] = [
   {

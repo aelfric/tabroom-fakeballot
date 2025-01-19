@@ -1,16 +1,15 @@
-
 export type CongressEntry = {
   name: string;
   id: number;
   speeches: Speech[];
-  rank?: number
+  rank?: number;
 };
 
 export type Speech = {
-  name?: string,
-  topic?: string,
+  name?: string;
+  topic?: string;
   comments?: string;
-  po?: boolean,
-  side?: "1" | "2",
-  points?: number
+  po?: boolean;
+  side?: "1" | "2";
+  points?: number;
 };

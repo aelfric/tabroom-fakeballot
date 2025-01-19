@@ -1,11 +1,14 @@
-import React, {ReactNode} from "react";
+import React, { ReactNode } from "react";
 
 interface ContentProps {
-    main: ReactNode;
-    menu: ReactNode;
+  main: ReactNode;
+  menu: ReactNode;
 }
 
-export default class Content extends React.Component<ContentProps, { collapseMenu: boolean }> {
+export default class Content extends React.Component<
+  ContentProps,
+  { collapseMenu: boolean }
+> {
   state = {
     collapseMenu: false,
   };
