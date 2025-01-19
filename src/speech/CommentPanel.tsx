@@ -2,17 +2,17 @@
 import React from "react";
 
 import { CommentBox } from "../CommentBox";
-import {SpeechEntry} from "./types";
+import { SpeechEntry } from "./types";
 
 interface CommentPanelProps {
   entries: SpeechEntry[];
   rfd?: string;
   setRFD?: any;
-  setComments: (i: number) => unknown
+  setComments: (i: number) => unknown;
 }
 
 interface CommentPanelState {
-  currentStudent: number | `${number}` | "rfd"
+  currentStudent: number | `${number}` | "rfd";
 }
 
 export class CommentPanel extends React.Component<

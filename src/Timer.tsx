@@ -3,7 +3,7 @@ import React from "react";
 import moment from "moment";
 
 interface TimerProps {
-  initialDuration: number
+  initialDuration: number;
 }
 
 interface TimerState {

@@ -80,7 +80,7 @@ export class BallotStartedForm extends React.Component<
           counts[points] = 1;
         } else {
           errors.push(
-            `Tied points forbidden: you have two speakers with points ${points}`
+            `Tied points forbidden: you have two speakers with points ${points}`,
           );
         }
       }
@@ -89,7 +89,7 @@ export class BallotStartedForm extends React.Component<
           counts[rank] = 1;
         } else {
           errors.push(
-            `You have repeated the rank ${rank}.  All ranks must be unique`
+            `You have repeated the rank ${rank}.  All ranks must be unique`,
           );
         }
       }
@@ -108,8 +108,8 @@ export class BallotStartedForm extends React.Component<
       if (lowPointErrors.length > 0) {
         errors.push(
           `Entry ranked ${lowPointErrors.join(
-            ", "
-          )} has worse points than a lower ranked entry`
+            ", ",
+          )} has worse points than a lower ranked entry`,
         );
         errors.push("Rank order must match the order of points given.");
       }
@@ -123,7 +123,7 @@ export class BallotStartedForm extends React.Component<
   };
 
   handleSubmit: MouseEventHandler<HTMLInputElement> = (
-    evt: MouseEvent<HTMLInputElement>
+    evt: MouseEvent<HTMLInputElement>,
   ) => {
     if (this.checkErrors(evt)) {
       this.props.onSubmit(this.state.entries);

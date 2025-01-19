@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Content from "../Content";
 import { BallotStartedMenu } from "../congress/BallotStartedMenu";
 import { DebateBallotMain } from "./DebateBallotMain";
-import {ConfirmBallot} from "./ConfirmBallot";
+import { ConfirmBallot } from "./ConfirmBallot";
 
 export function DebateBallotStarted() {
   const [round, setRound] = useState<DebateRound>({
@@ -12,11 +12,11 @@ export function DebateBallotStarted() {
         speakers: [
           {
             name: "Kiersten Buzbee",
-            last: "Buzbee"
+            last: "Buzbee",
           },
           {
             name: "Teegin Groves",
-            last: "Groves"
+            last: "Groves",
           },
         ],
       },
@@ -25,11 +25,11 @@ export function DebateBallotStarted() {
         speakers: [
           {
             name: "Ross Brown",
-            last: "Brown"
+            last: "Brown",
           },
           {
             name: "Jackie Nguyen",
-            last: "Nguyen"
+            last: "Nguyen",
           },
         ],
       },

@@ -20,7 +20,7 @@ export function DebateBallotMain({
     rfd: "",
   });
   const [winningEntry, setWinningEntry] = useState<undefined | string>(
-    undefined
+    undefined,
   );
   const [winningSide, setWinningSide] = useState<undefined | string>(undefined);
 
@@ -37,8 +37,8 @@ export function DebateBallotMain({
         }
       }
     }
-    
-    const updatedEntries = entries.map(team => {
+
+    const updatedEntries = entries.map((team) => {
       return {
         ...team,
         speakers: team.speakers.map((speaker, index) => {
@@ -48,11 +48,11 @@ export function DebateBallotMain({
           };
         }),
       };
-    })
-    
+    });
+
     if (!winningEntry) {
       tmpErrors.push(
-        "You didn't choose a winner. There are no ties in debate, though there are sometimes tears. Be strong."
+        "You didn't choose a winner. There are no ties in debate, though there are sometimes tears. Be strong.",
       );
     }
     if (tmpErrors.length === 0) {

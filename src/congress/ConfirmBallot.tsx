@@ -1,9 +1,17 @@
 import React from "react";
 import Content from "../Content";
 import { SortableTable } from "../SortableTable";
-import {CongressEntry} from "./types";
+import { CongressEntry } from "./types";
 
-function EntryRow({ rank, name, even }: {rank?: number, name: string, even: boolean}) {
+function EntryRow({
+  rank,
+  name,
+  even,
+}: {
+  rank?: number;
+  name: string;
+  even: boolean;
+}) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{rank}</td>

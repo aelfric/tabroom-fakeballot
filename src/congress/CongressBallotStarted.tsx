@@ -256,7 +256,7 @@ function CongressBallotMain({
     a: (p: { entries: CongressEntry[]; errors: string[] }) => {
       entries: CongressEntry[];
       errors: string[];
-    }
+    },
   ) => void;
   onSubmit: () => unknown;
 }) {
@@ -285,7 +285,7 @@ function CongressBallotMain({
         return { ...oldState };
       });
     },
-    [selected]
+    [selected],
   );
 
   const addPoSession = useCallback(
@@ -307,7 +307,7 @@ function CongressBallotMain({
         return { ...oldState };
       });
     },
-    [selected]
+    [selected],
   );
 
   function updateSpeech(idx: number) {
@@ -524,7 +524,7 @@ function CongressBallotMain({
                 />
               ) : (
                 <CongressSpeech key={i} speech={s} onSave={updateSpeech(i)} />
-              )
+              ),
             )}
           </div>
         </div>

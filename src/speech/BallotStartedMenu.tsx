@@ -49,7 +49,7 @@ export const BallotStartedMenu = () => (
       </span>
 
       <div className="bigger centeralign semibold" />
-      <Timer initialDuration={10}/>
+      <Timer initialDuration={10} />
       <h4>Other ballots</h4>
     </div>
   </>

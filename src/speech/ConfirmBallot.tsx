@@ -1,11 +1,19 @@
 import React from "react";
 import Content from "../Content";
 import { SortableTable } from "../SortableTable";
-import {SpeechEntry} from "./types";
+import { SpeechEntry } from "./types";
 
 const includePoints = false;
 
-function EntryRow({ ranks, points, code, name, title, order, even }: SpeechEntry & {even: boolean}) {
+function EntryRow({
+  ranks,
+  points,
+  code,
+  name,
+  title,
+  order,
+  even,
+}: SpeechEntry & { even: boolean }) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{ranks}</td>
@@ -133,7 +141,7 @@ export default class ConfirmSubmit extends React.Component<
           <div className="sidenote">
             <h4>RFD</h4>
 
-            <div dangerouslySetInnerHTML={{ __html: this.props.rfd || ""}} />
+            <div dangerouslySetInnerHTML={{ __html: this.props.rfd || "" }} />
           </div>
         }
       />
