@@ -40,7 +40,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
-    "@tanstack/router-devtools": "1.81.14",
+    "@tanstack/router-devtools": "1.97.3",
     "@tanstack/router-plugin": "1.91.1",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "^6.6.3",
