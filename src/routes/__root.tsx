@@ -6,7 +6,6 @@ import Layout from "../Layout.jsx";
 export const Route = createRootRoute({
   component: () => (
     <>
-      <b>blah</b>
       <Layout>
         <Outlet />
       </Layout>
