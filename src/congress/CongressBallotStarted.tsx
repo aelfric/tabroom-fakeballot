@@ -4,12 +4,17 @@ import React, { useCallback, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
 import { CongressEntry, Speech } from "./types";
+import { Updater, useImmer } from "use-immer";
+
+type CongressRound = {
+  entries: CongressEntry[];
+  errors: string[];
+  speechNumber: number;
+  poNumber: number;
+};
 
 export function CongressBallotStarted() {
-  const [round, setRound] = useState<{
-    entries: CongressEntry[];
-    errors: string[];
-  }>({
+  const [round, setRound] = useImmer<CongressRound>({
     entries: [
       "Alannah Meadows",
       "Casper Howard",
@@ -26,6 +31,8 @@ export function CongressBallotStarted() {
       "Susheela Innes",
     ].map(generateEntry),
     errors: [],
+    speechNumber: 1,
+    poNumber: 1,
   });
 
   const [confirming, setConfirming] = useState(false);
@@ -55,18 +62,18 @@ export function CongressBallotStarted() {
 function CongressSpeech({
   speech,
   onSave,
-}: {
+}: Readonly<{
   speech: Speech;
   onSave: (f: FormData) => void;
-}) {
-  const [comments, setComments] = useState(speech.comments || "");
+}>) {
+  const [comments, setComments] = useState(speech.comments ?? "");
   return (
     <form action={onSave}>
       <div className="lightbordertop martop">
         <div className="odd noborder">
           <span className="quarter marno">
             <p className="speech bluetext semibold bigger">
-              {speech.name || "New speech:"}
+              {speech.name ?? "New speech:"}
             </p>
           </span>
 
@@ -97,7 +104,7 @@ function CongressSpeech({
                   name="side"
                   value="1"
                   defaultChecked={speech.side === "1"}
-                />
+                />{" "}
                 For the bill
               </span>
             </label>
@@ -110,7 +117,7 @@ function CongressSpeech({
                   name="side"
                   value="2"
                   defaultChecked={speech.side === "2"}
-                />
+                />{" "}
                 Against
               </span>
             </label>
@@ -164,11 +171,11 @@ function CongressSpeech({
 function CongressPoSession({
   speech,
   onSave,
-}: {
+}: Readonly<{
   speech: Speech;
   onSave: (f: FormData) => void;
-}) {
-  const [comments, setComments] = useState(speech.comments || "");
+}>) {
+  const [comments, setComments] = useState(speech.comments ?? "");
   return (
     <form action={onSave}>
       <div className="lightbordertop martop">
@@ -176,7 +183,7 @@ function CongressPoSession({
           <div className="odd noborder">
             <span className="quarter marno">
               <p className="po bluetext semibold bigger">
-                {speech.name || "New PO rating:"}
+                {speech.name ?? "New PO rating:"}
               </p>
             </span>
             <span className="threequarters padvertmore bigger rightalign semibold bluetext po">
@@ -247,42 +254,34 @@ function CongressBallotMain({
   round,
   setRound,
   onSubmit,
-}: {
+}: Readonly<{
   round: {
     errors: string[];
     entries: CongressEntry[];
   };
-  setRound: (
-    a: (p: { entries: CongressEntry[]; errors: string[] }) => {
-      entries: CongressEntry[];
-      errors: string[];
-    },
-  ) => void;
+  setRound: Updater<CongressRound>;
   onSubmit: () => unknown;
-}) {
+}>) {
   const [po, setPo] = useState(-1);
   const [selected, setSelected] = useState(0);
   const [tab, setTab] = useState("speeches");
 
   const addSpeech = useCallback(
     (formData: FormData) => {
+      console.log("Add speech");
       let topic = String(formData.get("topic"));
       let points = Number(formData.get("points"));
       let side = String(formData.get("side")) as "1" | "2";
       let comments = String(formData.get("comments"));
-      setRound((oldState) => {
-        let speeches: Speech[] = oldState.entries[selected].speeches;
-        oldState.entries[selected].speeches = [
-          ...speeches,
-          {
-            name: "Speech #" + (speeches.length + 1),
-            topic,
-            points,
-            comments,
-            side,
-          },
-        ];
-        return { ...oldState };
+      setRound((draft) => {
+        draft.entries[selected].speeches.push({
+          name: "Speech #" + draft.speechNumber,
+          topic,
+          points,
+          comments,
+          side,
+        });
+        draft.speechNumber = draft.speechNumber + 1;
       });
     },
     [selected],
@@ -292,19 +291,15 @@ function CongressBallotMain({
     (formData: FormData) => {
       const points = Number(formData.get("points"));
       const comments = String(formData.get("comments"));
-      debugger;
-      setRound((oldState: { entries: CongressEntry[]; errors: string[] }) => {
-        let speeches = oldState.entries[selected].speeches;
-        oldState.entries[selected].speeches = [
-          ...speeches,
-          {
-            name: "PO Session #" + (speeches.length + 1),
-            po: true,
-            points,
-            comments,
-          },
-        ];
-        return { ...oldState };
+
+      setRound((draft) => {
+        draft.entries[selected].speeches.push({
+          name: "PO Session #" + draft.poNumber,
+          po: true,
+          points,
+          comments,
+        });
+        draft.poNumber = draft.poNumber + 1;
       });
     },
     [selected],
@@ -316,22 +311,15 @@ function CongressBallotMain({
       const points = Number(formData.get("points"));
       const side = formData.get("side") as "1" | "2";
       const comments = String(formData.get("comments"));
-      setRound((oldState) => {
-        let speeches = oldState.entries[selected].speeches;
-        oldState.entries[selected].speeches = [...speeches].map((s, i) => {
-          if (i === idx) {
-            return {
-              name: s.name,
-              topic,
-              points,
-              comments,
-              side,
-            };
-          } else {
-            return s;
-          }
-        });
-        return { ...oldState };
+
+      setRound((draft) => {
+        draft.entries[selected].speeches[idx] = {
+          name: draft.entries[selected].speeches[idx].name,
+          topic,
+          points,
+          comments,
+          side,
+        };
       });
     };
   }
@@ -340,21 +328,13 @@ function CongressBallotMain({
     return function (formData: FormData) {
       const points = Number(formData.get("points"));
       const comments = String(formData.get("comments"));
-      setRound((oldState) => {
-        let speeches = oldState.entries[selected].speeches;
-        oldState.entries[selected].speeches = [...speeches].map((s, i) => {
-          if (i === idx) {
-            return {
-              name: s.name,
-              po: true,
-              points,
-              comments,
-            };
-          } else {
-            return s;
-          }
-        });
-        return { ...oldState };
+      setRound((draft) => {
+        draft.entries[selected].speeches[idx] = {
+          name: draft.entries[selected].speeches[idx].name,
+          po: true,
+          points,
+          comments,
+        };
       });
     };
   }
@@ -424,17 +404,19 @@ function CongressBallotMain({
         <li
           id="button_speeches"
           className={tab === "speeches" ? "tabs selected invert" : "tabs"}
-          onClick={() => setTab("speeches")}
         >
-          Speeches
+          <button onClick={() => setTab("speeches")} type={"button"}>
+            Speeches
+          </button>
         </li>
 
         <li
           id="button_rankings"
           className={tab === "rankings" ? "tabs selected invert" : "tabs"}
-          onClick={() => setTab("rankings")}
         >
-          Rankings
+          <button onClick={() => setTab("rankings")} type={"button"}>
+            Rankings
+          </button>
         </li>
       </ul>
 
@@ -485,7 +467,10 @@ function CongressBallotMain({
                 Presiding Officer this session
               </span>
               <span className="quarter nospace centeralign">
-                <label className="switch smaller">
+                <label
+                  className="switch smaller"
+                  aria-label={"Presiding officer this session"}
+                >
                   <input
                     className="padsettingbox"
                     type="checkbox"
@@ -518,12 +503,16 @@ function CongressBallotMain({
             {round.entries[selected].speeches.map((s, i) =>
               s.po ? (
                 <CongressPoSession
-                  key={i}
+                  key={s.name}
                   speech={s}
                   onSave={updatePoSession(i)}
                 />
               ) : (
-                <CongressSpeech key={i} speech={s} onSave={updateSpeech(i)} />
+                <CongressSpeech
+                  key={s.name}
+                  speech={s}
+                  onSave={updateSpeech(i)}
+                />
               ),
             )}
           </div>
@@ -573,7 +562,6 @@ function CongressBallotMain({
             <table
               id="sortable"
               className="tablesorter tablesorter-default tablesorterb8b1a23feee53 hasStickyHeaders tablesorter9781b859d7f2a"
-              role="grid"
             >
               <thead>
                 <tr
@@ -588,7 +576,6 @@ function CongressBallotMain({
                     role="columnheader"
                     aria-disabled="false"
                     aria-controls="sortable"
-                    unselectable="on"
                     aria-sort="none"
                     aria-label="Entry Code: No sort applied, activate to apply a descending sort"
                     style={{ userSelect: "none" }}
@@ -604,7 +591,6 @@ function CongressBallotMain({
                     role="columnheader"
                     aria-disabled="false"
                     aria-controls="sortable"
-                    unselectable="on"
                     aria-sort="none"
                     aria-label="Speech Points: No sort applied, activate to apply a descending sort"
                     style={{ userSelect: "none" }}
@@ -622,7 +608,6 @@ function CongressBallotMain({
                     role="columnheader"
                     aria-disabled="false"
                     aria-controls="sortable"
-                    unselectable="on"
                     aria-sort="none"
                     aria-label="Average: No sort applied, activate to apply a descending sort"
                     style={{ userSelect: "none" }}
@@ -638,7 +623,6 @@ function CongressBallotMain({
                     role="columnheader"
                     aria-disabled="false"
                     aria-controls="sortable"
-                    unselectable="on"
                     aria-sort="none"
                     aria-label="Rank: No sort applied, activate to apply a descending sort"
                     style={{ userSelect: "none" }}
@@ -676,7 +660,6 @@ function CongressBallotMain({
                     </td>
                     <td className="centeralign">
                       <input
-                        tabIndex={1}
                         type="number"
                         step="1"
                         size={5}

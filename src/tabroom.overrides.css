@@ -1,0 +1,16 @@
+.tabs button {
+  font-size: inherit;
+  font-family: inherit;
+  color: inherit;
+  width: 100%;
+  height: 100%;
+  font-weight: inherit;
+  border: none;
+  background-color: inherit;
+  line-height: inherit;
+  border-radius: unset;
+}
+
+.tabs button:focus {
+  border: 1px dotted;
+}
