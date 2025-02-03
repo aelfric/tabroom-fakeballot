@@ -43,17 +43,14 @@ export function CongressBallot({
       </div>
 
       <div className="full ltbordertop flexrow">
-        <div className="full flexrow">
-          <span className="half centeralign"></span>
+        <span className="half centeralign"></span>
+        <span className="half centeralign padright">
+          <Link to={"/congress"} className="greentext invert buttonwhite">
+            ON MY WAY!
+          </Link>
 
-          <span className="fourfifths rightalign">
-            <Link to={"/congress"} className="greentext invert buttonwhite">
-              ON MY WAY!
-            </Link>
-
-            <span className="quarterspacer"></span>
-          </span>
-        </div>
+          <span className="quarterspacer"></span>
+        </span>
       </div>
     </div>
   );

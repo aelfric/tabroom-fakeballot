@@ -12,7 +12,7 @@ type SpeechBallotProps = {
   };
 };
 
-export function SpeechBallot({ round }: SpeechBallotProps) {
+export function SpeechBallot({ round }: Readonly<SpeechBallotProps>) {
   return (
     <div
       className="bluebordertop odd marbottom "
@@ -64,12 +64,9 @@ export function SpeechBallot({ round }: SpeechBallotProps) {
       </div>
 
       <div className="full ltbordertop">
-        <div className="full padvertless nospace explain semibold centeralign graytext padbottom">
-          Press the Button!
-        </div>
-        <span className="fifth centeralign"></span>
+        <span className="half centeralign"></span>
 
-        <span className="fourfifths rightalign">
+        <span className="half centeralign padright">
           <Link to="/speech" className="greentext invert buttonwhite">
             ON MY WAY!
           </Link>

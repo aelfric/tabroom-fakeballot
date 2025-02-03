@@ -3,10 +3,11 @@ import sparky from "./images/sparky.png";
 import logo from "./images/nsda-header-logo.png";
 import search from "./images/search.png";
 import { FakeLink } from "./FakeLink";
+import { Link } from "@tanstack/react-router";
 
 export function Menus() {
   return (
-    <span id="menus">
+    <div className={"flexrow menuright"}>
       <ul id="nav">
         <li className="top">
           <FakeLink className="centeralign top_link" href="/">
@@ -55,90 +56,115 @@ export function Menus() {
       </ul>
 
       <span />
-    </span>
+    </div>
   );
 }
 
 export default function Header() {
   return (
     <div id="header">
-      <span id="logo">
-        <span className="headline">
-          <span id="sparky">
-            <img src={sparky} alt="National Speech and Debate Association" />
+      <div id="headerarch">
+        <span id="logo">
+          <span className="headline">
+            <span id="sparky">
+              <img src={sparky} alt="National Speech and Debate Association" />
+            </span>
+
+            <span id="sparked">
+              <Link tabIndex={-1} to="/">
+                Tabroom.com
+              </Link>
+            </span>
           </span>
 
-          <span id="sparked">
-            <FakeLink tabIndex={-1} href="index.mhtml">
-              Tabroom.com
-            </FakeLink>
+          <span className="nsda">
+            <span className="blurb">a project of the</span>
+
+            <span className="nsdalogo">
+              <a tabIndex={-1} href="https://www.speechanddebate.org">
+                <img src={logo} alt="National Speech and Debate Association" />
+              </a>
+            </span>
           </span>
         </span>
 
-        <span className="nsda">
-          <span className="blurb">a project of the</span>
-
-          <span className="nsdalogo">
-            <FakeLink tabIndex={-1} href="https://www.speechanddebate.org">
-              <img src={logo} alt="National Speech and Debate Association" />
-            </FakeLink>
-          </span>
-        </span>
-      </span>
-
-      <span id="toprow">
-        <FakeLink tabIndex={-1} href="/user/login/logout.mhtml">
-          Logout
-        </FakeLink>
-
-        <FakeLink tabIndex={-1} href="/user/login/profile.mhtml">
-          Profile
-        </FakeLink>
-
-        <FakeLink tabIndex={-1} href="/user/home.mhtml">
-          email@example.com
-        </FakeLink>
-
-        <span id="search" title="Search for tournaments">
-          <form>
-            <input
-              type="text"
-              maxLength={128}
-              size={15}
-              name="search"
-              placeholder="SEARCH"
-              autoComplete="off"
-              autoCorrect="off"
-              autoCapitalize="off"
-              spellCheck="false"
-              id="searchtext"
-              className="notfirst"
-              tabIndex={-1}
-            />
-
-            <input
-              type="hidden"
-              name="caller"
-              value="/user/judge/ballot.mhtml?panel_id=3209946&amp;judge_id=961185"
-            />
-
-            <button type="submit" className="search notfirst">
-              <img src={search} alt="Search" />
-            </button>
-          </form>
-        </span>
-
-        <span id="helpbutton" title="Tabroom Help">
+        <span id="toprow" className={"grow"}>
           <FakeLink
             tabIndex={-1}
-            href="https://docs.tabroom.com"
-            target="_blank"
-            rel="noopener noreferrer"
+            className="fa fa-2x fa-sign-out loginicons"
+            id="tabroom_logout"
+            title="Log Out of Tabroom"
+          ></FakeLink>
+          <FakeLink
+            tabIndex={-1}
+            className="fa fa-2x fa-user loginicons"
+            id="tabroom_homescreen"
+            title="Tabroom Account Profile"
+          ></FakeLink>
+          <FakeLink
+            tabIndex={-1}
+            className="fa fa-2x fa-home loginicons"
+            id="tabroom_profile"
+            title="Tabroom Home Screen"
+          ></FakeLink>
+          <FakeLink
+            tabIndex={-1}
+            className="fa fa-sm fa-envelope borderright orangetext"
+            id="tabroom_inbox"
+            title="Tabroom Inbox"
           >
-            <i className="fa fa-question-circle" />
+            <span id={"inbox_count"}>1</span>
           </FakeLink>
+
+          <FakeLink
+            tabIndex={-1}
+            href="/user/home.mhtml"
+            className={"noborder padvert"}
+          >
+            email@example.com
+          </FakeLink>
+
+          <span id="search" title="Search for tournaments">
+            <form>
+              <input
+                type="text"
+                maxLength={128}
+                size={15}
+                name="search"
+                placeholder="SEARCH TOURNAMENTS"
+                autoComplete="off"
+                autoCorrect="off"
+                autoCapitalize="off"
+                spellCheck="false"
+                id="searchtext"
+                className="notfirst"
+                tabIndex={-1}
+              />
+
+              <input
+                type="hidden"
+                name="caller"
+                value="/user/judge/ballot.mhtml?panel_id=3209946&amp;judge_id=961185"
+              />
+
+              <button type="submit" className="search notfirst">
+                <img src={search} alt="Search" />
+              </button>
+            </form>
+          </span>
+
+          <span id="helpbutton" title="Tabroom Help">
+            <FakeLink
+              tabIndex={-1}
+              href="https://docs.tabroom.com"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i className="fa fa-question-circle" />
+            </FakeLink>
+          </span>
         </span>
-      </span>
+      </div>
       <Menus />
     </div>
   );

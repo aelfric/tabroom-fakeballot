@@ -4,9 +4,9 @@ import { Link } from "@tanstack/react-router";
 
 export function DebateBallot({
   round = { name: "", room: "", time: "" },
-}: {
+}: Readonly<{
   round: { name: string; room: string; time: string };
-}) {
+}>) {
   return (
     <div
       className="bluebordertop odd marbottom  flexkids"
@@ -56,17 +56,13 @@ export function DebateBallot({
       </div>
 
       <div className="full ltbordertop flexrow">
-        <div className="full flexrow">
-          <span className="half centeralign"></span>
-
-          <span className="fourfifths rightalign">
-            <Link to={"/debate"} className="greentext invert buttonwhite">
-              ON MY WAY!
-            </Link>
-
-            <span className="quarterspacer"></span>
-          </span>
-        </div>
+        <span className="half centeralign"></span>
+        <span className="half centeralign padright">
+          <Link to={"/debate"} className="greentext invert buttonwhite">
+            ON MY WAY!
+          </Link>
+          <span className="quarterspacer"></span>
+        </span>
       </div>
     </div>
   );

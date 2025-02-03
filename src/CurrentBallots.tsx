@@ -32,10 +32,6 @@ export function DefaultMenu() {
       <div className="sidenote">
         <h4>Judging</h4>
 
-        <FakeLink className="yellow full" href="/user/judge/panels.mhtml">
-          Current Ballots &amp; Panels
-        </FakeLink>
-
         <FakeLink className="blue half" href="/user/judge/index.mhtml">
           Upcoming
         </FakeLink>
@@ -55,8 +51,9 @@ export function DefaultMenu() {
           Paradigm
         </FakeLink>
 
+        <FakeLink className="blue half">Judge Certifications</FakeLink>
         <FakeLink
-          className="blue full"
+          className="blue half"
           href="/user/judge/hire.mhtml?person_id=5820"
         >
           Offer Hired Judging Rounds

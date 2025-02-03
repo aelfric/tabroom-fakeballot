@@ -5,12 +5,14 @@ export function ConfirmBallot({
   confirm,
   winningEntry,
   rfd,
-}: {
+  confirmed,
+}: Readonly<{
   entries: TeamDebateEntry[];
   confirm: () => void;
-  winningEntry?: number | undefined;
+  confirmed: () => void;
+  winningEntry?: number;
   rfd?: string;
-}) {
+}>) {
   return (
     <Content
       main={
@@ -29,13 +31,13 @@ export function ConfirmBallot({
 
           {entries.map((team) => {
             return (
-              <span className="pagehalf">
+              <span className="pagehalf" key={team.code}>
                 <span className="semibold bigger full padvertmore martopmore">
                   {team.code} scores
                 </span>
 
                 {team.speakers.map((speaker) => (
-                  <div className="odd padmore">
+                  <div className="odd padmore" key={speaker.name}>
                     <span className="half rightalign">{speaker.name}:</span>
                     <span className="quarter centeralign">
                       {speaker.points}
@@ -71,7 +73,7 @@ export function ConfirmBallot({
             <span className="half centeralign ballotconfirm padleft padright">
               <button
                 className="greentext buttonwhite invert full confirm"
-                onClick={() => alert("you're done")}
+                onClick={confirmed}
               >
                 YES! CORRECT! CONFIRM!
               </button>
@@ -82,7 +84,7 @@ export function ConfirmBallot({
       menu={
         <div className="sidenote">
           <h4>RFD</h4>
-          <div dangerouslySetInnerHTML={{ __html: rfd || "" }} />
+          <div dangerouslySetInnerHTML={{ __html: rfd ?? "" }} />
         </div>
       }
     />
