@@ -199,7 +199,7 @@ export function DebateBallotMain({
                           <input
                             type="number"
                             className="totals"
-                            step=""
+                            step="0.1"
                             name={`${entry.code}_${j}_points`}
                             size={5}
                             min="0"
