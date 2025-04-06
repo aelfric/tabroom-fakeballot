@@ -13,6 +13,10 @@ updates:
       tanstack:
         patterns: 
           - "@tanstack/*"
+      react:
+        patterns:
+          - "react"
+          - "react-dom"
     reviewers:
       - "aelfric"
   - package-ecosystem: "github-actions"
