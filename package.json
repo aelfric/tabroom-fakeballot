@@ -17,12 +17,6 @@
     "tinymce": "^7.6.1",
     "use-immer": "^0.11.0"
   },
-  "overrides": {
-    "@tinymce/tinymce-react": {
-      "react": "$react",
-      "react-dom": "$react-dom"
-    }
-  },
   "scripts": {
     "start": "vite",
     "build": "tsc && vite build",
