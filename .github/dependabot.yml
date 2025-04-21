@@ -17,6 +17,12 @@ updates:
         patterns:
           - "react"
           - "react-dom"
+      vite:
+        patterns:
+          - "vite"
+          - "vitest"
+          - "vite-tsconfig-paths"
+          - "@vitejs/**"
     reviewers:
       - "aelfric"
   - package-ecosystem: "github-actions"
