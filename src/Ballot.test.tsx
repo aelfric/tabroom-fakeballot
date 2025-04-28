@@ -12,13 +12,13 @@ import {
 import { routeTree } from "./routeTree.gen";
 
 describe("Landing Page", () => {
-  it("can open a speech ballot", () => {
+  it("can open a speech ballot", async () => {
     const rootRoute = createRootRoute();
     let router = createRouter({ routeTree: rootRoute });
     render(
       <RouterProvider router={router} defaultComponent={CurrentBallots} />,
     );
-    const startButtons = screen.getAllByText("ON MY WAY!");
+    const startButtons = await screen.findAllByText("ON MY WAY!");
     fireEvent.click(startButtons[0]);
 
     expect(screen.queryByText("OBT Round 1")).toBeInTheDocument();
