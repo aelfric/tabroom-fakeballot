@@ -6,7 +6,7 @@
   "type": "module",
   "dependencies": {
     "@tanstack/react-router": "^1.120.15",
-    "@tinymce/tinymce-react": "^6.1.0",
+    "@tinymce/tinymce-react": "^6.2.1",
     "alertifyjs": "^1.14.0",
     "immer": "^10.1.1",
     "jquery": "^3.7.1",
