@@ -12,8 +12,8 @@
     "jquery": "^3.7.1",
     "jquery.runner": "^2.3.0",
     "moment": "^2.30.1",
-    "react": "19.1.0",
-    "react-dom": "19.1.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
     "tinymce": "^7.9.1",
     "use-immer": "^0.11.0"
   },
