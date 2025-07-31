@@ -23,8 +23,10 @@ updates:
           - "vitest"
           - "vite-tsconfig-paths"
           - "@vitejs/**"
-    reviewers:
-      - "aelfric"
+      tinymce:
+        patterns:
+          - "tinymce"
+          - "@tinymce/**"
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
