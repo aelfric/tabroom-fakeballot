@@ -1,4 +1,3 @@
-import React from "react";
 import { FakeLink } from "../FakeLink";
 import { Link } from "@tanstack/react-router";
 

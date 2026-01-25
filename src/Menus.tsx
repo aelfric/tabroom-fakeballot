@@ -1,4 +1,3 @@
-import React from "react";
 import sparky from "./images/sparky.png";
 import logo from "./images/nsda-header-logo.png";
 import search from "./images/search.png";

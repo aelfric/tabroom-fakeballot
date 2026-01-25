@@ -1,5 +1,3 @@
-import React from "react";
-
 type BallotRowProps = {
   code: string;
   name: string;

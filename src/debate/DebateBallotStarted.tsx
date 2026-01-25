@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
 import { DebateBallotMain } from "./DebateBallotMain";

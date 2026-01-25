@@ -1,5 +1,3 @@
-import React from "react";
-
 export function TabroomError(props: { errors: string[] }) {
   return (
     <div className="borderred centeralign martopmore marbottommore">

@@ -1,6 +1,6 @@
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
-import React, { useCallback, useState } from "react";
+import { useCallback, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
 import { CongressEntry, Speech } from "./types";

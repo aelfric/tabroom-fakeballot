@@ -1,4 +1,4 @@
-import React, { Activity, ReactNode, useState } from "react";
+import { Activity, ReactNode, useState } from "react";
 
 interface TabNavProps {
   tabs: {

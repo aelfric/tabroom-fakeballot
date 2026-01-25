@@ -1,4 +1,3 @@
-import React from "react";
 import Content from "../Content";
 import { SortableTable } from "../SortableTable";
 import { CongressEntry } from "./types";

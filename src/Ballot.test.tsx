@@ -11,7 +11,7 @@ import "@testing-library/jest-dom/vitest";
 describe("Landing Page", () => {
   it("can open a speech ballot", async () => {
     const rootRoute = createRootRoute();
-    let router = createRouter({ routeTree: rootRoute });
+    const router = createRouter({ routeTree: rootRoute });
     render(
       <RouterProvider router={router} defaultComponent={CurrentBallots} />,
     );

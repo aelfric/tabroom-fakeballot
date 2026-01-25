@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import Content from "./Content";
 import { FakeLink } from "./FakeLink";
 import { SpeechBallot } from "./speech/SpeechBallot";

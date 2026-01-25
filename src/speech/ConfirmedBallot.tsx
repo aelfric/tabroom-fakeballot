@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import Content from "../Content";
 import { DefaultMenu } from "../CurrentBallots";
 import { SpeechEntry } from "./types";
