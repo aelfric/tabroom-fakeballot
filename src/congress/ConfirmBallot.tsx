@@ -28,7 +28,7 @@ interface ConfirmSubmitProps {
 export function ConfirmSubmit(props: ConfirmSubmitProps) {
   const onSubmit = () => undefined;
 
-  let columns = [
+  const columns = [
     {
       label: "Rank",
       property: "rank",
@@ -63,7 +63,7 @@ export function ConfirmSubmit(props: ConfirmSubmitProps) {
           </h6>
 
           <p className="centeralign martopmuchmore redtext semibold bigger">
-            You'll have to contact the tournament staff to make any further
+            You&#39;ll have to contact the tournament staff to make any further
             changes
           </p>
 

@@ -1,4 +1,6 @@
 import { Editor } from "@tinymce/tinymce-react";
+import { Events } from "tinymce";
+import { ReactNode } from "react";
 
 const tinyMCEConfig = {
   external_plugins: {},
@@ -13,12 +15,13 @@ const tinyMCEConfig = {
     "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
 };
 
-/**
- *
- * @param { {setComments: (evt: import("tinymcr").Events.EditorEventMap["blur"]) => unknown, currentComments?: string} } props
- * @returns {ReactNode}
- */
-export function CommentBox({ setComments, currentComments }) {
+export function CommentBox({
+  setComments,
+  currentComments,
+}: {
+  setComments: (evt: Events.EditorEventMap["blur"]) => void;
+  currentComments?: string;
+}): ReactNode {
   return (
     <div className="row centeralign odd">
       <Editor

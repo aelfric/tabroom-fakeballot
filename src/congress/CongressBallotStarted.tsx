@@ -132,7 +132,7 @@ function CongressSpeech({
           <CommentBox
             key={speech.comments}
             currentComments={comments}
-            setComments={(evt: any) => {
+            setComments={(evt) => {
               setComments(evt.target.getContent());
             }}
           />
@@ -200,7 +200,7 @@ function CongressPoSession({
           <CommentBox
             key={speech.comments}
             currentComments={comments}
-            setComments={(evt: any) => {
+            setComments={(evt) => {
               setComments(evt.target.getContent());
             }}
           />
@@ -270,10 +270,10 @@ function CongressBallotMain({
   const addSpeech = useCallback(
     (formData: FormData) => {
       console.log("Add speech");
-      let topic = String(formData.get("topic"));
-      let points = Number(formData.get("points"));
-      let side = String(formData.get("side")) as "1" | "2";
-      let comments = String(formData.get("comments"));
+      const topic = String(formData.get("topic"));
+      const points = Number(formData.get("points"));
+      const side = String(formData.get("side")) as "1" | "2";
+      const comments = String(formData.get("comments"));
       setRound((draft) => {
         draft.entries[selected].speeches.push({
           name: "Speech #" + draft.speechNumber,
@@ -354,11 +354,11 @@ function CongressBallotMain({
     }
 
     const counts: Record<number, number> = {};
-    for (let ranking of rankings) {
+    for (const ranking of rankings) {
       counts[ranking] = (counts[ranking] || 0) + 1;
     }
 
-    for (let entry of Object.entries(counts)) {
+    for (const entry of Object.entries(counts)) {
       if (entry[1] > 1 && entry[0] !== "9" && entry[0] !== "0") {
         errors = [...errors, `You have repeated the rank ${entry[0]}`];
       }

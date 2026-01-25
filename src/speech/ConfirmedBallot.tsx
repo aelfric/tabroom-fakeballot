@@ -84,7 +84,7 @@ export default function ConfirmedBallot({
           </div>
 
           {entries.map((e, i) => (
-            <Result {...e} even={i % 2 === 0} />
+            <Result key={e.code} {...e} even={i % 2 === 0} />
           ))}
         </>
       }

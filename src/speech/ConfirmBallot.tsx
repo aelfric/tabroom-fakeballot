@@ -40,7 +40,9 @@ interface ConfirmSubmitProps {
   onSubmit: any;
 }
 
-interface ConfirmSubmitState {}
+interface ConfirmSubmitState {
+  sort: string;
+}
 
 export default class ConfirmSubmit extends React.Component<
   ConfirmSubmitProps,
@@ -107,8 +109,8 @@ export default class ConfirmSubmit extends React.Component<
             </h6>
 
             <p className="centeralign martopmuchmore redtext semibold bigger">
-              You'll have to contact the tournament staff to make any further
-              changes
+              You&#39;ll have to contact the tournament staff to make any
+              further changes
             </p>
 
             <p className="centeralign bluetext bigger semibold marbottommore">

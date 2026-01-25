@@ -15,7 +15,7 @@ const includePoints = true;
 
 interface BallotStartedFormProps {
   entries: SpeechEntry[];
-  onSubmit: (a: any[]) => any;
+  onSubmit: (a: SpeechEntry[]) => unknown;
   setRFD: unknown;
   rfd?: string;
 }
@@ -39,25 +39,25 @@ export class BallotStartedForm extends React.Component<
   };
 
   setTitle = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].title = evt.target.value;
     this.setState({ entries: entries });
   };
 
   setRank = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].ranks = evt.target.value;
     this.setState({ entries: entries });
   };
 
   setPoints = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].points = evt.target.value;
     this.setState({ entries: entries });
   };
 
   setComments = (idx: number) => (evt: FocusEvent<Editor>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].comments = evt.target.getContent();
     this.setState({ entries: entries });
   };

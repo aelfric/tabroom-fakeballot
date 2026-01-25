@@ -20,9 +20,7 @@ export interface Column {
   ariaLabel: string;
 }
 
-type Entry = Record<string, string | number>;
-
-type SortableTableProps<T extends Object> = {
+type SortableTableProps<T extends object> = {
   defaultSort: keyof T;
   columns: Column[];
   children?: ReactNode;
@@ -30,12 +28,12 @@ type SortableTableProps<T extends Object> = {
   rowComponent: (o: { entry: T; i: number }) => ReactNode;
 };
 
-interface SortableTableState<T extends Object> {
+interface SortableTableState<T extends object> {
   sort: keyof T;
 }
 
 // @ts-ignore
-export class SortableTable<T extends Object> extends React.Component<
+export class SortableTable<T extends object> extends React.Component<
   SortableTableProps<T>,
   SortableTableState<T>
 > {
@@ -92,7 +90,7 @@ export class SortableTable<T extends Object> extends React.Component<
             className="yellowrow smallish centeralign tablesorter-headerRow"
             role="row"
           >
-            {this.props.columns.map((col, i) => {
+            {this.props.columns.map((col) => {
               return (
                 <th
                   key={col.property}
@@ -102,7 +100,6 @@ export class SortableTable<T extends Object> extends React.Component<
                   role="columnheader"
                   aria-disabled="false"
                   aria-controls="sortable"
-                  unselectable="on"
                   aria-sort="none"
                   aria-label="Code: No sort applied, activate to apply an ascending sort"
                   onClick={() => this.changeSort(col.property)}

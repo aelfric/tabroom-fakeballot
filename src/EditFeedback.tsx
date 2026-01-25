@@ -99,7 +99,7 @@ export default class EditFeedback extends React.Component<
             {this.state.entries.map((e: SpeechEntry, i: number) => (
               <React.Fragment key={e.code}>
                 <h4>
-                  Comments for {e.code} – {e.name} – "{e.title}"
+                  Comments for {e.code} – {e.name} – &ldquo;{e.title}&rdquo;
                 </h4>
 
                 <CommentBox
