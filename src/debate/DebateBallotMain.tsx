@@ -328,9 +328,7 @@ export function DebateBallotMain({
                     </span>
                   </div>
                   <CommentBox
-                    setComments={(evt: {
-                      target: { getContent: () => unknown };
-                    }) =>
+                    setComments={(evt) =>
                       setComments((comments) => ({
                         ...comments,
                         rfd: evt.target.getContent(),
@@ -362,14 +360,12 @@ export function DebateBallotMain({
                     </span>
                   </div>
                   <CommentBox
-                    setComments={(evt: {
-                      target: { getContent: () => unknown };
-                    }) =>
+                    setComments={(evt) => {
                       setComments((comments) => ({
                         ...comments,
                         [e.code]: evt.target.getContent(),
-                      }))
-                    }
+                      }));
+                    }}
                     currentComments={comments[e.code] || ""}
                   />
                 </>

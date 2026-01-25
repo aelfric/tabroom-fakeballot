@@ -1,6 +1,7 @@
 import { Editor } from "@tinymce/tinymce-react";
 import { Events } from "tinymce";
 import { ReactNode } from "react";
+import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 
 const tinyMCEConfig = {
   external_plugins: {},
@@ -19,7 +20,7 @@ export function CommentBox({
   setComments,
   currentComments,
 }: {
-  setComments: (evt: Events.EditorEventMap["blur"]) => void;
+  setComments: EventHandler<Events.EditorEventMap["blur"]>;
   currentComments?: string;
 }): ReactNode {
   return (

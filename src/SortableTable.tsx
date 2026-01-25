@@ -5,7 +5,7 @@ export function dynamicSort<T>(property: string) {
   let sortOrder = 1;
   if (property[0] === "-") {
     sortOrder = -1;
-    property = property.substr(1);
+    property = property.slice(1);
   }
   return function (a: T, b: T) {
     const result =
@@ -71,7 +71,7 @@ export class SortableTable<T extends object> extends React.Component<
       if (value[0] !== "-") {
         value = "-" + value;
       } else {
-        value = value.substr(1);
+        value = value.slice(1);
       }
     }
     this.setState({ sort: value });
