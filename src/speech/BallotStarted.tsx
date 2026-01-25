@@ -16,7 +16,7 @@ const includePoints = true;
 interface BallotStartedFormProps {
   entries: SpeechEntry[];
   onSubmit: (a: SpeechEntry[]) => unknown;
-  setRFD: unknown;
+  setRFD: () => void;
   rfd?: string;
 }
 

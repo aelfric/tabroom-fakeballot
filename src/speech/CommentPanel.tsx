@@ -7,7 +7,7 @@ import { SpeechEntry } from "./types";
 interface CommentPanelProps {
   entries: SpeechEntry[];
   rfd?: string;
-  setRFD?: any;
+  setRFD?: () => void;
   setComments: (i: number) => unknown;
 }
 

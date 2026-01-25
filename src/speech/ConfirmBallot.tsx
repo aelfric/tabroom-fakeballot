@@ -1,4 +1,4 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Content from "../Content";
 import { SortableTable } from "../SortableTable";
 import { SpeechEntry } from "./types";
@@ -36,8 +36,8 @@ function EntryRow({
 interface ConfirmSubmitProps {
   entries: SpeechEntry[];
   rfd?: string;
-  confirm: any;
-  onSubmit: any;
+  confirm: MouseEventHandler<unknown>;
+  onSubmit: MouseEventHandler<unknown>;
 }
 
 interface ConfirmSubmitState {
