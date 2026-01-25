@@ -1,15 +1,12 @@
-// @ts-nocheck
 import { describe, expect, it } from "vitest";
 import { fireEvent, render, screen } from "@testing-library/react";
 import CurrentBallots from "./CurrentBallots";
 import {
-  createMemoryHistory,
   createRootRoute,
   createRouter,
-  RouterContextProvider,
   RouterProvider,
 } from "@tanstack/react-router";
-import { routeTree } from "./routeTree.gen";
+import "@testing-library/jest-dom/vitest";
 
 describe("Landing Page", () => {
   it("can open a speech ballot", async () => {

@@ -10,93 +10,39 @@
 
 import { createFileRoute } from '@tanstack/react-router'
 
-// Import Routes
+import { Route as rootRouteImport } from './routes/__root'
 
-import { Route as rootRoute } from './routes/__root'
+const SpeechLazyRouteImport = createFileRoute('/speech')()
+const DebateLazyRouteImport = createFileRoute('/debate')()
+const CongressLazyRouteImport = createFileRoute('/congress')()
+const AboutLazyRouteImport = createFileRoute('/about')()
+const IndexLazyRouteImport = createFileRoute('/')()
 
-// Create Virtual Routes
-
-const SpeechLazyImport = createFileRoute('/speech')()
-const DebateLazyImport = createFileRoute('/debate')()
-const CongressLazyImport = createFileRoute('/congress')()
-const AboutLazyImport = createFileRoute('/about')()
-const IndexLazyImport = createFileRoute('/')()
-
-// Create/Update Routes
-
-const SpeechLazyRoute = SpeechLazyImport.update({
+const SpeechLazyRoute = SpeechLazyRouteImport.update({
   id: '/speech',
   path: '/speech',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/speech.lazy').then((d) => d.Route))
-
-const DebateLazyRoute = DebateLazyImport.update({
+const DebateLazyRoute = DebateLazyRouteImport.update({
   id: '/debate',
   path: '/debate',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/debate.lazy').then((d) => d.Route))
-
-const CongressLazyRoute = CongressLazyImport.update({
+const CongressLazyRoute = CongressLazyRouteImport.update({
   id: '/congress',
   path: '/congress',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/congress.lazy').then((d) => d.Route))
-
-const AboutLazyRoute = AboutLazyImport.update({
+const AboutLazyRoute = AboutLazyRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
-
-const IndexLazyRoute = IndexLazyImport.update({
+const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
-  getParentRoute: () => rootRoute,
+  getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
-
-// Populate the FileRoutesByPath interface
-
-declare module '@tanstack/react-router' {
-  interface FileRoutesByPath {
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/congress': {
-      id: '/congress'
-      path: '/congress'
-      fullPath: '/congress'
-      preLoaderRoute: typeof CongressLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/debate': {
-      id: '/debate'
-      path: '/debate'
-      fullPath: '/debate'
-      preLoaderRoute: typeof DebateLazyImport
-      parentRoute: typeof rootRoute
-    }
-    '/speech': {
-      id: '/speech'
-      path: '/speech'
-      fullPath: '/speech'
-      preLoaderRoute: typeof SpeechLazyImport
-      parentRoute: typeof rootRoute
-    }
-  }
-}
-
-// Create and export the route tree
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
@@ -105,7 +51,6 @@ export interface FileRoutesByFullPath {
   '/debate': typeof DebateLazyRoute
   '/speech': typeof SpeechLazyRoute
 }
-
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
@@ -113,16 +58,14 @@ export interface FileRoutesByTo {
   '/debate': typeof DebateLazyRoute
   '/speech': typeof SpeechLazyRoute
 }
-
 export interface FileRoutesById {
-  __root__: typeof rootRoute
+  __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
   '/debate': typeof DebateLazyRoute
   '/speech': typeof SpeechLazyRoute
 }
-
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths: '/' | '/about' | '/congress' | '/debate' | '/speech'
@@ -131,13 +74,52 @@ export interface FileRouteTypes {
   id: '__root__' | '/' | '/about' | '/congress' | '/debate' | '/speech'
   fileRoutesById: FileRoutesById
 }
-
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
   CongressLazyRoute: typeof CongressLazyRoute
   DebateLazyRoute: typeof DebateLazyRoute
   SpeechLazyRoute: typeof SpeechLazyRoute
+}
+
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/speech': {
+      id: '/speech'
+      path: '/speech'
+      fullPath: '/speech'
+      preLoaderRoute: typeof SpeechLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debate': {
+      id: '/debate'
+      path: '/debate'
+      fullPath: '/debate'
+      preLoaderRoute: typeof DebateLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/congress': {
+      id: '/congress'
+      path: '/congress'
+      fullPath: '/congress'
+      preLoaderRoute: typeof CongressLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/about': {
+      id: '/about'
+      path: '/about'
+      fullPath: '/about'
+      preLoaderRoute: typeof AboutLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
@@ -147,39 +129,6 @@ const rootRouteChildren: RootRouteChildren = {
   DebateLazyRoute: DebateLazyRoute,
   SpeechLazyRoute: SpeechLazyRoute,
 }
-
-export const routeTree = rootRoute
+export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-/* ROUTE_MANIFEST_START
-{
-  "routes": {
-    "__root__": {
-      "filePath": "__root.tsx",
-      "children": [
-        "/",
-        "/about",
-        "/congress",
-        "/debate",
-        "/speech"
-      ]
-    },
-    "/": {
-      "filePath": "index.lazy.tsx"
-    },
-    "/about": {
-      "filePath": "about.lazy.tsx"
-    },
-    "/congress": {
-      "filePath": "congress.lazy.tsx"
-    },
-    "/debate": {
-      "filePath": "debate.lazy.tsx"
-    },
-    "/speech": {
-      "filePath": "speech.lazy.tsx"
-    }
-  }
-}
-ROUTE_MANIFEST_END */
