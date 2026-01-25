@@ -1,5 +1,5 @@
 import Content from "../Content";
-import { SortableTable } from "../SortableTable";
+import { Column, SortableTable } from "../SortableTable";
 import { CongressEntry } from "./types";
 
 function EntryRow({
@@ -28,7 +28,7 @@ interface ConfirmSubmitProps {
 export function ConfirmSubmit(props: ConfirmSubmitProps) {
   const onSubmit = () => undefined;
 
-  const columns = [
+  const columns: Column<CongressEntry>[] = [
     {
       label: "Rank",
       property: "rank",

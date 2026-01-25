@@ -1,12 +1,10 @@
-// @ts-nocheck
 import React, { CSSProperties, ReactNode } from "react";
 
-export function dynamicSort<T>(property: string) {
-  let sortOrder = 1;
-  if (property[0] === "-") {
-    sortOrder = -1;
-    property = property.slice(1);
-  }
+export function dynamicSort<T extends Record<string, unknown>>(
+  property: keyof T,
+  direction: "asc" | "desc",
+) {
+  const sortOrder = direction === "asc" ? 1 : -1;
   return function (a: T, b: T) {
     const result =
       a[property] < b[property] ? -1 : a[property] > b[property] ? 1 : 0;
@@ -14,67 +12,69 @@ export function dynamicSort<T>(property: string) {
   };
 }
 
-export interface Column {
-  property: string;
+export interface Column<T> {
+  property: keyof T;
   label: string | string[];
   ariaLabel: string;
 }
 
-type SortableTableProps<T extends object> = {
+type SortableTableProps<T extends Record<string, unknown>> = {
   defaultSort: keyof T;
-  columns: Column[];
+  columns: Column<T>[];
   children?: ReactNode;
   entries: T[];
   rowComponent: (o: { entry: T; i: number }) => ReactNode;
 };
 
-interface SortableTableState<T extends object> {
+interface SortableTableState<T extends Record<string, unknown>> {
   sort: keyof T;
+  direction: "asc" | "desc";
 }
 
-// @ts-ignore
-export class SortableTable<T extends object> extends React.Component<
-  SortableTableProps<T>,
-  SortableTableState<T>
-> {
+export class SortableTable<
+  T extends Record<string, unknown>,
+> extends React.Component<SortableTableProps<T>, SortableTableState<T>> {
   state = {
     sort: this.props.defaultSort,
+    direction: "asc" as "asc" | "desc",
   };
 
-  sortArrows = (style: CSSProperties | undefined, prop: string) => {
-    const direction =
-      this.state.sort === prop
-        ? "UP"
-        : this.state.sort === "-" + prop
-          ? "DOWN"
-          : undefined;
-
-    let url;
-    switch (direction) {
-      case "UP":
-        url =
-          "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7)";
-        break;
-      case "DOWN":
-        url =
-          "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7)";
-        break;
-      default:
-        url =
-          "url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==)";
+  sortArrows = (style: CSSProperties | undefined, prop: keyof T) => {
+    let url =
+      "url(data:image/gif;base64,R0lGODlhFQAJAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAkAAAIXjI+AywnaYnhUMoqt3gZXPmVg94yJVQAAOw==)";
+    if (this.state.sort === prop) {
+      switch (this.state.direction) {
+        case "asc":
+          url =
+            "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjI8Bya2wnINUMopZAQA7)";
+          break;
+        case "desc":
+          url =
+            "url(data:image/gif;base64,R0lGODlhFQAEAIAAACMtMP///yH5BAEAAAEALAAAAAAVAAQAAAINjB+gC+jP2ptn0WskLQA7)";
+      }
     }
     return { ...style, backgroundImage: url };
   };
 
-  changeSort = (value: string) => {
+  changeSort = (value: keyof T) => {
     if (value === this.state.sort) {
-      if (value[0] !== "-") {
-        value = "-" + value;
+      if (this.state.direction === "asc") {
+        this.setState({
+          sort: value,
+          direction: "desc",
+        });
       } else {
-        value = value.slice(1);
+        this.setState({
+          sort: value,
+          direction: "asc",
+        });
       }
+    } else {
+      this.setState({
+        sort: value,
+        direction: "asc",
+      });
     }
-    this.setState({ sort: value });
   };
 
   render() {
@@ -93,7 +93,7 @@ export class SortableTable<T extends object> extends React.Component<
             {this.props.columns.map((col) => {
               return (
                 <th
-                  key={col.property}
+                  key={String(col.property)}
                   className="sortable"
                   tabIndex={0}
                   scope="col"
@@ -123,7 +123,7 @@ export class SortableTable<T extends object> extends React.Component<
 
         <tbody id="ballottable" aria-live="polite" aria-relevant="all">
           {[...this.props.entries]
-            .sort(dynamicSort(this.state.sort))
+            .sort(dynamicSort(this.state.sort, this.state.direction))
             .map((entry, i) => this.props.rowComponent({ entry: entry, i: i }))}
         </tbody>
 

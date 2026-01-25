@@ -1,6 +1,6 @@
 import React, { MouseEventHandler } from "react";
 import Content from "../Content";
-import { SortableTable } from "../SortableTable";
+import { Column, SortableTable } from "../SortableTable";
 import { SpeechEntry } from "./types";
 
 const includePoints = false;
@@ -53,7 +53,7 @@ export default class ConfirmSubmit extends React.Component<
   };
 
   render() {
-    let columns = [
+    let columns: Column<SpeechEntry>[] = [
       {
         label: "Rank",
         property: "ranks",

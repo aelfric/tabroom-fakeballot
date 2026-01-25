@@ -97,10 +97,13 @@ export class BallotStartedForm extends React.Component<
 
     if (includePoints) {
       const lowPointErrors = [];
-      const sortedEntries = this.state.entries.sort(dynamicSort("ranks"));
+      const sortedEntries = this.state.entries.sort(
+        dynamicSort("ranks", "asc"),
+      );
       for (let i = 0; i < sortedEntries.length - 1; i++) {
-        // @ts-ignore
-        if (sortedEntries[i + 1].points > sortedEntries[i].points) {
+        if (
+          (sortedEntries[i + 1].points ?? 0) > (sortedEntries[i].points ?? 0)
+        ) {
           lowPointErrors.push(sortedEntries[i].ranks);
         }
       }
@@ -131,7 +134,7 @@ export class BallotStartedForm extends React.Component<
   };
 
   render() {
-    const columns: Column[] = [
+    const columns: Column<SpeechEntry>[] = [
       {
         label: "Code",
         property: "code",
