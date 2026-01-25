@@ -125,7 +125,7 @@ export class SortableTable<T extends Object> extends React.Component<
         </thead>
 
         <tbody id="ballottable" aria-live="polite" aria-relevant="all">
-          {this.props.entries
+          {[...this.props.entries]
             .sort(dynamicSort(this.state.sort))
             .map((entry, i) => this.props.rowComponent({ entry: entry, i: i }))}
         </tbody>

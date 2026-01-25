@@ -13,23 +13,25 @@ type CongressRound = {
   poNumber: number;
 };
 
+export const CONGRESS_NAMES = [
+  "Alannah Meadows",
+  "Casper Howard",
+  "Cory McDonald",
+  "Farah Petersen",
+  "Kirsten Arias",
+  "Siobhan Wang",
+  "Zain Swanson",
+  "Huhana Rhodes",
+  "Sepphora Herman",
+  "Nicholas Charlotte",
+  "Devin Kino",
+  "Adrien O'Hannigan",
+  "Susheela Innes",
+];
+
 export function CongressBallotStarted() {
   const [round, setRound] = useImmer<CongressRound>({
-    entries: [
-      "Alannah Meadows",
-      "Casper Howard",
-      "Cory McDonald",
-      "Farah Petersen",
-      "Kirsten Arias",
-      "Siobhan Wang",
-      "Zain Swanson",
-      "Huhana Rhodes",
-      "Sepphora Herman",
-      "Nicholas Charlotte",
-      "Devin Kino",
-      "Adrien O'Hannigan",
-      "Susheela Innes",
-    ].map(generateEntry),
+    entries: CONGRESS_NAMES.map(generateEntry),
     errors: [],
     speechNumber: 1,
     poNumber: 1,
@@ -643,7 +645,9 @@ function CongressBallotMain({
                       title="Doubled 0 daggers "
                     >
                       <div className="full flexrow grow semibold">
-                        <span>{entry.name}</span>
+                        <label htmlFor={`${entry.id}_ranks`}>
+                          {entry.name}
+                        </label>
                       </div>
                     </td>
                     <td className="centeralign">
