@@ -59,7 +59,6 @@ export class CommentPanel extends React.Component<
             </span>
           </span>
         </div>
-        <ul id="tabnav" />
         {this.state.currentStudent === "rfd" ? (
           <div className="commentary">
             <p className="semibold greentext centeralign full">

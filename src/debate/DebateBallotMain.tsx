@@ -1,6 +1,7 @@
 import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { TabroomError } from "../TabroomError";
+import { TabNav } from "../TabNav";
 
 type DebateBallotMainProps = {
   round: DebateRound;
@@ -15,7 +16,6 @@ export function DebateBallotMain({
 }: DebateBallotMainProps) {
   const { entries } = round;
   const [errors, setErrors] = useState<string[]>([]);
-  const [tab, setTab] = useState<string>("rfd");
   const [comments, setComments] = useState<Record<string, string>>({
     rfd: "",
   });
@@ -302,52 +302,73 @@ export function DebateBallotMain({
           before writing or giving extensive feedback. Look under the Past tab
           of your judging home screen to see past results &amp; edit feedback.
         </p>
-        <ul id="tabnav">
-          <li
-            id="header_rfd"
-            className={`commentzing ${tab === "rfd" ? "selected" : null}`}
-          >
-            <a onClick={() => setTab("rfd")}>Reason for Decision</a>
-          </li>
-          {entries.map((e) => (
-            <li
-              id="header_45718286"
-              className={`commentzing ${tab === e.code ? "selected" : null}`}
-            >
-              <a onClick={() => setTab(e.code)}>{e.code}</a>
-            </li>
-          ))}
-        </ul>
-        <div id="box_rfd" className="commentary">
-          <span className="threequarters">
-            {tab === "rfd" ? (
-              <p className="semibold greentext full">
-                These comments go to all participants in the round.
-              </p>
-            ) : (
-              <p className="semibold bluetext full">
-                These comments go only to {tab} &amp; coaches
-              </p>
-            )}
-          </span>
+        <TabNav
+          tabs={[
+            {
+              name: "Reason for Decision",
+              children: (
+                <>
+                  <div id="box_rfd" className="commentary">
+                    <span className="threequarters">
+                      <p className="semibold greentext full">
+                        These comments go to all participants in the round.
+                      </p>
+                    </span>
 
-          <span className="quarter rightalign semibold bluetext">
-            Save Feedback
-            <button
-              type="button"
-              onClick={saveComments}
-              className="bluetext buttonwhite fa fa-lg fa-save"
-            ></button>
-          </span>
-        </div>
-        <CommentBox
-          setComments={(evt: { target: { getContent: () => any } }) =>
-            setComments((comments) => ({
-              ...comments,
-              [tab]: evt.target.getContent(),
-            }))
-          }
-          currentComments={comments[tab] || ""}
+                    <span className="quarter rightalign semibold bluetext">
+                      Save Feedback
+                      <button
+                        type="button"
+                        onClick={saveComments}
+                        className="bluetext buttonwhite fa fa-lg fa-save"
+                      ></button>
+                    </span>
+                  </div>
+                  <CommentBox
+                    setComments={(evt: { target: { getContent: () => any } }) =>
+                      setComments((comments) => ({
+                        ...comments,
+                        rfd: evt.target.getContent(),
+                      }))
+                    }
+                    currentComments={comments.rfd || ""}
+                  />
+                </>
+              ),
+            },
+            ...entries.map((e) => ({
+              name: e.code,
+              children: (
+                <>
+                  <div id="box_rfd" className="commentary">
+                    <span className="threequarters">
+                      <p className="semibold bluetext full">
+                        These comments go only to {e.code} &amp; coaches
+                      </p>
+                    </span>
+
+                    <span className="quarter rightalign semibold bluetext">
+                      Save Feedback
+                      <button
+                        type="button"
+                        onClick={saveComments}
+                        className="bluetext buttonwhite fa fa-lg fa-save"
+                      ></button>
+                    </span>
+                  </div>
+                  <CommentBox
+                    setComments={(evt: { target: { getContent: () => any } }) =>
+                      setComments((comments) => ({
+                        ...comments,
+                        [e.code]: evt.target.getContent(),
+                      }))
+                    }
+                    currentComments={comments[e.code] || ""}
+                  />
+                </>
+              ),
+            })),
+          ]}
         />
       </form>
     </>

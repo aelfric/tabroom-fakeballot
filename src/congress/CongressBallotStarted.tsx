@@ -5,6 +5,7 @@ import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
 import { CongressEntry, Speech } from "./types";
 import { Updater, useImmer } from "use-immer";
+import { TabNav } from "../TabNav";
 
 type CongressRound = {
   entries: CongressEntry[];
@@ -266,8 +267,6 @@ function CongressBallotMain({
 }>) {
   const [po, setPo] = useState(-1);
   const [selected, setSelected] = useState(0);
-  const [tab, setTab] = useState("speeches");
-
   const addSpeech = useCallback(
     (formData: FormData) => {
       console.log("Add speech");
@@ -402,289 +401,292 @@ function CongressBallotMain({
         </span>
       </div>
 
-      <ul id="tabnav" className="marbottom">
-        <li
-          id="button_speeches"
-          className={tab === "speeches" ? "tabs selected invert" : "tabs"}
-        >
-          <button onClick={() => setTab("speeches")} type={"button"}>
-            Speeches
-          </button>
-        </li>
-
-        <li
-          id="button_rankings"
-          className={tab === "rankings" ? "tabs selected invert" : "tabs"}
-        >
-          <button onClick={() => setTab("rankings")} type={"button"}>
-            Rankings
-          </button>
-        </li>
-      </ul>
-
-      {tab === "speeches" && (
-        <div
-          className="speeches screens"
-          data-select2-id="select2-data-82-5nzn"
-        >
-          <div className="full" data-select2-id="select2-data-81-12wv">
-            <span className="twofifths bluetext">
-              <h5>Per-Speech Points</h5>
-            </span>
-
-            <span className="fifth rightalign redtext semibold">
-              Select a speaker:
-            </span>
-
-            <span className="twofifths" data-select2-id="select2-data-80-n8xo">
-              <select
-                name="entry_id"
-                className="fixedbig select2-hidden-accessible"
-                onChange={(evt) => setSelected(Number(evt.target.value))}
-                value={selected}
-                tabIndex={-1}
-                aria-hidden="true"
-                data-select2-id="select2-data-76-q41r"
+      <TabNav
+        tabs={[
+          {
+            name: "Speeches",
+            children: (
+              <div
+                className="speeches screens"
+                data-select2-id="select2-data-82-5nzn"
               >
-                <option
-                  value=""
-                  data-select2-id="select2-data-86-kqdt"
-                ></option>
-                {round.entries.map((e, i) => (
-                  <option value={i} key={e.name}>
-                    {e.name}
-                  </option>
-                ))}
-              </select>
-            </span>
-          </div>
+                <div className="full" data-select2-id="select2-data-81-12wv">
+                  <span className="twofifths bluetext">
+                    <h5>Per-Speech Points</h5>
+                  </span>
 
-          <div className="martop ltbordertop padvert">
-            <span className="half nospace">
-              <h5 className="nospace">{round.entries[selected].name}</h5>
-            </span>
+                  <span className="fifth rightalign redtext semibold">
+                    Select a speaker:
+                  </span>
 
-            <span className="half nospace rightalign">
-              <span className="threequarters semibold redtext">
-                Presiding Officer this session
-              </span>
-              <span className="quarter nospace centeralign">
-                <label
-                  className="switch smaller"
-                  aria-label={"Presiding officer this session"}
-                >
-                  <input
-                    className="padsettingbox"
-                    type="checkbox"
-                    value="1"
-                    id="po"
-                    name="po"
-                    onChange={(evt) => {
-                      if (evt.target.checked) {
-                        setPo(selected);
-                      } else {
-                        setPo(-1);
-                      }
-                    }}
-                  />
-                  <div className="slider"></div>
-                </label>
-              </span>
-            </span>
-          </div>
-          <div id="new">
-            {po === selected ? (
-              <CongressPoSession speech={{}} onSave={addPoSession} />
-            ) : (
-              <CongressSpeech
-                key={round.entries[selected].speeches.length}
-                speech={{}}
-                onSave={addSpeech}
-              />
-            )}
-            {round.entries[selected].speeches.map((s, i) =>
-              s.po ? (
-                <CongressPoSession
-                  key={s.name}
-                  speech={s}
-                  onSave={updatePoSession(i)}
-                />
-              ) : (
-                <CongressSpeech
-                  key={s.name}
-                  speech={s}
-                  onSave={updateSpeech(i)}
-                />
-              ),
-            )}
-          </div>
-        </div>
-      )}
-
-      {tab === "rankings" && (
-        <div className="rankings screens">
-          <div className="full nospace centeralign">
-            <span className="nineteen leftalign nospace ballotshell">
-              <div className="padvertmuchless ltborderbottom marbottom">
-                <p dir="ltr">
-                  We are all influenced by implicit bias or stereotypes that,
-                  when unchecked, influence our judging in ways that may
-                  negatively impact the students we are called to judge
-                  impartially. Before writing comments or making a decision,
-                  please take a moment to reflect on any preconceived notions
-                  you may hold that may impact your decision-making process
-                  and/or jeopardize the student experience.
-                </p>
-                <p>&nbsp;</p>
-              </div>
-
-              <h6 className="bluetext centeralign padmore marbottom semibold half">
-                Blanks will be auto-filled with a 9
-              </h6>
-            </span>
-          </div>
-
-          {round.errors.length > 0 && (
-            <div className="borderred centeralign martopmore marbottommore">
-              <h6 className="bluetext semibold">
-                Oh, drat. Your ballot had errors.
-              </h6>
-              {round.errors.map((e) => (
-                <p className="bigger semibold redtext" key={e}>
-                  {e}
-                </p>
-              ))}
-              <p className="bigger semibold bluetext">
-                Please correct these before continuing.
-              </p>
-            </div>
-          )}
-
-          <form action={saveRankings} method="post">
-            <table
-              id="sortable"
-              className="tablesorter tablesorter-default tablesorterb8b1a23feee53 hasStickyHeaders tablesorter9781b859d7f2a"
-            >
-              <thead>
-                <tr
-                  className="yellowrow smallish centeralign tablesorter-headerRow"
-                  role="row"
-                >
-                  <th
-                    data-column="0"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex={0}
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    aria-sort="none"
-                    aria-label="Entry Code: No sort applied, activate to apply a descending sort"
-                    style={{ userSelect: "none" }}
+                  <span
+                    className="twofifths"
+                    data-select2-id="select2-data-80-n8xo"
                   >
-                    <div className="tablesorter-header-inner">Entry Code</div>
-                  </th>
-
-                  <th
-                    data-column="1"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex={0}
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    aria-sort="none"
-                    aria-label="Speech Points: No sort applied, activate to apply a descending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">
-                      Speech Points
-                    </div>
-                  </th>
-
-                  <th
-                    data-column="2"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex={0}
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    aria-sort="none"
-                    aria-label="Average: No sort applied, activate to apply a descending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">Average</div>
-                  </th>
-
-                  <th
-                    data-column="3"
-                    className="tablesorter-header sortable tablesorter-headerUnSorted"
-                    tabIndex={0}
-                    scope="col"
-                    role="columnheader"
-                    aria-disabled="false"
-                    aria-controls="sortable"
-                    aria-sort="none"
-                    aria-label="Rank: No sort applied, activate to apply a descending sort"
-                    style={{ userSelect: "none" }}
-                  >
-                    <div className="tablesorter-header-inner">Rank</div>
-                  </th>
-                </tr>
-              </thead>
-
-              <tbody id="ballottable" aria-live="polite" aria-relevant="all">
-                {round.entries.map((entry, i) => (
-                  <tr
-                    key={entry.id}
-                    className={i % 2 === 0 ? "ballotrows even" : "ballotrows"}
-                  >
-                    <td
-                      className="leftalign padvertmore"
-                      title="Doubled 0 daggers "
+                    <select
+                      name="entry_id"
+                      className="fixedbig select2-hidden-accessible"
+                      onChange={(evt) => setSelected(Number(evt.target.value))}
+                      value={selected}
+                      tabIndex={-1}
+                      aria-hidden="true"
+                      data-select2-id="select2-data-76-q41r"
                     >
-                      <div className="full flexrow grow semibold">
-                        <label htmlFor={`${entry.id}_ranks`}>
-                          {entry.name}
-                        </label>
-                      </div>
-                    </td>
-                    <td className="centeralign">
-                      {entry.speeches.map((s) => s.points).join(",")}
-                    </td>
+                      <option
+                        value=""
+                        data-select2-id="select2-data-86-kqdt"
+                      ></option>
+                      {round.entries.map((e, i) => (
+                        <option value={i} key={e.name}>
+                          {e.name}
+                        </option>
+                      ))}
+                    </select>
+                  </span>
+                </div>
 
-                    <td className="centeralign">
-                      {entry.speeches.length > 0 &&
-                        entry.speeches
-                          .map((s) => Number(s.points))
-                          .reduce(function (sum, value) {
-                            return sum + value;
-                          }, 0) / entry.speeches.length}
-                    </td>
-                    <td className="centeralign">
-                      <input
-                        type="number"
-                        step="1"
-                        size={5}
-                        name={`${entry.id}_ranks`}
-                        id={`${entry.id}_ranks`}
-                        max="9"
-                        defaultValue={entry.rank}
+                <div className="martop ltbordertop padvert">
+                  <span className="half nospace">
+                    <h5 className="nospace">{round.entries[selected].name}</h5>
+                  </span>
+
+                  <span className="half nospace rightalign">
+                    <span className="threequarters semibold redtext">
+                      Presiding Officer this session
+                    </span>
+                    <span className="quarter nospace centeralign">
+                      <label
+                        className="switch smaller"
+                        aria-label={"Presiding officer this session"}
+                      >
+                        <input
+                          className="padsettingbox"
+                          type="checkbox"
+                          value="1"
+                          id="po"
+                          name="po"
+                          onChange={(evt) => {
+                            if (evt.target.checked) {
+                              setPo(selected);
+                            } else {
+                              setPo(-1);
+                            }
+                          }}
+                        />
+                        <div className="slider"></div>
+                      </label>
+                    </span>
+                  </span>
+                </div>
+                <div id="new">
+                  {po === selected ? (
+                    <CongressPoSession speech={{}} onSave={addPoSession} />
+                  ) : (
+                    <CongressSpeech
+                      key={round.entries[selected].speeches.length}
+                      speech={{}}
+                      onSave={addSpeech}
+                    />
+                  )}
+                  {round.entries[selected].speeches.map((s, i) =>
+                    s.po ? (
+                      <CongressPoSession
+                        key={s.name}
+                        speech={s}
+                        onSave={updatePoSession(i)}
                       />
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-            <div className="liblrow rightalign padvert">
-              <span className="half centeralign nospace">
-                <input type="submit" value="Submit Ballot" />
-              </span>
-            </div>
-          </form>
-        </div>
-      )}
+                    ) : (
+                      <CongressSpeech
+                        key={s.name}
+                        speech={s}
+                        onSave={updateSpeech(i)}
+                      />
+                    ),
+                  )}
+                </div>
+              </div>
+            ),
+          },
+          {
+            name: "Rankings",
+            children: (
+              <div className="rankings screens">
+                <div className="full nospace centeralign">
+                  <span className="nineteen leftalign nospace ballotshell">
+                    <div className="padvertmuchless ltborderbottom marbottom">
+                      <p dir="ltr">
+                        We are all influenced by implicit bias or stereotypes
+                        that, when unchecked, influence our judging in ways that
+                        may negatively impact the students we are called to
+                        judge impartially. Before writing comments or making a
+                        decision, please take a moment to reflect on any
+                        preconceived notions you may hold that may impact your
+                        decision-making process and/or jeopardize the student
+                        experience.
+                      </p>
+                      <p>&nbsp;</p>
+                    </div>
+
+                    <h6 className="bluetext centeralign padmore marbottom semibold half">
+                      Blanks will be auto-filled with a 9
+                    </h6>
+                  </span>
+                </div>
+
+                {round.errors.length > 0 && (
+                  <div className="borderred centeralign martopmore marbottommore">
+                    <h6 className="bluetext semibold">
+                      Oh, drat. Your ballot had errors.
+                    </h6>
+                    {round.errors.map((e) => (
+                      <p className="bigger semibold redtext" key={e}>
+                        {e}
+                      </p>
+                    ))}
+                    <p className="bigger semibold bluetext">
+                      Please correct these before continuing.
+                    </p>
+                  </div>
+                )}
+
+                <form action={saveRankings} method="post">
+                  <table
+                    id="sortable"
+                    className="tablesorter tablesorter-default tablesorterb8b1a23feee53 hasStickyHeaders tablesorter9781b859d7f2a"
+                  >
+                    <thead>
+                      <tr
+                        className="yellowrow smallish centeralign tablesorter-headerRow"
+                        role="row"
+                      >
+                        <th
+                          data-column="0"
+                          className="tablesorter-header sortable tablesorter-headerUnSorted"
+                          tabIndex={0}
+                          scope="col"
+                          role="columnheader"
+                          aria-disabled="false"
+                          aria-controls="sortable"
+                          aria-sort="none"
+                          aria-label="Entry Code: No sort applied, activate to apply a descending sort"
+                          style={{ userSelect: "none" }}
+                        >
+                          <div className="tablesorter-header-inner">
+                            Entry Code
+                          </div>
+                        </th>
+
+                        <th
+                          data-column="1"
+                          className="tablesorter-header sortable tablesorter-headerUnSorted"
+                          tabIndex={0}
+                          scope="col"
+                          role="columnheader"
+                          aria-disabled="false"
+                          aria-controls="sortable"
+                          aria-sort="none"
+                          aria-label="Speech Points: No sort applied, activate to apply a descending sort"
+                          style={{ userSelect: "none" }}
+                        >
+                          <div className="tablesorter-header-inner">
+                            Speech Points
+                          </div>
+                        </th>
+
+                        <th
+                          data-column="2"
+                          className="tablesorter-header sortable tablesorter-headerUnSorted"
+                          tabIndex={0}
+                          scope="col"
+                          role="columnheader"
+                          aria-disabled="false"
+                          aria-controls="sortable"
+                          aria-sort="none"
+                          aria-label="Average: No sort applied, activate to apply a descending sort"
+                          style={{ userSelect: "none" }}
+                        >
+                          <div className="tablesorter-header-inner">
+                            Average
+                          </div>
+                        </th>
+
+                        <th
+                          data-column="3"
+                          className="tablesorter-header sortable tablesorter-headerUnSorted"
+                          tabIndex={0}
+                          scope="col"
+                          role="columnheader"
+                          aria-disabled="false"
+                          aria-controls="sortable"
+                          aria-sort="none"
+                          aria-label="Rank: No sort applied, activate to apply a descending sort"
+                          style={{ userSelect: "none" }}
+                        >
+                          <div className="tablesorter-header-inner">Rank</div>
+                        </th>
+                      </tr>
+                    </thead>
+
+                    <tbody
+                      id="ballottable"
+                      aria-live="polite"
+                      aria-relevant="all"
+                    >
+                      {round.entries.map((entry, i) => (
+                        <tr
+                          key={entry.id}
+                          className={
+                            i % 2 === 0 ? "ballotrows even" : "ballotrows"
+                          }
+                        >
+                          <td
+                            className="leftalign padvertmore"
+                            title="Doubled 0 daggers "
+                          >
+                            <div className="full flexrow grow semibold">
+                              <label htmlFor={`${entry.id}_ranks`}>
+                                {entry.name}
+                              </label>
+                            </div>
+                          </td>
+                          <td className="centeralign">
+                            {entry.speeches.map((s) => s.points).join(",")}
+                          </td>
+
+                          <td className="centeralign">
+                            {entry.speeches.length > 0 &&
+                              entry.speeches
+                                .map((s) => Number(s.points))
+                                .reduce(function (sum, value) {
+                                  return sum + value;
+                                }, 0) / entry.speeches.length}
+                          </td>
+                          <td className="centeralign">
+                            <input
+                              type="number"
+                              step="1"
+                              size={5}
+                              name={`${entry.id}_ranks`}
+                              id={`${entry.id}_ranks`}
+                              max="9"
+                              defaultValue={entry.rank}
+                            />
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                  <div className="liblrow rightalign padvert">
+                    <span className="half centeralign nospace">
+                      <input type="submit" value="Submit Ballot" />
+                    </span>
+                  </div>
+                </form>
+              </div>
+            ),
+          },
+        ]}
+      />
     </div>
   );
 }
