@@ -1,5 +1,5 @@
 import { FakeLink } from "../FakeLink";
-import Timer from "../Timer";
+import { Timer } from "../Timer";
 
 export const BallotStartedMenu = () => (
   <>
