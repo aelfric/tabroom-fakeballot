@@ -1,4 +1,4 @@
-import React, { MouseEventHandler } from "react";
+import { MouseEventHandler } from "react";
 import Content from "../Content";
 import { DefaultMenu } from "../CurrentBallots";
 import { SpeechEntry } from "./types";
@@ -84,7 +84,7 @@ export default function ConfirmedBallot({
           </div>
 
           {entries.map((e, i) => (
-            <Result {...e} even={i % 2 === 0} />
+            <Result key={e.code} {...e} even={i % 2 === 0} />
           ))}
         </>
       }

@@ -15,8 +15,7 @@ describe("Congress Ballot", () => {
     const user = userEvent.setup();
     render(<CongressBallotStarted />);
     await user.click(await screen.findByText("Rankings"));
-    let alannah = await screen.findByLabelText("Alannah Meadows");
-    await user.type(alannah, "1");
+    await user.type(await screen.findByLabelText("Alannah Meadows"), "1");
     await user.click(screen.getByText("Submit Ballot"));
     expect(
       await screen.findByText("Oh, drat. Your ballot had errors."),

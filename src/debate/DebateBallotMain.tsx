@@ -1,4 +1,4 @@
-import React, { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
+import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { TabroomError } from "../TabroomError";
 import { TabNav } from "../TabNav";
@@ -189,7 +189,10 @@ export function DebateBallotMain({
                 </td>
                 <td colSpan={4} className={"nospace"}>
                   {entry.speakers.map((s, j) => (
-                    <div className="padless marno ltbordertop centeralign">
+                    <div
+                      className="padless marno ltbordertop centeralign"
+                      key={s.name}
+                    >
                       <span className="smallish half marno padless leftalign 158778_row">
                         {s.name}:
                       </span>
@@ -325,7 +328,7 @@ export function DebateBallotMain({
                     </span>
                   </div>
                   <CommentBox
-                    setComments={(evt: { target: { getContent: () => any } }) =>
+                    setComments={(evt) =>
                       setComments((comments) => ({
                         ...comments,
                         rfd: evt.target.getContent(),
@@ -357,12 +360,12 @@ export function DebateBallotMain({
                     </span>
                   </div>
                   <CommentBox
-                    setComments={(evt: { target: { getContent: () => any } }) =>
+                    setComments={(evt) => {
                       setComments((comments) => ({
                         ...comments,
                         [e.code]: evt.target.getContent(),
-                      }))
-                    }
+                      }));
+                    }}
                     currentComments={comments[e.code] || ""}
                   />
                 </>

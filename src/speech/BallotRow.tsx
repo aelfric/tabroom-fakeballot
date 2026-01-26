@@ -1,4 +1,4 @@
-import React from "react";
+import { ChangeEvent } from "react";
 
 type BallotRowProps = {
   code: string;
@@ -6,11 +6,11 @@ type BallotRowProps = {
   title?: string;
   ranks?: string;
   points?: string;
-  setTitle: any;
-  setPoints: any;
-  setRank: any;
+  setTitle: (evt: ChangeEvent<HTMLInputElement>) => void;
+  setPoints: (evt: ChangeEvent<HTMLInputElement>) => void;
+  setRank: (evt: ChangeEvent<HTMLInputElement>) => void;
   even: boolean;
-  row: any;
+  row: number;
   includePoints: boolean;
 };
 

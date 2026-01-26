@@ -1,23 +1,25 @@
 import React, {
   ChangeEvent,
+  Dispatch,
   MouseEvent,
   MouseEventHandler,
-  FocusEvent,
+  SetStateAction,
 } from "react";
 import { Column, dynamicSort, SortableTable } from "../SortableTable";
 import { CommentPanel } from "./CommentPanel";
 import { BallotRow } from "./BallotRow";
 import { TabroomError } from "../TabroomError";
 import { SpeechEntry } from "./types";
-import { Editor } from "tinymce";
+import { Events } from "tinymce";
+import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 
 const includePoints = true;
 
 interface BallotStartedFormProps {
   entries: SpeechEntry[];
-  onSubmit: (a: any[]) => any;
-  setRFD: unknown;
-  rfd?: string;
+  onSubmit: (a: SpeechEntry[]) => unknown;
+  setRFD: Dispatch<SetStateAction<string>>;
+  rfd: string;
 }
 
 interface BallotStartedFormState {
@@ -39,28 +41,33 @@ export class BallotStartedForm extends React.Component<
   };
 
   setTitle = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].title = evt.target.value;
     this.setState({ entries: entries });
   };
 
   setRank = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].ranks = evt.target.value;
     this.setState({ entries: entries });
   };
 
   setPoints = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    let entries = this.state.entries;
+    const { entries } = this.state;
     entries[idx].points = evt.target.value;
     this.setState({ entries: entries });
   };
 
-  setComments = (idx: number) => (evt: FocusEvent<Editor>) => {
-    let entries = this.state.entries;
-    entries[idx].comments = evt.target.getContent();
-    this.setState({ entries: entries });
-  };
+  setComments: (
+    idx: number | `${number}` | "rfd",
+  ) => EventHandler<Events.EditorEventMap["blur"]> =
+    (idx: number | `${number}` | "rfd") => (evt) => {
+      if (idx !== "rfd") {
+        const { entries } = this.state;
+        entries[idx].comments = evt.target.getContent();
+        this.setState({ entries: entries });
+      }
+    };
 
   checkErrors = (evt: MouseEvent<HTMLInputElement>) => {
     const counts = [];
@@ -97,10 +104,13 @@ export class BallotStartedForm extends React.Component<
 
     if (includePoints) {
       const lowPointErrors = [];
-      const sortedEntries = this.state.entries.sort(dynamicSort("ranks"));
+      const sortedEntries = this.state.entries.sort(
+        dynamicSort("ranks", "asc"),
+      );
       for (let i = 0; i < sortedEntries.length - 1; i++) {
-        // @ts-ignore
-        if (sortedEntries[i + 1].points > sortedEntries[i].points) {
+        if (
+          (sortedEntries[i + 1].points ?? 0) > (sortedEntries[i].points ?? 0)
+        ) {
           lowPointErrors.push(sortedEntries[i].ranks);
         }
       }
@@ -131,7 +141,7 @@ export class BallotStartedForm extends React.Component<
   };
 
   render() {
-    const columns: Column[] = [
+    const columns: Column<SpeechEntry>[] = [
       {
         label: "Code",
         property: "code",

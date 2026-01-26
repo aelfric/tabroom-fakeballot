@@ -1,4 +1,4 @@
-import React, { AnchorHTMLAttributes } from "react";
+import { AnchorHTMLAttributes } from "react";
 import "./App.css";
 import "./fonts.css";
 import "./tabroom.css";

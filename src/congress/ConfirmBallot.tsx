@@ -1,6 +1,5 @@
-import React from "react";
 import Content from "../Content";
-import { SortableTable } from "../SortableTable";
+import { Column, SortableTable } from "../SortableTable";
 import { CongressEntry } from "./types";
 
 function EntryRow({
@@ -29,7 +28,7 @@ interface ConfirmSubmitProps {
 export function ConfirmSubmit(props: ConfirmSubmitProps) {
   const onSubmit = () => undefined;
 
-  let columns = [
+  const columns: Column<CongressEntry>[] = [
     {
       label: "Rank",
       property: "rank",
@@ -64,7 +63,7 @@ export function ConfirmSubmit(props: ConfirmSubmitProps) {
           </h6>
 
           <p className="centeralign martopmuchmore redtext semibold bigger">
-            You'll have to contact the tournament staff to make any further
+            You&#39;ll have to contact the tournament staff to make any further
             changes
           </p>
 

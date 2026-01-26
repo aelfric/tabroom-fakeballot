@@ -1,9 +1,9 @@
-import React, { FocusEvent } from "react";
 import Content from "./Content";
 import { FakeLink } from "./FakeLink";
 import { CommentBox } from "./CommentBox";
 import { SpeechEntry } from "./speech/types";
-import { Events, Editor } from "tinymce";
+import { Events } from "tinymce";
+import React from "react";
 
 interface EditFeedbackProps {
   entries: SpeechEntry[];
@@ -24,12 +24,14 @@ export default class EditFeedback extends React.Component<
     entries: JSON.parse(JSON.stringify(this.props.entries)),
   };
 
-  setComments = (idx: number) => (evt: FocusEvent<Editor>) => {
-    this.setState(({ entries }) => {
-      entries[idx].comments = evt.target.getContent();
-      return { entries: entries };
-    });
-  };
+  setComments =
+    (idx: number) =>
+    (evt: { target: { getContent: () => string | undefined } }) => {
+      this.setState(({ entries }) => {
+        entries[idx].comments = evt.target.getContent();
+        return { entries: entries };
+      });
+    };
 
   render() {
     return (
@@ -99,7 +101,7 @@ export default class EditFeedback extends React.Component<
             {this.state.entries.map((e: SpeechEntry, i: number) => (
               <React.Fragment key={e.code}>
                 <h4>
-                  Comments for {e.code} – {e.name} – "{e.title}"
+                  Comments for {e.code} – {e.name} – &ldquo;{e.title}&rdquo;
                 </h4>
 
                 <CommentBox

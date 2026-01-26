@@ -1,6 +1,6 @@
-import React from "react";
+import React, { MouseEventHandler } from "react";
 import Content from "../Content";
-import { SortableTable } from "../SortableTable";
+import { Column, SortableTable } from "../SortableTable";
 import { SpeechEntry } from "./types";
 
 const includePoints = false;
@@ -36,11 +36,13 @@ function EntryRow({
 interface ConfirmSubmitProps {
   entries: SpeechEntry[];
   rfd?: string;
-  confirm: any;
-  onSubmit: any;
+  confirm: MouseEventHandler<unknown>;
+  onSubmit: MouseEventHandler<unknown>;
 }
 
-interface ConfirmSubmitState {}
+interface ConfirmSubmitState {
+  sort: string;
+}
 
 export default class ConfirmSubmit extends React.Component<
   ConfirmSubmitProps,
@@ -51,7 +53,7 @@ export default class ConfirmSubmit extends React.Component<
   };
 
   render() {
-    let columns = [
+    let columns: Column<SpeechEntry>[] = [
       {
         label: "Rank",
         property: "ranks",
@@ -107,8 +109,8 @@ export default class ConfirmSubmit extends React.Component<
             </h6>
 
             <p className="centeralign martopmuchmore redtext semibold bigger">
-              You'll have to contact the tournament staff to make any further
-              changes
+              You&#39;ll have to contact the tournament staff to make any
+              further changes
             </p>
 
             <p className="centeralign bluetext bigger semibold marbottommore">
