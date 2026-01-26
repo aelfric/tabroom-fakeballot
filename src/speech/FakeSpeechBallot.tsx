@@ -13,6 +13,7 @@ export const SPEECH_ENTRIES: SpeechEntry[] = [
     ranks: undefined,
     points: undefined,
     order: "1st",
+    comments: "",
   },
   {
     code: "2940",
@@ -21,6 +22,7 @@ export const SPEECH_ENTRIES: SpeechEntry[] = [
     ranks: undefined,
     points: undefined,
     order: "2nd",
+    comments: "",
   },
   {
     code: "2858",
@@ -29,6 +31,7 @@ export const SPEECH_ENTRIES: SpeechEntry[] = [
     ranks: undefined,
     points: undefined,
     order: "3rd",
+    comments: "",
   },
   {
     code: "2720",
@@ -37,6 +40,7 @@ export const SPEECH_ENTRIES: SpeechEntry[] = [
     ranks: undefined,
     points: undefined,
     order: "4th",
+    comments: "",
   },
   {
     code: "2395",
@@ -45,6 +49,7 @@ export const SPEECH_ENTRIES: SpeechEntry[] = [
     ranks: undefined,
     points: undefined,
     order: "5th",
+    comments: "",
   },
   {
     code: "2603",
@@ -53,11 +58,19 @@ export const SPEECH_ENTRIES: SpeechEntry[] = [
     ranks: undefined,
     points: undefined,
     order: "6th",
+    comments: "",
   },
 ];
 
 export default function FakeSpeechBallot() {
-  const [entries, setEntries] = useState(SPEECH_ENTRIES);
+  const [entries, setEntries] = useState<SpeechEntry[]>(
+    SPEECH_ENTRIES.map((e) => ({
+      ...e,
+      title: undefined,
+      ranks: undefined,
+      points: undefined,
+    })),
+  );
   const [rfd, setRfd] = useState("");
   const [confirming, setConfirming] = useState(false);
   if (confirming) {

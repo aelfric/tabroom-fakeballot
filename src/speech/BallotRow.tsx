@@ -37,7 +37,7 @@ export function BallotRow({
         <input
           type="text"
           tabIndex={3 * row + 1}
-          name="12863154"
+          name={`${code}_title`}
           size={30}
           placeholder="Enter title or extemp question"
           value={title}
@@ -51,7 +51,8 @@ export function BallotRow({
           type="number"
           step="1"
           size={5}
-          name="12863154_ranks"
+          aria-label={`${code}_ranks`}
+          name={`${code}_ranks`}
           max="3"
           value={ranks}
           onChange={setRank}
@@ -64,8 +65,9 @@ export function BallotRow({
             className="2108733"
             type="number"
             step="1"
-            name="12863154_points"
-            id="12863154_points"
+            aria-label={`${code}_points`}
+            name={`${code}_points`}
+            id={`${code}_points`}
             size={5}
             min={1}
             max={100}
