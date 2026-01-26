@@ -1,23 +1,25 @@
 import React, {
   ChangeEvent,
+  Dispatch,
   MouseEvent,
   MouseEventHandler,
-  FocusEvent,
+  SetStateAction,
 } from "react";
 import { Column, dynamicSort, SortableTable } from "../SortableTable";
 import { CommentPanel } from "./CommentPanel";
 import { BallotRow } from "./BallotRow";
 import { TabroomError } from "../TabroomError";
 import { SpeechEntry } from "./types";
-import { Editor } from "tinymce";
+import { Events } from "tinymce";
+import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 
 const includePoints = true;
 
 interface BallotStartedFormProps {
   entries: SpeechEntry[];
   onSubmit: (a: SpeechEntry[]) => unknown;
-  setRFD: () => void;
-  rfd?: string;
+  setRFD: Dispatch<SetStateAction<string>>;
+  rfd: string;
 }
 
 interface BallotStartedFormState {
@@ -56,11 +58,16 @@ export class BallotStartedForm extends React.Component<
     this.setState({ entries: entries });
   };
 
-  setComments = (idx: number) => (evt: FocusEvent<Editor>) => {
-    const { entries } = this.state;
-    entries[idx].comments = evt.target.getContent();
-    this.setState({ entries: entries });
-  };
+  setComments: (
+    idx: number | `${number}` | "rfd",
+  ) => EventHandler<Events.EditorEventMap["blur"]> =
+    (idx: number | `${number}` | "rfd") => (evt) => {
+      if (idx !== "rfd") {
+        const { entries } = this.state;
+        entries[idx].comments = evt.target.getContent();
+        this.setState({ entries: entries });
+      }
+    };
 
   checkErrors = (evt: MouseEvent<HTMLInputElement>) => {
     const counts = [];
