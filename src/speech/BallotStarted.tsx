@@ -1,9 +1,10 @@
-import React, {
+import {
   ChangeEvent,
   Dispatch,
   MouseEvent,
   MouseEventHandler,
   SetStateAction,
+  useState,
 } from "react";
 import { Column, dynamicSort, SortableTable } from "../SortableTable";
 import { CommentPanel } from "./CommentPanel";
@@ -21,58 +22,39 @@ interface BallotStartedFormProps {
   setRFD: Dispatch<SetStateAction<string>>;
   rfd: string;
 }
+export function BallotStartedForm(props: BallotStartedFormProps) {
+  const [entries, setEntries] = useState(props.entries);
+  const [errors, setErrors] = useState<string[]>([]);
 
-interface BallotStartedFormState {
-  entries: SpeechEntry[];
-  errors: string[];
-  sort: string;
-  currentStudent: string;
-}
-
-export class BallotStartedForm extends React.Component<
-  BallotStartedFormProps,
-  BallotStartedFormState
-> {
-  state = {
-    entries: this.props.entries,
-    errors: [],
-    sort: "order",
-    currentStudent: "rfd",
-  };
-
-  setTitle = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    const { entries } = this.state;
+  const setTitle = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
     entries[idx].title = evt.target.value;
-    this.setState({ entries: entries });
+    setEntries(entries);
   };
 
-  setRank = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    const { entries } = this.state;
+  const setRank = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
     entries[idx].ranks = evt.target.value;
-    this.setState({ entries: entries });
+    setEntries(entries);
   };
 
-  setPoints = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    const { entries } = this.state;
+  const setPoints = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
     entries[idx].points = evt.target.value;
-    this.setState({ entries: entries });
+    setEntries(entries);
   };
 
-  setComments: (
+  const setComments: (
     idx: number | `${number}` | "rfd",
   ) => EventHandler<Events.EditorEventMap["blur"]> =
     (idx: number | `${number}` | "rfd") => (evt) => {
       if (idx !== "rfd") {
-        const { entries } = this.state;
         entries[idx].comments = evt.target.getContent();
-        this.setState({ entries: entries });
+        setEntries(entries);
       }
     };
 
-  checkErrors = (evt: MouseEvent<HTMLInputElement>) => {
+  const checkErrors = (evt: MouseEvent<HTMLInputElement>) => {
     const counts = [];
     const errors = [];
-    for (const element of this.state.entries) {
+    for (const element of entries) {
       const points = Number(element.points) || 0;
       const rank = Number(element.ranks);
       if (rank === undefined) {
@@ -104,9 +86,7 @@ export class BallotStartedForm extends React.Component<
 
     if (includePoints) {
       const lowPointErrors = [];
-      const sortedEntries = this.state.entries.sort(
-        dynamicSort("ranks", "asc"),
-      );
+      const sortedEntries = entries.sort(dynamicSort("ranks", "ascending"));
       for (let i = 0; i < sortedEntries.length - 1; i++) {
         if (
           (sortedEntries[i + 1].points ?? 0) > (sortedEntries[i].points ?? 0)
@@ -125,136 +105,130 @@ export class BallotStartedForm extends React.Component<
       }
     }
     evt.preventDefault();
-    this.setState({
-      errors: errors,
-    });
+    setErrors(errors);
 
     return errors.length === 0;
   };
 
-  handleSubmit: MouseEventHandler<HTMLInputElement> = (
+  const handleSubmit: MouseEventHandler<HTMLInputElement> = (
     evt: MouseEvent<HTMLInputElement>,
   ) => {
-    if (this.checkErrors(evt)) {
-      this.props.onSubmit(this.state.entries);
+    if (checkErrors(evt)) {
+      props.onSubmit(entries);
     }
   };
 
-  render() {
-    const columns: Column<SpeechEntry>[] = [
-      {
-        label: "Code",
-        property: "code",
-        ariaLabel: "",
-      },
-      {
-        label: "Name",
-        property: "name",
-        ariaLabel: "",
-      },
-      {
-        label: "Title/Question",
-        property: "title",
-        ariaLabel: "",
-      },
-      {
-        label: includePoints ? ["Ranks", "Points"] : "Ranks",
-        property: "ranks",
-        ariaLabel: "",
-      },
-    ];
+  const columns: Column<SpeechEntry>[] = [
+    {
+      label: "Code",
+      property: "code",
+      ariaLabel: "",
+    },
+    {
+      label: "Name",
+      property: "name",
+      ariaLabel: "",
+    },
+    {
+      label: "Title/Question",
+      property: "title",
+      ariaLabel: "",
+    },
+    {
+      label: includePoints ? ["Ranks", "Points"] : "Ranks",
+      property: "ranks",
+      ariaLabel: "",
+    },
+  ];
 
-    return (
-      <>
-        <div>
-          <span className="twothirds nospace">
-            <h4>OBT Round 1 Ballot for Riccobono</h4>
-          </span>
+  return (
+    <>
+      <div>
+        <span className="twothirds nospace">
+          <h4>OBT Round 1 Ballot for Riccobono</h4>
+        </span>
 
-          <span className="third rightalign right">
-            <h5 className="normalweight bluetext">Room: 12</h5>
+        <span className="third rightalign right">
+          <h5 className="normalweight bluetext">Room: 12</h5>
+        </span>
+      </div>
+
+      {errors.length > 0 && <TabroomError errors={errors} />}
+
+      <form method="post">
+        <input type="hidden" name="panel_id" value="3209946" />
+
+        <input type="hidden" name="judge_id" value="961185" />
+
+        <div className="padvert marbottommore marleftmore">
+          <span className="half leftalign">
+            <span className="semibold redtext inline marright">Points:</span>{" "}
+            Range: 75-100 *. Whole points only. No ties. Ranks and points must
+            agree.
           </span>
         </div>
+        <SortableTable<SpeechEntry>
+          entries={entries}
+          defaultSort="order"
+          columns={columns}
+          rowComponent={({ entry, i }) => (
+            <BallotRow
+              includePoints={includePoints}
+              key={entry.code}
+              {...entry}
+              row={i}
+              setTitle={setTitle(i)}
+              setRank={setRank(i)}
+              setPoints={setPoints(i)}
+              even={i % 2 === 0}
+            />
+          )}
+        >
+          <tbody aria-live="polite" aria-relevant="all">
+            <tr className="liblrow odd" role="row">
+              <td colSpan={10} className="rightalign">
+                <input
+                  type="button"
+                  value=" Submit Ballot "
+                  onClick={handleSubmit}
+                />
+              </td>
+            </tr>
+          </tbody>
+        </SortableTable>
 
-        {this.state.errors.length > 0 && (
-          <TabroomError errors={this.state.errors} />
-        )}
+        <div className="row smallish redtext semibold centeralign padvertmore even">
+          * The full point range is 1 - 100 but you must ask the tab room to
+          give points outside of 75 - 100.
+        </div>
 
-        <form method="post">
-          <input type="hidden" name="panel_id" value="3209946" />
-
-          <input type="hidden" name="judge_id" value="961185" />
-
-          <div className="padvert marbottommore marleftmore">
-            <span className="half leftalign">
-              <span className="semibold redtext inline marright">Points:</span>{" "}
-              Range: 75-100 *. Whole points only. No ties. Ranks and points must
-              agree.
-            </span>
+        <CommentPanel
+          entries={entries}
+          setComments={setComments}
+          setRFD={props.setRFD}
+          rfd={props.rfd}
+        />
+        <div className="libl full rightalign">
+          <div className="half centeralign">
+            <input
+              type="button"
+              value="Save Comments Only"
+              name="skipme"
+              className="med"
+              onClick={checkErrors}
+            />
           </div>
-          <SortableTable<SpeechEntry>
-            entries={this.state.entries}
-            defaultSort="order"
-            columns={columns}
-            rowComponent={({ entry, i }) => (
-              <BallotRow
-                includePoints={includePoints}
-                key={entry.code}
-                {...entry}
-                row={i}
-                setTitle={this.setTitle(i)}
-                setRank={this.setRank(i)}
-                setPoints={this.setPoints(i)}
-                even={i % 2 === 0}
-              />
-            )}
-          >
-            <tbody aria-live="polite" aria-relevant="all">
-              <tr className="liblrow odd" role="row">
-                <td colSpan={10} className="rightalign">
-                  <input
-                    type="button"
-                    value=" Submit Ballot "
-                    onClick={this.handleSubmit}
-                  />
-                </td>
-              </tr>
-            </tbody>
-          </SortableTable>
 
-          <div className="row smallish redtext semibold centeralign padvertmore even">
-            * The full point range is 1 - 100 but you must ask the tab room to
-            give points outside of 75 - 100.
+          <div className="half">
+            <input
+              onClick={handleSubmit}
+              type="button"
+              value="Save Comments &amp; Ballot"
+              className="med"
+            />
           </div>
-
-          <CommentPanel
-            entries={this.state.entries}
-            setComments={this.setComments}
-            setRFD={this.props.setRFD}
-            rfd={this.props.rfd}
-          />
-          <div className="libl full rightalign">
-            <div className="half centeralign">
-              <input
-                type="button"
-                value="Save Comments Only"
-                name="skipme"
-                className="med"
-                onClick={this.checkErrors}
-              />
-            </div>
-
-            <div className="half">
-              <input
-                onClick={this.handleSubmit}
-                type="button"
-                value="Save Comments &amp; Ballot"
-                className="med"
-              />
-            </div>
-          </div>
-        </form>
-      </>
-    );
-  }
+        </div>
+      </form>
+    </>
+  );
 }

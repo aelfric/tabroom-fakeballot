@@ -63,6 +63,7 @@ export default function FakeSpeechBallot() {
   if (confirming) {
     return (
       <ConfirmSubmit
+        rfd={rfd}
         entries={entries}
         onSubmit={() => undefined}
         confirm={() => setConfirming(false)}

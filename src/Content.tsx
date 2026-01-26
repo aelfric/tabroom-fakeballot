@@ -1,45 +1,32 @@
-import React, { ReactNode } from "react";
+import { ReactNode, useState } from "react";
 
 interface ContentProps {
   main: ReactNode;
   menu: ReactNode;
 }
 
-export default class Content extends React.Component<
-  ContentProps,
-  { collapseMenu: boolean }
-> {
-  state = {
-    collapseMenu: false,
-  };
+export default function Content(props: ContentProps) {
+  const [collapseMenu, setCollapseMenu] = useState(false);
+  const toggleCollapse = () => setCollapseMenu((status) => !status);
+  return (
+    <div id="content">
+      {collapseMenu && (
+        <button
+          className="shade closedshade fa fa-backward"
+          onClick={toggleCollapse}
+        />
+      )}
 
-  toggleCollapse = () => {
-    this.setState((prevState) => ({
-      collapseMenu: !prevState.collapseMenu,
-    }));
-  };
-
-  render() {
-    return (
-      <div id="content">
-        {this.state.collapseMenu && (
-          <button
-            className="shade closedshade fa fa-backward"
-            onClick={this.toggleCollapse}
-          />
-        )}
-
-        <div className={`main ${this.state.collapseMenu ? "mainfull" : ""}`}>
-          {this.props.main}
-        </div>
-        <div className={`menu ${this.state.collapseMenu ? "hidden" : ""}`}>
-          <button
-            className="shade openshade fa fa-forward"
-            onClick={this.toggleCollapse}
-          />
-          {this.props.menu}
-        </div>
+      <div className={`main ${collapseMenu ? "mainfull" : ""}`}>
+        {props.main}
       </div>
-    );
-  }
+      <div className={`menu ${collapseMenu ? "hidden" : ""}`}>
+        <button
+          className="shade openshade fa fa-forward"
+          onClick={toggleCollapse}
+        />
+        {props.menu}
+      </div>
+    </div>
+  );
 }
