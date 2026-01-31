@@ -2,8 +2,7 @@ import { MouseEventHandler } from "react";
 import Content from "../Content";
 import { Column, SortableTable } from "../SortableTable";
 import { SpeechEntry } from "./types";
-
-const includePoints = false;
+import { includePoints } from "./BallotStarted";
 
 function EntryRow({
   ranks,
@@ -16,10 +15,8 @@ function EntryRow({
 }: SpeechEntry & { even: boolean }) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
-      <td className="centeralig1n">{ranks}</td>
-      {includePoints && (
-        <td className="centeralign">{points ? points : "ZERO"}</td>
-      )}
+      <td className="centeralign">{ranks}</td>
+      {includePoints && <td className="centeralign">{points}</td>}
       <td className="centeralign">{code}</td>
       <td>{name}</td>
       <td>{title}</td>
@@ -44,7 +41,7 @@ export default function ConfirmSubmit(props: ConfirmSubmitProps) {
     },
     {
       label: "Points",
-      property: "ranks",
+      property: "points",
       ariaLabel: "",
     },
     {
@@ -68,7 +65,7 @@ export default function ConfirmSubmit(props: ConfirmSubmitProps) {
       ariaLabel: "",
     },
   ];
-  columns = columns.filter((c) => c.label !== "Points");
+  columns = columns.filter((c) => includePoints || c.label !== "Points");
   return (
     <Content
       main={

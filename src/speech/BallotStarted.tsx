@@ -14,40 +14,53 @@ import { SpeechEntry } from "./types";
 import { Events } from "tinymce";
 import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 
-const includePoints = true;
+export const includePoints = true;
 
 interface BallotStartedFormProps {
   entries: SpeechEntry[];
-  onSubmit: (a: SpeechEntry[]) => unknown;
+  setEntries: Dispatch<SetStateAction<SpeechEntry[]>>;
+  onSubmit: () => void;
   setRFD: Dispatch<SetStateAction<string>>;
   rfd: string;
 }
 export function BallotStartedForm(props: BallotStartedFormProps) {
-  const [entries, setEntries] = useState(props.entries);
+  const { entries, setEntries } = props;
   const [errors, setErrors] = useState<string[]>([]);
 
-  const setTitle = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    entries[idx].title = evt.target.value;
-    setEntries(entries);
+  const setTitle = (code: string) => (evt: ChangeEvent<HTMLInputElement>) => {
+    setEntries((entries) =>
+      entries.map((e) =>
+        e.code === code ? { ...e, title: evt.target.value } : e,
+      ),
+    );
   };
 
-  const setRank = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    entries[idx].ranks = evt.target.value;
-    setEntries(entries);
+  const setRank = (code: string) => (evt: ChangeEvent<HTMLInputElement>) => {
+    setEntries((entries) =>
+      entries.map((e) =>
+        e.code === code ? { ...e, ranks: evt.target.value } : e,
+      ),
+    );
   };
 
-  const setPoints = (idx: number) => (evt: ChangeEvent<HTMLInputElement>) => {
-    entries[idx].points = evt.target.value;
-    setEntries(entries);
+  const setPoints = (code: string) => (evt: ChangeEvent<HTMLInputElement>) => {
+    setEntries((entries) =>
+      entries.map((e) =>
+        e.code === code ? { ...e, points: evt.target.value } : e,
+      ),
+    );
   };
 
   const setComments: (
-    idx: number | `${number}` | "rfd",
+    code: string,
   ) => EventHandler<Events.EditorEventMap["blur"]> =
-    (idx: number | `${number}` | "rfd") => (evt) => {
-      if (idx !== "rfd") {
-        entries[idx].comments = evt.target.getContent();
-        setEntries(entries);
+    (code: string) => (evt) => {
+      if (code !== "rfd") {
+        setEntries((entries) =>
+          entries.map((e) =>
+            e.code === code ? { ...e, comments: evt.target.getContent() } : e,
+          ),
+        );
       }
     };
 
@@ -114,7 +127,7 @@ export function BallotStartedForm(props: BallotStartedFormProps) {
     evt: MouseEvent<HTMLInputElement>,
   ) => {
     if (checkErrors(evt)) {
-      props.onSubmit(entries);
+      props.onSubmit();
     }
   };
 
@@ -156,10 +169,6 @@ export function BallotStartedForm(props: BallotStartedFormProps) {
       {errors.length > 0 && <TabroomError errors={errors} />}
 
       <form method="post">
-        <input type="hidden" name="panel_id" value="3209946" />
-
-        <input type="hidden" name="judge_id" value="961185" />
-
         <div className="padvert marbottommore marleftmore">
           <span className="half leftalign">
             <span className="semibold redtext inline marright">Points:</span>{" "}
@@ -177,9 +186,9 @@ export function BallotStartedForm(props: BallotStartedFormProps) {
               key={entry.code}
               {...entry}
               row={i}
-              setTitle={setTitle(i)}
-              setRank={setRank(i)}
-              setPoints={setPoints(i)}
+              setTitle={setTitle(entry.code)}
+              setRank={setRank(entry.code)}
+              setPoints={setPoints(entry.code)}
               even={i % 2 === 0}
             />
           )}

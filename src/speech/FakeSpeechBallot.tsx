@@ -66,9 +66,9 @@ export default function FakeSpeechBallot() {
   const [entries, setEntries] = useState<SpeechEntry[]>(
     SPEECH_ENTRIES.map((e) => ({
       ...e,
-      title: undefined,
-      ranks: undefined,
-      points: undefined,
+      title: "",
+      ranks: "",
+      points: "",
     })),
   );
   const [rfd, setRfd] = useState("");
@@ -88,10 +88,10 @@ export default function FakeSpeechBallot() {
         main={
           <BallotStartedForm
             entries={entries}
+            setEntries={setEntries}
             setRFD={setRfd}
             rfd={rfd}
-            onSubmit={(es) => {
-              setEntries(es);
+            onSubmit={() => {
               setConfirming(true);
             }}
           />

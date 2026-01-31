@@ -9,9 +9,7 @@ interface CommentPanelProps {
   entries: SpeechEntry[];
   rfd?: string;
   setRFD?: Dispatch<SetStateAction<string>>;
-  setComments: (
-    i: number | `${number}` | "rfd",
-  ) => EventHandler<Events.EditorEventMap["blur"]>;
+  setComments: (code: string) => EventHandler<Events.EditorEventMap["blur"]>;
 }
 
 export function CommentPanel({ entries, ...props }: CommentPanelProps) {
@@ -59,7 +57,6 @@ export function CommentPanel({ entries, ...props }: CommentPanelProps) {
           <CommentBox
             setComments={(evt) => {
               if (props.setRFD && evt.target) {
-                console.log(evt);
                 return props.setRFD(evt.target.getContent());
               }
             }}
@@ -74,7 +71,7 @@ export function CommentPanel({ entries, ...props }: CommentPanelProps) {
           </p>
           <CommentBox
             key={entries[currentStudent]?.code}
-            setComments={props.setComments(currentStudent)}
+            setComments={props.setComments(entries[currentStudent]?.code)}
             currentComments={entries[currentStudent]?.comments}
           />
         </div>

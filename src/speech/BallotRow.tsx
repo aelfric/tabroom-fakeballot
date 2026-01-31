@@ -29,7 +29,9 @@ export function BallotRow({
 }: BallotRowProps) {
   return (
     <tr className={`ballotrows ${even ? "even" : "odd"}`} role="row">
-      <td className="leftalign semibold">{code}</td>
+      <td className="leftalign semibold">
+        {row} {code}
+      </td>
 
       <td className="padleftmore">{name}</td>
 
