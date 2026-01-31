@@ -1,93 +1,68 @@
-import { MouseEventHandler } from "react";
-import Content from "../Content";
-import { DefaultMenu } from "../CurrentBallots";
-import { SpeechEntry } from "./types";
+import { Link } from "@tanstack/react-router";
+import { SPEECH_ENTRIES } from "./FakeSpeechBallot";
 
-function Result({
-  order,
-  code,
-  name,
-  title,
-  ranks,
-  points,
-  even,
-}: SpeechEntry & { even: boolean }) {
-  return (
-    <div className={`row ${even ? "even" : "odd"}`}>
-      <span className="sixth padvert smaller">{order} Speaker</span>
+const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
+const suffixes = new Map([
+  ["one", "st"],
+  ["two", "nd"],
+  ["few", "rd"],
+  ["other", "th"],
+]);
+const formatOrdinals = (n: number) => {
+  const rule = pr.select(n);
+  const suffix = suffixes.get(rule);
+  return `${n}${suffix}`;
+};
 
-      <span className="third semibold bluetext">
-        {code} {name}
-        <div className="full nospace">{title}</div>
-      </span>
-
-      <span className="half centeralign marno padno">
-        Rank: {ranks} – {points}
-      </span>
-    </div>
-  );
+function dueDate() {
+  const date = new Date();
+  date.setHours(21, 0, 0);
+  return new Intl.DateTimeFormat("en-US", {
+    dateStyle: "medium",
+    timeStyle: "short",
+    timeZone: Intl.DateTimeFormat().resolvedOptions().timeZone,
+  }).format(date);
 }
 
-export default function ConfirmedBallot({
-  entries,
-  editFeedback,
-}: {
-  entries: SpeechEntry[];
-  editFeedback: MouseEventHandler<HTMLButtonElement>;
-}) {
+export default function ConfirmedBallot() {
   return (
-    <Content
-      menu={<DefaultMenu />}
-      main={
-        <>
-          <h3>Current Ballots</h3>
+    <>
+      <div className="full nospace martopmore odd bluebordertop thinborder flexrow">
+        <span className="fifth nospace bigger semibold italic padleft">
+          OBT Round 1
+        </span>
 
-          <span className="third nospace">
-            <h6 className="padleftmore greentext marbottommore semibold">
-              None Posted...yet!
-            </h6>
-          </span>
-          <span className="twothirds rightalign semibold nospace">
-            <p>
-              Ballots will appear here once rounds have been published on the
-              web
-            </p>
-          </span>
+        <span className="threetenths biggish semibold bluetext rightalign italic padrightless">
+          Example Tournament
+        </span>
+        <span className="threetenths padleftless italic">
+          Edit deadline {dueDate()}
+        </span>
 
-          <h4 className="martopmore">Previously Entered Results</h4>
-
-          <p className="martop marbottom bluetext semibold">
-            Note: You cannot edit past results; you can only view them. Once you
-            have confirmed a ballot, you must contact the tournament officials
-            to make changes. You may edit/extend past comments until the
-            tournament ends.
-          </p>
-
-          <div className="full nospace martop">
-            <span className="threefifths padleft">
-              <h5>Online Ballot Test</h5>
+        <span className="fifth rightalign">
+          <Link
+            className="bluetext buttonwhite smallish hover padvertless padleft padright invert"
+            to="/speech-feedback"
+          >
+            Edit Feedback
+          </Link>
+        </span>
+      </div>
+      <div className="ltbordertop odd">
+        {SPEECH_ENTRIES.map((entry, index) => (
+          <div key={entry.code} className="nospace ltborderbottom flexrow full">
+            <span className="tenth padvert smaller">
+              {formatOrdinals(index + 1)} spkr
             </span>
 
-            <span className="fifth nospace">
-              <h6>Round 1</h6>
-            </span>
+            <span className="fifth grow">{entry.code}</span>
 
-            <span className="fifth rightalign">
-              <button
-                type="button"
-                className="bluetext buttonwhite hover smallish invert"
-                onClick={editFeedback}
-              >
-                Edit Feedback
-              </button>
-            </span>
+            <span className="tenth semibold">{entry.ranks ?? index + 1}</span>
+
+            <span className="tenth">{entry.points ?? 99 - index}</span>
           </div>
-
-          {entries.map((e, i) => (
-            <Result key={e.code} {...e} even={i % 2 === 0} />
-          ))}
-        </>
-      }
-    />
+        ))}
+      </div>
+    </>
   );
 }

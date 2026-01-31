@@ -1,127 +1,111 @@
 import Content from "./Content";
-import { FakeLink } from "./FakeLink";
-import { CommentBox } from "./CommentBox";
+import { DefaultMenu } from "./CurrentBallots";
 import { SpeechEntry } from "./speech/types";
+import { useState } from "react";
+import { SPEECH_ENTRIES } from "./speech/FakeSpeechBallot";
 import { Events } from "tinymce";
-import React from "react";
+import { CommentBox } from "./CommentBox";
+import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 
-interface EditFeedbackProps {
-  entries: SpeechEntry[];
-  rfd?: string;
-  setRFD: (evt: Events.EditorEventMap["blur"]) => unknown;
-  onSubmit: (e: SpeechEntry[]) => unknown;
-}
+export default function EditFeedback() {
+  const [entries, setEntries] = useState<SpeechEntry[]>(
+    SPEECH_ENTRIES.map((e) => ({
+      ...e,
+      title: "",
+      ranks: "",
+      points: "",
+    })),
+  );
+  const [rfd, setRfd] = useState("");
 
-interface EditFeedbackState {
-  entries: SpeechEntry[];
-}
-
-export default class EditFeedback extends React.Component<
-  EditFeedbackProps,
-  EditFeedbackState
-> {
-  state = {
-    entries: JSON.parse(JSON.stringify(this.props.entries)),
-  };
-
-  setComments =
-    (idx: number) =>
-    (evt: { target: { getContent: () => string | undefined } }) => {
-      this.setState(({ entries }) => {
-        entries[idx].comments = evt.target.getContent();
-        return { entries: entries };
-      });
+  const setComments: (
+    code: string,
+  ) => EventHandler<Events.EditorEventMap["blur"]> =
+    (code: string) => (evt) => {
+      if (code !== "rfd") {
+        setEntries((entries) =>
+          entries.map((e) =>
+            e.code === code ? { ...e, comments: evt.target.getContent() } : e,
+          ),
+        );
+      }
     };
 
-  render() {
-    return (
-      <Content
-        menu={
-          <>
-            <div className="shade openshade fa fa-forward" />
-
-            <div className="sidenote">
-              <h4>This round:</h4>
-
-              <div className="evenrownohover block padless smallish">
-                <span className="smallspan">Round:</span>
-
-                <span className="namespan">Round 1</span>
-              </div>
-
-              <div className="evenrownohover block padless smallish">
-                <span className="smallspan">Room:</span>
-                <span className="namespan">Lower Gym I</span>
-              </div>
-
-              <FakeLink
-                href="/index/tourn/postings/round.mhtml?tourn_id=12009&amp;round_id=393269"
-                className="blue block"
-              >
-                Full Pairing/Schematic
-              </FakeLink>
-            </div>
-
-            <div className="sidenote">
-              {this.state.entries.map((e: SpeechEntry) => (
-                <FakeLink
-                  className="yellow block"
-                  href="ballot_comments.mhtml?judge_id=963334&amp;ballot_id=12883649"
-                  key={e.code}
-                >
-                  For {e.code}
-                </FakeLink>
-              ))}
-            </div>
-
-            <div className="sidenote">
-              <h4>Other ballots</h4>
-            </div>
-          </>
-        }
-        main={
-          <>
-            <span className="hugespan nowrap padno" data-style="width: 450px;">
-              <h3>OBT Round 1 RFD/Comments for Riccobono</h3>
+  return (
+    <Content
+      menu={<DefaultMenu />}
+      main={
+        <>
+          <div className="full nospace ltborderbottom">
+            <span className="third nospace">
+              <h3>Edit Comments</h3>
             </span>
 
-            <span className="medbigspan nowrap right">
-              <h4 data-style="text-align: right;">In Lower Gym I</h4>
+            <span className="twothirds rightalign nospace bottomalign padbottom">
+              <p className="nospace marvertno rightalign semibold redtext">
+                OBT Round 1
+              </p>
+
+              <p className="nospace marvertless semibold bluetext">In 237</p>
+            </span>
+          </div>
+
+          <div className="bottomalign">
+            <span className="third nospace">
+              <h5>Reason for Rankings</h5>
             </span>
 
-            <h4>Reason for Rankings</h4>
-            <CommentBox
-              setComments={(evt) => this.props.setRFD(evt)}
-              currentComments={this.props.rfd}
-            />
-            <p className="explain">
-              RFDs are sent to everyone in the round; comments only to the entry
-              &amp; coaches
-            </p>
-            {this.state.entries.map((e: SpeechEntry, i: number) => (
-              <React.Fragment key={e.code}>
-                <h4>
-                  Comments for {e.code} – {e.name} – &ldquo;{e.title}&rdquo;
-                </h4>
+            <span className="twothirds nospace padbottom rightalign graytext semibold bottomalign">
+              Reasons for Rankings are sent to everyone in the round; comments
+              only go to that entry
+            </span>
+          </div>
 
-                <CommentBox
-                  key={e.code}
-                  setComments={this.setComments(i)}
-                  currentComments={e.comments}
-                />
-              </React.Fragment>
-            ))}
-            <div className="liblrow rightalign">
-              <input
-                type="submit"
-                value="Save RFD &amp; Comments"
-                className="med"
-                onClick={() => this.props.onSubmit(this.state.entries)}
+          <form method="post">
+            <p className="centeralign marleftmuchmore">
+              <CommentBox
+                setComments={(evt) => {
+                  if (setRfd && evt.target) {
+                    return setRfd(evt.target.getContent());
+                  }
+                }}
+                currentComments={rfd}
               />
+            </p>
+            {entries.map((entry) => {
+              return (
+                <>
+                  <div
+                    key={entry.code}
+                    className="full flexrow martopmore padtop bordertop"
+                  >
+                    <span className="twofifths grow padleft nospace">
+                      <h5>
+                        Comments for {entry.code} – Name: {entry.name}
+                      </h5>
+                    </span>
+
+                    <span className="bigger padbottom padtop twofifths rightalign grow italic padrightmore">
+                      &ldquo;Some Title&rdquo;
+                    </span>
+                  </div>
+                  <CommentBox
+                    key={`${entry.code}-comments`}
+                    setComments={setComments(entry.code)}
+                    currentComments={entry.comments}
+                  />
+                </>
+              );
+            })}
+
+            <div className="liblrow rightalign">
+              <span className="third centeralign">
+                <input type="submit" value="Save RFD &amp; Comments" />
+              </span>
             </div>
-          </>
-        }
-      />
-    );
-  }
+          </form>
+        </>
+      }
+    />
+  );
 }
