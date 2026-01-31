@@ -1,23 +1,38 @@
-import { describe, expect, it } from "vitest";
-import { fireEvent, render, screen } from "@testing-library/react";
-import CurrentBallots from "./CurrentBallots";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
+import type { RouterHistory } from "@tanstack/react-router";
 import {
-  createRootRoute,
+  createBrowserHistory,
   createRouter,
   RouterProvider,
 } from "@tanstack/react-router";
 import "@testing-library/jest-dom/vitest";
+import { routeTree } from "./routeTree.gen";
+import { userEvent } from "@testing-library/user-event";
 
 describe("Landing Page", () => {
-  it("can open a speech ballot", async () => {
-    const rootRoute = createRootRoute();
-    const router = createRouter({ routeTree: rootRoute });
-    render(
-      <RouterProvider router={router} defaultComponent={CurrentBallots} />,
-    );
-    const startButtons = await screen.findAllByText("ON MY WAY!");
-    fireEvent.click(startButtons[0]);
+  let history: RouterHistory;
 
-    expect(screen.queryByText("OBT Round 1")).toBeInTheDocument();
+  beforeEach(() => {
+    history = createBrowserHistory();
+    expect(window.location.pathname).toBe("/");
+  });
+
+  afterEach(() => {
+    history.destroy();
+    window.history.replaceState(null, "root", "/");
+    cleanup();
+  });
+
+  it("can open a speech ballot", async () => {
+    const user = userEvent.setup();
+    const router = createRouter({
+      routeTree,
+    });
+    render(<RouterProvider router={router} />);
+    const startButtons = await screen.findAllByText("ON MY WAY!");
+    await user.click(startButtons[0]);
+
+    expect(screen.queryByText("General Feedback")).toBeInTheDocument();
   });
 });
