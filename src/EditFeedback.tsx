@@ -1,22 +1,14 @@
 import Content from "./Content";
 import { DefaultMenu } from "./CurrentBallots";
-import { SpeechEntry } from "./speech/types";
-import { useState } from "react";
-import { SPEECH_ENTRIES } from "./speech/FakeSpeechBallot";
+import { useContext } from "react";
 import { Events } from "tinymce";
 import { CommentBox } from "./CommentBox";
 import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
+import { AppContext } from "./app-context";
 
 export default function EditFeedback() {
-  const [entries, setEntries] = useState<SpeechEntry[]>(
-    SPEECH_ENTRIES.map((e) => ({
-      ...e,
-      title: "",
-      ranks: "",
-      points: "",
-    })),
-  );
-  const [rfd, setRfd] = useState("");
+  const { speechRound } = useContext(AppContext);
+  const { entries, setEntries, rfd, setRfd } = speechRound!; // TODO
 
   const setComments: (
     code: string,
@@ -86,7 +78,7 @@ export default function EditFeedback() {
                     </span>
 
                     <span className="bigger padbottom padtop twofifths rightalign grow italic padrightmore">
-                      &ldquo;Some Title&rdquo;
+                      &ldquo;{entry.title}&rdquo;
                     </span>
                   </div>
                   <CommentBox
