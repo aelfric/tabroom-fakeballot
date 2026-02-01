@@ -6,26 +6,32 @@ import { useState } from "react";
 import { SpeechEntry } from "../speech/types";
 import { SPEECH_ENTRIES } from "../speech/FakeSpeechBallot";
 
-function AppRoot() {
+export function useSpeechRoundState(): SpeechRound {
   const [entries, setEntries] = useState<SpeechEntry[]>(
-    SPEECH_ENTRIES.map((e) => ({
-      ...e,
-      title: "",
-      ranks: "",
-      points: "",
-    })),
+    SPEECH_ENTRIES.map(
+      (e): SpeechEntry => ({
+        ...e,
+        title: "",
+        ranks: "",
+        points: "",
+      }),
+    ),
   );
   const [rfd, setRfd] = useState("");
   const [ballotState, setBallotState] = useState<BallotState>("unstarted");
 
-  const speechRound = {
+  return {
     entries,
     setEntries,
     rfd,
     setRfd,
     ballotState,
     setBallotState,
-  } satisfies SpeechRound;
+  };
+}
+
+function AppRoot() {
+  const speechRound = useSpeechRoundState();
   return (
     <AppContext value={{ speechRound }}>
       <Layout>

@@ -5,6 +5,7 @@ import { BallotStartedForm } from "./BallotStarted";
 
 import { AppContext } from "../app-context";
 import { useNavigate } from "@tanstack/react-router";
+import { BallotStartedMenu } from "./BallotStartedMenu";
 
 export const SPEECH_ENTRIES = [
   {
