@@ -1,46 +1,16 @@
-import { useState } from "react";
+import { useContext } from "react";
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
 import { DebateBallotMain } from "./DebateBallotMain";
 import { ConfirmBallot } from "./ConfirmBallot";
 import { BallotConfirmed } from "./BallotConfirmed";
+import { AppContext } from "../app-context";
 
 export function DebateBallotStarted() {
-  const [round, setRound] = useState<DebateRound>({
-    entries: [
-      {
-        code: "Williams Prep GB",
-        speakers: [
-          {
-            name: "Kiersten Buzbee",
-            last: "Buzbee",
-          },
-          {
-            name: "Teegin Groves",
-            last: "Groves",
-          },
-        ],
-      },
-      {
-        code: "Academy NB",
-        speakers: [
-          {
-            name: "Ross Brown",
-            last: "Brown",
-          },
-          {
-            name: "Jackie Nguyen",
-            last: "Nguyen",
-          },
-        ],
-      },
-    ],
-  });
+  const { debateRound } = useContext(AppContext);
+  const { round, setRound, ballotState, setBallotState } = debateRound!;
 
-  const [confirming, setConfirming] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
-
-  if (confirmed) {
+  if (ballotState === "confirmed") {
     return (
       <BallotConfirmed
         entries={round.entries}
@@ -50,13 +20,13 @@ export function DebateBallotStarted() {
     );
   }
 
-  if (confirming) {
+  if (ballotState === "entered") {
     return (
       <ConfirmBallot
         entries={round.entries}
         winningEntry={round.winningEntry}
-        confirm={() => setConfirming(false)}
-        confirmed={() => setConfirmed(true)}
+        confirm={() => setBallotState("started")}
+        confirmed={() => setBallotState("confirmed")}
         rfd={round.rfd}
       />
     );
@@ -67,7 +37,7 @@ export function DebateBallotStarted() {
           <DebateBallotMain
             round={round}
             setRound={setRound}
-            onSubmit={() => setConfirming(true)}
+            onSubmit={() => setBallotState("entered")}
           />
         }
         menu={<BallotStartedMenu />}
