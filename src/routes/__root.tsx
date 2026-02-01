@@ -4,10 +4,13 @@ import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { AppContext } from "../app-context";
 import { useSpeechRoundState } from "../speech/useSpeechRoundState";
 
+import { useDebateRoundState } from "../debate/use-debate-round-state";
+
 function AppRoot() {
   const speechRound = useSpeechRoundState();
+  const debateRound = useDebateRoundState();
   return (
-    <AppContext value={{ speechRound }}>
+    <AppContext value={{ speechRound, debateRound }}>
       <Layout>
         <Outlet />
       </Layout>

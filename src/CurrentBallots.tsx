@@ -5,7 +5,9 @@ import { CongressBallot } from "./congress/CongressBallot";
 import { DebateBallot } from "./debate/DebateBallot";
 import { SPEECH_ENTRIES } from "./speech/FakeSpeechBallot";
 import { TabNav } from "./TabNav";
-import ConfirmedBallot from "./speech/ConfirmedBallot";
+import SpeechConfirmedBallot from "./speech/ConfirmedBallot";
+import DebateConfirmedBallot from "./debate/ConfirmedBallot";
+import CongressConfirmedBallot from "./congress/ConfirmedBallot";
 
 export function DefaultMenu() {
   return (
@@ -189,7 +191,9 @@ export default function CurrentBallots() {
                         tournament officials to fix errors
                       </span>
                     </div>
-                    <ConfirmedBallot />
+                    <SpeechConfirmedBallot />
+                    <CongressConfirmedBallot />
+                    <DebateConfirmedBallot />
                   </div>
                 ),
               },
