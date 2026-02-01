@@ -33,6 +33,6 @@ describe("Landing Page", () => {
     const startButtons = await screen.findAllByText("ON MY WAY!");
     await user.click(startButtons[0]);
 
-    expect(screen.queryByText("General Feedback")).toBeInTheDocument();
+    expect(await screen.findByText("General Feedback")).toBeInTheDocument();
   });
 });
