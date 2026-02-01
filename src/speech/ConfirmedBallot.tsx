@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
-import { SPEECH_ENTRIES } from "./FakeSpeechBallot";
+import { useContext } from "react";
+import { AppContext } from "../app-context";
 
 const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
 const suffixes = new Map([
@@ -25,6 +26,8 @@ function dueDate() {
 }
 
 export default function ConfirmedBallot() {
+  const { speechRound } = useContext(AppContext);
+  const { entries } = speechRound!;
   return (
     <>
       <div className="full nospace martopmore odd bluebordertop thinborder flexrow">
@@ -49,7 +52,7 @@ export default function ConfirmedBallot() {
         </span>
       </div>
       <div className="ltbordertop odd">
-        {SPEECH_ENTRIES.map((entry, index) => (
+        {entries.map((entry, index) => (
           <div key={entry.code} className="nospace ltborderbottom flexrow full">
             <span className="tenth padvert smaller">
               {formatOrdinals(index + 1)} spkr
