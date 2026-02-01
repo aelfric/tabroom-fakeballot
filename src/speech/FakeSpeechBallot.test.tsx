@@ -12,7 +12,8 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import { AppContext } from "../app-context";
-import { useSpeechRoundState } from "../routes/__root";
+
+import { useSpeechRoundState } from "./useSpeechRoundState";
 
 describe("Speech Ballot", () => {
   let history: RouterHistory;

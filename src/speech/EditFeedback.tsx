@@ -1,10 +1,10 @@
-import Content from "./Content";
-import { DefaultMenu } from "./CurrentBallots";
+import Content from "../Content";
+import { DefaultMenu } from "../CurrentBallots";
 import { useContext } from "react";
 import { Events } from "tinymce";
-import { CommentBox } from "./CommentBox";
+import { CommentBox } from "../CommentBox";
 import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
-import { AppContext } from "./app-context";
+import { AppContext } from "../app-context";
 
 export default function EditFeedback() {
   const { speechRound } = useContext(AppContext);
