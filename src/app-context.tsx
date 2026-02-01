@@ -1,9 +1,9 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { SpeechEntry } from "./speech/types";
 import { CongressEntry } from "./congress/types";
+import { SpeechRound } from "./speech/useSpeechRoundState";
 
 export type BallotState = "unstarted" | "started" | "entered" | "confirmed";
-interface RoundState<E> {
+export interface RoundState<E> {
   entries: E[];
   setEntries: Dispatch<SetStateAction<E[]>>;
   rfd: string;
@@ -12,7 +12,6 @@ interface RoundState<E> {
   setBallotState: Dispatch<SetStateAction<BallotState>>;
 }
 
-export type SpeechRound = RoundState<SpeechEntry>;
 export type CongressRound = RoundState<CongressEntry>;
 export type DebateRound = RoundState<TeamDebateEntry>;
 export type Round = SpeechRound | CongressRound | DebateRound;
