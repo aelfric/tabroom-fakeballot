@@ -45,7 +45,7 @@ export default function ConfirmedBallot() {
         <span className="fifth rightalign">
           <Link
             className="bluetext buttonwhite smallish hover padvertless padleft padright invert"
-            to="/speech-feedback"
+            to="/congress-feedback"
           >
             Edit Feedback
           </Link>
@@ -57,12 +57,10 @@ export default function ConfirmedBallot() {
             <span className="tenth padvert smaller">
               {formatOrdinals(index + 1)} spkr
             </span>
-
-            <span className="fifth grow">{entry.code}</span>
-
-            <span className="tenth semibold">{entry.ranks ?? index + 1}</span>
-
-            <span className="tenth">{entry.points ?? 99 - index}</span>
+            <span className="fifth grow">{103}</span>
+            <span className="half">5,4</span>
+            <span className="tenth semibold">1</span>
+            <span className="tenth"></span>
           </div>
         ))}
       </div>
