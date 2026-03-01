@@ -15,6 +15,7 @@ import { Route as rootRouteImport } from './routes/__root'
 const IndexLazyRouteImport = createFileRoute('/')()
 const AboutLazyRouteImport = createFileRoute('/about')()
 const CongressLazyRouteImport = createFileRoute('/congress')()
+const CongressFeedbackLazyRouteImport = createFileRoute('/congress-feedback')()
 const DebateLazyRouteImport = createFileRoute('/debate')()
 const DebateFeedbackLazyRouteImport = createFileRoute('/debate-feedback')()
 const SpeechLazyRouteImport = createFileRoute('/speech')()
@@ -35,6 +36,13 @@ const CongressLazyRoute = CongressLazyRouteImport.update({
   path: '/congress',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/congress.lazy').then((d) => d.Route))
+const CongressFeedbackLazyRoute = CongressFeedbackLazyRouteImport.update({
+  id: '/congress-feedback',
+  path: '/congress-feedback',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/congress-feedback.lazy').then((d) => d.Route),
+)
 const DebateLazyRoute = DebateLazyRouteImport.update({
   id: '/debate',
   path: '/debate',
@@ -64,6 +72,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
+  '/congress-feedback': typeof CongressFeedbackLazyRoute
   '/debate': typeof DebateLazyRoute
   '/debate-feedback': typeof DebateFeedbackLazyRoute
   '/speech': typeof SpeechLazyRoute
@@ -73,6 +82,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
+  '/congress-feedback': typeof CongressFeedbackLazyRoute
   '/debate': typeof DebateLazyRoute
   '/debate-feedback': typeof DebateFeedbackLazyRoute
   '/speech': typeof SpeechLazyRoute
@@ -83,6 +93,7 @@ export interface FileRoutesById {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
+  '/congress-feedback': typeof CongressFeedbackLazyRoute
   '/debate': typeof DebateLazyRoute
   '/debate-feedback': typeof DebateFeedbackLazyRoute
   '/speech': typeof SpeechLazyRoute
@@ -94,6 +105,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/congress'
+    | '/congress-feedback'
     | '/debate'
     | '/debate-feedback'
     | '/speech'
@@ -103,6 +115,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/congress'
+    | '/congress-feedback'
     | '/debate'
     | '/debate-feedback'
     | '/speech'
@@ -112,6 +125,7 @@ export interface FileRouteTypes {
     | '/'
     | '/about'
     | '/congress'
+    | '/congress-feedback'
     | '/debate'
     | '/debate-feedback'
     | '/speech'
@@ -122,6 +136,7 @@ export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
   CongressLazyRoute: typeof CongressLazyRoute
+  CongressFeedbackLazyRoute: typeof CongressFeedbackLazyRoute
   DebateLazyRoute: typeof DebateLazyRoute
   DebateFeedbackLazyRoute: typeof DebateFeedbackLazyRoute
   SpeechLazyRoute: typeof SpeechLazyRoute
@@ -149,6 +164,13 @@ declare module '@tanstack/react-router' {
       path: '/congress'
       fullPath: '/congress'
       preLoaderRoute: typeof CongressLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/congress-feedback': {
+      id: '/congress-feedback'
+      path: '/congress-feedback'
+      fullPath: '/congress-feedback'
+      preLoaderRoute: typeof CongressFeedbackLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/debate': {
@@ -186,6 +208,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AboutLazyRoute: AboutLazyRoute,
   CongressLazyRoute: CongressLazyRoute,
+  CongressFeedbackLazyRoute: CongressFeedbackLazyRoute,
   DebateLazyRoute: DebateLazyRoute,
   DebateFeedbackLazyRoute: DebateFeedbackLazyRoute,
   SpeechLazyRoute: SpeechLazyRoute,

@@ -6,6 +6,7 @@ import { ConfirmSubmit } from "./ConfirmBallot";
 import { CongressEntry, Speech } from "./types";
 import { Updater, useImmer } from "use-immer";
 import { TabNav } from "../TabNav";
+import { BallotState } from "../app-context";
 
 type CongressRound = {
   entries: CongressEntry[];
@@ -30,7 +31,7 @@ export const CONGRESS_NAMES = [
   "Susheela Innes",
 ];
 
-export function CongressBallotStarted() {
+function useCongressBallotState() {
   const [round, setRound] = useImmer<CongressRound>({
     entries: CONGRESS_NAMES.map(generateEntry),
     errors: [],
@@ -38,12 +39,18 @@ export function CongressBallotStarted() {
     poNumber: 1,
   });
 
-  const [confirming, setConfirming] = useState(false);
-  if (confirming) {
+  const [ballotState, setBallotState] = useState<BallotState>("unstarted");
+  return { round, setRound, ballotState, setBallotState };
+}
+
+export function CongressBallotStarted() {
+  const { round, setRound, ballotState, setBallotState } =
+    useCongressBallotState();
+  if (ballotState === "entered") {
     return (
       <ConfirmSubmit
         entries={round.entries}
-        confirm={() => setConfirming(false)}
+        confirm={() => setBallotState("confirmed")}
       />
     );
   } else {
@@ -53,7 +60,7 @@ export function CongressBallotStarted() {
           <CongressBallotMain
             round={round}
             setRound={setRound}
-            onSubmit={() => setConfirming(true)}
+            onSubmit={() => setBallotState("entered")}
           />
         }
         menu={<BallotStartedMenu />}
