@@ -8,7 +8,7 @@
     "@tanstack/react-router": "^1.170.18",
     "@tinymce/tinymce-react": "^6.3.0",
     "alertifyjs": "^1.14.0",
-    "immer": "^11.1.4",
+    "immer": "^11.1.15",
     "jquery": "^4.0.0",
     "jquery.runner": "^2.3.0",
     "moment": "^2.30.1",
