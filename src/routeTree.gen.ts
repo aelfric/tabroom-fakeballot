@@ -12,37 +12,37 @@ import { createFileRoute } from '@tanstack/react-router'
 
 import { Route as rootRouteImport } from './routes/__root'
 
-const SpeechLazyRouteImport = createFileRoute('/speech')()
-const DebateLazyRouteImport = createFileRoute('/debate')()
-const CongressLazyRouteImport = createFileRoute('/congress')()
-const AboutLazyRouteImport = createFileRoute('/about')()
 const IndexLazyRouteImport = createFileRoute('/')()
+const AboutLazyRouteImport = createFileRoute('/about')()
+const CongressLazyRouteImport = createFileRoute('/congress')()
+const DebateLazyRouteImport = createFileRoute('/debate')()
+const SpeechLazyRouteImport = createFileRoute('/speech')()
 
-const SpeechLazyRoute = SpeechLazyRouteImport.update({
-  id: '/speech',
-  path: '/speech',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/speech.lazy').then((d) => d.Route))
-const DebateLazyRoute = DebateLazyRouteImport.update({
-  id: '/debate',
-  path: '/debate',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/debate.lazy').then((d) => d.Route))
-const CongressLazyRoute = CongressLazyRouteImport.update({
-  id: '/congress',
-  path: '/congress',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/congress.lazy').then((d) => d.Route))
-const AboutLazyRoute = AboutLazyRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/index.lazy').then((d) => d.Route))
+const AboutLazyRoute = AboutLazyRouteImport.update({
+  id: '/about',
+  path: '/about',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/about.lazy').then((d) => d.Route))
+const CongressLazyRoute = CongressLazyRouteImport.update({
+  id: '/congress',
+  path: '/congress',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/congress.lazy').then((d) => d.Route))
+const DebateLazyRoute = DebateLazyRouteImport.update({
+  id: '/debate',
+  path: '/debate',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/debate.lazy').then((d) => d.Route))
+const SpeechLazyRoute = SpeechLazyRouteImport.update({
+  id: '/speech',
+  path: '/speech',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() => import('./routes/speech.lazy').then((d) => d.Route))
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
@@ -84,25 +84,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/speech': {
-      id: '/speech'
-      path: '/speech'
-      fullPath: '/speech'
-      preLoaderRoute: typeof SpeechLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/debate': {
-      id: '/debate'
-      path: '/debate'
-      fullPath: '/debate'
-      preLoaderRoute: typeof DebateLazyRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/congress': {
-      id: '/congress'
-      path: '/congress'
-      fullPath: '/congress'
-      preLoaderRoute: typeof CongressLazyRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/about': {
@@ -112,11 +98,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AboutLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexLazyRouteImport
+    '/congress': {
+      id: '/congress'
+      path: '/congress'
+      fullPath: '/congress'
+      preLoaderRoute: typeof CongressLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debate': {
+      id: '/debate'
+      path: '/debate'
+      fullPath: '/debate'
+      preLoaderRoute: typeof DebateLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/speech': {
+      id: '/speech'
+      path: '/speech'
+      fullPath: '/speech'
+      preLoaderRoute: typeof SpeechLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
