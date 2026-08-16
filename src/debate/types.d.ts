@@ -1,7 +1,7 @@
 import { Dispatch, SetStateAction } from "react";
 import { BallotState } from "../app-context";
 
-type TeamDebateEntry = {
+export type TeamDebateEntry = {
   code: string;
   side: "Aff" | "Neg";
   speakers: {

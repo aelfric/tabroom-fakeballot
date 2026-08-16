@@ -1,5 +1,6 @@
 import { Link } from "@tanstack/react-router";
 import Content from "../Content";
+import type { TeamDebateEntry } from "./types";
 
 export function BallotConfirmed(
   props: Readonly<{

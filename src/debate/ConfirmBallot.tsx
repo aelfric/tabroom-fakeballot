@@ -1,4 +1,5 @@
 import Content from "../Content";
+import type { TeamDebateEntry } from "./types";
 
 export function ConfirmBallot({
   entries,
