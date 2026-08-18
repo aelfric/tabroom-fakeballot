@@ -5,7 +5,7 @@ export function BallotConfirmed(
   props: Readonly<{
     entries: TeamDebateEntry[];
     winningEntry?: number;
-    rfd?: string;
+    rfd: string;
   }>,
 ) {
   const sides = ["Aff", "Neg"];

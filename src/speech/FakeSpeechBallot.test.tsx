@@ -1,19 +1,62 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
-import { SPEECH_ENTRIES } from "./FakeSpeechBallot";
+import FakeSpeechBallot, { SPEECH_ENTRIES } from "./FakeSpeechBallot";
 import { userEvent } from "@testing-library/user-event";
-import FakeSpeechBallot from "./FakeSpeechBallot";
+import {
+  createBrowserHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  RouterHistory,
+  RouterProvider,
+} from "@tanstack/react-router";
+import { AppContext } from "../app-context";
+
+import { useSpeechRoundState } from "./useSpeechRoundState";
 
 describe("Speech Ballot", () => {
+  let history: RouterHistory;
+  beforeEach(() => {
+    history = createBrowserHistory();
+    expect(window.location.pathname).toBe("/");
+  });
+
+  afterEach(() => {
+    history.destroy();
+    window.history.replaceState(null, "root", "/");
+    cleanup();
+  });
+
+  function renderComponent() {
+    const rootRoute = createRootRoute();
+    const indexRoute = createRoute({
+      getParentRoute: () => rootRoute,
+      path: "/",
+      component: () => {
+        const speechRound = useSpeechRoundState();
+        return (
+          <AppContext.Provider value={{ speechRound }}>
+            <FakeSpeechBallot />
+          </AppContext.Provider>
+        );
+      },
+    });
+
+    const routeTree = rootRoute.addChildren([indexRoute]);
+    const router = createRouter({ routeTree, history });
+
+    render(<RouterProvider router={router} />);
+  }
+
   it("renders", async () => {
-    render(<FakeSpeechBallot />);
+    renderComponent();
     expect(await screen.findByText("Submit Ballot")).toBeInTheDocument();
   });
 
   it("reports ranking errors", async () => {
     const user = userEvent.setup();
-    render(<FakeSpeechBallot />);
+    renderComponent();
     await user.type(
       await screen.findByLabelText(`${SPEECH_ENTRIES[0].code}_ranks`),
       "1",
@@ -30,7 +73,7 @@ describe("Speech Ballot", () => {
 
   it("allows ranking", async () => {
     const user = userEvent.setup();
-    render(<FakeSpeechBallot />);
+    renderComponent();
 
     await user.type(
       await screen.findByLabelText(`${SPEECH_ENTRIES[0].code}_ranks`),

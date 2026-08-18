@@ -2,19 +2,6 @@ import { Link } from "@tanstack/react-router";
 import { useContext } from "react";
 import { AppContext } from "../app-context";
 
-const pr = new Intl.PluralRules("en-US", { type: "ordinal" });
-const suffixes = new Map([
-  ["one", "st"],
-  ["two", "nd"],
-  ["few", "rd"],
-  ["other", "th"],
-]);
-const formatOrdinals = (n: number) => {
-  const rule = pr.select(n);
-  const suffix = suffixes.get(rule);
-  return `${n}${suffix}`;
-};
-
 function dueDate() {
   const date = new Date();
   date.setHours(21, 0, 0);
@@ -26,13 +13,13 @@ function dueDate() {
 }
 
 export default function ConfirmedBallot() {
-  const { speechRound } = useContext(AppContext);
-  const { entries } = speechRound!;
+  const { debateRound } = useContext(AppContext);
+  const { entries } = debateRound!.round;
   return (
     <>
       <div className="full nospace martopmore odd bluebordertop thinborder flexrow">
         <span className="fifth nospace bigger semibold italic padleft">
-          OBT Round 1
+          PF Round 1
         </span>
 
         <span className="threetenths biggish semibold bluetext rightalign italic padrightless">
@@ -45,24 +32,40 @@ export default function ConfirmedBallot() {
         <span className="fifth rightalign">
           <Link
             className="bluetext buttonwhite smallish hover padvertless padleft padright invert"
-            to="/speech-feedback"
+            to="/debate-feedback"
           >
             Edit Feedback
           </Link>
         </span>
       </div>
       <div className="ltbordertop odd">
-        {entries.map((entry, index) => (
-          <div key={entry.code} className="nospace ltborderbottom flexrow full">
-            <span className="tenth padvert smaller">
-              {formatOrdinals(index + 1)} spkr
+        {entries.map((e) => (
+          <div className="nospace ltborderbottom flexrow full" key={e.code}>
+            <span className="twenty padvert smaller centeralign">{e.side}</span>
+
+            <span className="twenty padvert smaller"></span>
+
+            <span className="fifth">{e.code}</span>
+
+            <span className="tenth centeralign semibold">
+              {debateRound?.round.winningSide &&
+                (debateRound?.round.winningSide === e.side ? "W" : "L")}
+            </span>
+            <span className="quarter nospace smallish">
+              {e.speakers.map((s) => (
+                <span className="full padless marno" key={s.name}>
+                  {s.name}
+                </span>
+              ))}
             </span>
 
-            <span className="fifth grow">{entry.code}</span>
-
-            <span className="tenth semibold">{entry.ranks ?? index + 1}</span>
-
-            <span className="tenth">{entry.points ?? 99 - index}</span>
+            <span className="tenth nospace smallish rightalign">
+              {e.speakers.map((s) => (
+                <span className="full padless marno" key={s.name}>
+                  {s.points}
+                </span>
+              ))}
+            </span>
           </div>
         ))}
       </div>

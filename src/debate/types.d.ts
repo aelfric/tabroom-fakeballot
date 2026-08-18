@@ -1,16 +1,27 @@
+import { Dispatch, SetStateAction } from "react";
+import { BallotState } from "../app-context";
+
 type TeamDebateEntry = {
   code: string;
-  side?: "Aff" | "Neg";
+  side: "Aff" | "Neg";
   speakers: {
     name: string;
     last: string;
     points?: number;
   }[];
-  comments?: string;
+  comments: string;
 };
 
-type DebateRound = {
+export type DebateRound = {
   entries: TeamDebateEntry[];
-  winningEntry?: number;
-  rfd?: string;
+  winningEntry: number;
+  winningSide: "Aff" | "Neg" | "";
+  rfd: string;
+};
+
+export type DebateRoundState = {
+  round: DebateRound;
+  setRound: Dispatch<SetStateAction<DebateRound>>;
+  ballotState: BallotState;
+  setBallotState: Dispatch<SetStateAction<BallotState>>;
 };

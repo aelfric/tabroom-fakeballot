@@ -2,6 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { TabroomError } from "../TabroomError";
 import { TabNav } from "../TabNav";
+import { DebateRound } from "./types";
 
 type DebateBallotMainProps = {
   round: DebateRound;
@@ -27,7 +28,6 @@ export function DebateBallotMain({
   function saveDecision(evt: FormData) {
     const tmpErrors = [];
     for (const [key, value] of evt.entries()) {
-      console.log(key, value);
       if (key.endsWith("_points")) {
         if (Number(value) < 25) {
           tmpErrors.push(`Points ${value || 0} below minimum of 25`);
@@ -149,7 +149,7 @@ export function DebateBallotMain({
       </div>
 
       {errors.length > 0 && <TabroomError errors={errors} />}
-      <form action={saveDecision} method="post">
+      <form action={saveDecision}>
         <table id="sortable">
           <thead>
             <tr className="yellowrow smallish centeralign">
@@ -203,6 +203,7 @@ export function DebateBallotMain({
                             type="number"
                             className="totals"
                             step="0.1"
+                            aria-label={`${entry.code}_${j}_points`}
                             name={`${entry.code}_${j}_points`}
                             size={5}
                             min="0"
@@ -220,7 +221,12 @@ export function DebateBallotMain({
           </tbody>
         </table>
         <div className="odd">
-          <span className="fifth semibold bluetext rightalign">Winner</span>
+          <label
+            htmlFor={"winner"}
+            className="fifth semibold bluetext rightalign"
+          >
+            Winner
+          </label>
 
           <span className="quarter leftalign" id="winbox">
             <select
@@ -238,11 +244,7 @@ export function DebateBallotMain({
               </option>
 
               {entries.map((e, i) => (
-                <option
-                  key={e.code}
-                  value={i}
-                  selected={winningEntry === String(i)}
-                >
+                <option key={e.code} value={i}>
                   {e.code}
                 </option>
               ))}
