@@ -25,6 +25,7 @@ updates:
           - "vitest"
           - "vite-tsconfig-paths"
           - "@vitejs/**"
+          - "@vitest/**"
       tinymce:
         patterns:
           - "tinymce"
