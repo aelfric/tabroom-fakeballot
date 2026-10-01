@@ -11,7 +11,7 @@
     "immer": "^11.1.18",
     "jquery": "^4.0.0",
     "jquery.runner": "^2.3.0",
-    "moment": "^2.30.1",
+    "moment": "^2.31.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
     "tinymce": "^8.9.1",
