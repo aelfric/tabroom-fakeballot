@@ -13,6 +13,7 @@ import { CongressEntry, CongressRound, Speech } from "./types";
 import { TabNav } from "../TabNav";
 import { AppContext } from "../app-context";
 import { useNavigate } from "@tanstack/react-router";
+import { getString } from "../form-data";
 
 export const CONGRESS_NAMES = [
   "Alannah Meadows",
@@ -30,7 +31,9 @@ export const CONGRESS_NAMES = [
   "Susheela Innes",
 ];
 
-export const CONGRESS_ENTRIES = CONGRESS_NAMES.map(generateEntry);
+export const CONGRESS_ENTRIES = CONGRESS_NAMES.map((CONGRESS_NAME, index) =>
+  generateEntry(CONGRESS_NAME, index),
+);
 
 export function CongressBallotStarted() {
   const { congressRound } = useContext(AppContext);
@@ -263,10 +266,10 @@ function CongressBallotMain({
   const addSpeech = useCallback(
     (formData: FormData) => {
       console.log("Add speech");
-      const topic = String(formData.get("topic"));
+      const topic = getString(formData, "topic");
       const points = Number(formData.get("points"));
-      const side = String(formData.get("side")) as "1" | "2";
-      const comments = String(formData.get("comments"));
+      const side = getString(formData, "side") as "1" | "2";
+      const comments = getString(formData, "comments");
       setRound((previousState) => {
         const nextSpeechNumber =
           previousState.entries
@@ -299,7 +302,7 @@ function CongressBallotMain({
   const addPoSession = useCallback(
     (formData: FormData) => {
       const points = Number(formData.get("points"));
-      const comments = String(formData.get("comments"));
+      const comments = getString(formData, "comments");
 
       setRound((previousState) => {
         const nextPoNumber =
@@ -332,10 +335,10 @@ function CongressBallotMain({
 
   function updateSpeech(idx: number) {
     return function (formData: FormData) {
-      const topic = String(formData.get("topic"));
+      const topic = getString(formData, "topic");
       const points = Number(formData.get("points"));
       const side = formData.get("side") as "1" | "2";
-      const comments = String(formData.get("comments"));
+      const comments = getString(formData, "comments");
       setRound((previousState) => ({
         entries: previousState.entries.map((e, i) =>
           i === selected
@@ -362,7 +365,7 @@ function CongressBallotMain({
   function updatePoSession(idx: number) {
     return function (formData: FormData) {
       const points = Number(formData.get("points"));
-      const comments = String(formData.get("comments"));
+      const comments = getString(formData, "comments");
       setRound((previousState) => {
         return {
           entries: previousState.entries.map((entry, entryIndex) => {
