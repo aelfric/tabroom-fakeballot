@@ -26,8 +26,8 @@ function dueDate() {
 }
 
 export default function ConfirmedBallot() {
-  const { speechRound } = useContext(AppContext);
-  const { entries } = speechRound!;
+  const { congressRound } = useContext(AppContext);
+  const { round } = congressRound!;
   return (
     <>
       <div className="full nospace martopmore odd bluebordertop thinborder flexrow">
@@ -52,14 +52,16 @@ export default function ConfirmedBallot() {
         </span>
       </div>
       <div className="ltbordertop odd">
-        {entries.map((entry, index) => (
-          <div key={entry.code} className="nospace ltborderbottom flexrow full">
+        {round?.entries.map((entry, index) => (
+          <div key={entry.name} className="nospace ltborderbottom flexrow full">
             <span className="tenth padvert smaller">
               {formatOrdinals(index + 1)} spkr
             </span>
-            <span className="fifth grow">{103}</span>
-            <span className="half">5,4</span>
-            <span className="tenth semibold">1</span>
+            <span className="fifth grow">{entry.name}</span>
+            <span className="half">
+              {entry.speeches.map((s) => s.points).join(",")}
+            </span>
+            <span className="tenth semibold">{entry.rank}</span>
             <span className="tenth"></span>
           </div>
         ))}

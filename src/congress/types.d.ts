@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { BallotState, CongressRound } from "../app-context";
+import { BallotState } from "../app-context";
 
 export type CongressEntry = {
   name: string;
@@ -15,6 +15,10 @@ export type Speech = {
   po?: boolean;
   side?: "1" | "2";
   points?: number;
+};
+
+export type CongressRound = {
+  entries: CongressEntry[];
 };
 
 export type CongressRoundState = {

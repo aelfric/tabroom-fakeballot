@@ -21,12 +21,14 @@ function EntryRow({
 
 interface ConfirmSubmitProps {
   entries: CongressEntry[];
-  confirm: () => void;
+  confirm: () => Promise<void>;
   rfd?: string;
 }
 
-export function ConfirmSubmit(props: ConfirmSubmitProps) {
-  const onSubmit = () => undefined;
+export function ConfirmSubmit(props: Readonly<ConfirmSubmitProps>) {
+  const onSubmit = async () => {
+    await props.confirm();
+  };
 
   const columns: Column<CongressEntry>[] = [
     {
