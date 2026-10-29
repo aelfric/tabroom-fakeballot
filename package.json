@@ -14,7 +14,7 @@
     "moment": "^2.31.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "tinymce": "^8.9.1",
+    "tinymce": "^8.10.1",
     "use-immer": "^0.11.0"
   },
   "scripts": {
