@@ -1,19 +1,62 @@
-import { describe, expect, it } from "vitest";
-import { render, screen } from "@testing-library/react";
+import { afterEach, beforeEach, describe, expect, it } from "vitest";
+import { cleanup, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom/vitest";
 import { CONGRESS_NAMES, CongressBallotStarted } from "./CongressBallotStarted";
 import { userEvent } from "@testing-library/user-event";
+import {
+  createBrowserHistory,
+  createRootRoute,
+  createRoute,
+  createRouter,
+  RouterHistory,
+  RouterProvider,
+} from "@tanstack/react-router";
+import { AppContext } from "../app-context";
+import { useCongressRoundState } from "./use-congress-round-state";
 
 describe("Congress Ballot", () => {
+  let history: RouterHistory;
+  beforeEach(() => {
+    history = createBrowserHistory();
+    expect(window.location.pathname).toBe("/");
+  });
+
+  afterEach(() => {
+    history.destroy();
+    window.history.replaceState(null, "root", "/");
+    cleanup();
+  });
+
+  function renderComponent() {
+    const rootRoute = createRootRoute();
+    const indexRoute = createRoute({
+      getParentRoute: () => rootRoute,
+      path: "/",
+      component: () => {
+        const congressRound = useCongressRoundState();
+        return (
+          <AppContext.Provider value={{ congressRound }}>
+            <CongressBallotStarted />
+          </AppContext.Provider>
+        );
+      },
+    });
+
+    const routeTree = rootRoute.addChildren([indexRoute]);
+    const router = createRouter({ routeTree, history });
+
+    render(<RouterProvider router={router} />);
+  }
+
   it("renders", async () => {
-    render(<CongressBallotStarted />);
+    renderComponent();
     expect(await screen.findByText("Speeches")).toBeInTheDocument();
     expect(await screen.findByText("Rankings")).toBeInTheDocument();
   });
 
   it("reports ranking errors", async () => {
     const user = userEvent.setup();
-    render(<CongressBallotStarted />);
+    renderComponent();
     await user.click(await screen.findByText("Rankings"));
     await user.type(await screen.findByLabelText("Alannah Meadows"), "1");
     await user.click(screen.getByText("Submit Ballot"));
@@ -24,7 +67,7 @@ describe("Congress Ballot", () => {
 
   it("allows ranking", async () => {
     const user = userEvent.setup();
-    render(<CongressBallotStarted />);
+    renderComponent();
     await user.click(await screen.findByText("Rankings"));
 
     await user.type(await screen.findByLabelText(CONGRESS_NAMES[0]), "1");

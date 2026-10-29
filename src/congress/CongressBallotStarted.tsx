@@ -1,18 +1,21 @@
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
-import { useCallback, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
 import { CongressEntry, Speech } from "./types";
 import { Updater, useImmer } from "use-immer";
 import { TabNav } from "../TabNav";
-import { BallotState } from "../app-context";
+import { AppContext, BallotState } from "../app-context";
 
 type CongressRound = {
   entries: CongressEntry[];
-  errors: string[];
-  speechNumber: number;
-  poNumber: number;
 };
 
 export const CONGRESS_NAMES = [
@@ -31,25 +34,21 @@ export const CONGRESS_NAMES = [
   "Susheela Innes",
 ];
 
-function useCongressBallotState() {
+export const CONGRESS_ENTRIES = CONGRESS_NAMES.map(generateEntry);
+
+export function CongressBallotStarted() {
+  const { congressRound } = useContext(AppContext);
+  const { entries, setEntries } = congressRound!.round;
   const [round, setRound] = useImmer<CongressRound>({
-    entries: CONGRESS_NAMES.map(generateEntry),
-    errors: [],
-    speechNumber: 1,
-    poNumber: 1,
+    entries: CONGRESS_ENTRIES,
   });
 
   const [ballotState, setBallotState] = useState<BallotState>("unstarted");
-  return { round, setRound, ballotState, setBallotState };
-}
 
-export function CongressBallotStarted() {
-  const { round, setRound, ballotState, setBallotState } =
-    useCongressBallotState();
   if (ballotState === "entered") {
     return (
       <ConfirmSubmit
-        entries={round.entries}
+        entries={entries}
         confirm={() => setBallotState("confirmed")}
       />
     );
@@ -58,6 +57,8 @@ export function CongressBallotStarted() {
       <Content
         main={
           <CongressBallotMain
+            entries={entries}
+            setEntries={setEntries}
             round={round}
             setRound={setRound}
             onSubmit={() => setBallotState("entered")}
@@ -261,17 +262,22 @@ function generateEntry(name: string): CongressEntry {
 }
 
 function CongressBallotMain({
-  round,
   setRound,
+  entries,
+  setEntries,
   onSubmit,
 }: Readonly<{
   round: {
-    errors: string[];
     entries: CongressEntry[];
   };
+  entries: CongressEntry[];
+  setEntries: Dispatch<SetStateAction<CongressEntry[]>>;
   setRound: Updater<CongressRound>;
   onSubmit: () => unknown;
 }>) {
+  const [speechNumber, setSpeechNumber] = useState(1);
+  const [poNumber, setPoNumber] = useState(1);
+  const [errors, setErrors] = useState<string[]>([]);
   const [po, setPo] = useState(-1);
   const [selected, setSelected] = useState(0);
   const addSpeech = useCallback(
@@ -283,14 +289,14 @@ function CongressBallotMain({
       const comments = String(formData.get("comments"));
       setRound((draft) => {
         draft.entries[selected].speeches.push({
-          name: "Speech #" + draft.speechNumber,
+          name: "Speech #" + speechNumber,
           topic,
           points,
           comments,
           side,
         });
-        draft.speechNumber = draft.speechNumber + 1;
       });
+      setSpeechNumber((curr) => curr + 1);
     },
     [selected],
   );
@@ -302,13 +308,13 @@ function CongressBallotMain({
 
       setRound((draft) => {
         draft.entries[selected].speeches.push({
-          name: "PO Session #" + draft.poNumber,
+          name: "PO Session #" + poNumber,
           po: true,
           points,
           comments,
         });
-        draft.poNumber = draft.poNumber + 1;
       });
+      setPoNumber((curr) => curr + 1);
     },
     [selected],
   );
@@ -319,7 +325,6 @@ function CongressBallotMain({
       const points = Number(formData.get("points"));
       const side = formData.get("side") as "1" | "2";
       const comments = String(formData.get("comments"));
-
       setRound((draft) => {
         draft.entries[selected].speeches[idx] = {
           name: draft.entries[selected].speeches[idx].name,
@@ -336,13 +341,26 @@ function CongressBallotMain({
     return function (formData: FormData) {
       const points = Number(formData.get("points"));
       const comments = String(formData.get("comments"));
-      setRound((draft) => {
-        draft.entries[selected].speeches[idx] = {
-          name: draft.entries[selected].speeches[idx].name,
-          po: true,
-          points,
-          comments,
-        };
+      setEntries((curr) => {
+        return curr.map((entry, entryIndex) => {
+          if (entryIndex === selected) {
+            return {
+              ...entry,
+              speeches: curr[entryIndex].speeches.map((sp, i) =>
+                i === idx
+                  ? {
+                      ...sp,
+                      po: true,
+                      points,
+                      comments,
+                    }
+                  : sp,
+              ),
+            };
+          } else {
+            return entry;
+          }
+        });
       });
     };
   }
@@ -381,9 +399,9 @@ function CongressBallotMain({
       return {
         ...oldState,
         entries,
-        errors,
       };
     });
+    setErrors(errors);
     if (errors.length === 0) {
       onSubmit();
     }
@@ -443,7 +461,7 @@ function CongressBallotMain({
                         value=""
                         data-select2-id="select2-data-86-kqdt"
                       ></option>
-                      {round.entries.map((e, i) => (
+                      {entries.map((e, i) => (
                         <option value={i} key={e.name}>
                           {e.name}
                         </option>
@@ -454,7 +472,7 @@ function CongressBallotMain({
 
                 <div className="martop ltbordertop padvert">
                   <span className="half nospace">
-                    <h5 className="nospace">{round.entries[selected].name}</h5>
+                    <h5 className="nospace">{entries[selected].name}</h5>
                   </span>
 
                   <span className="half nospace rightalign">
@@ -490,12 +508,12 @@ function CongressBallotMain({
                     <CongressPoSession speech={{}} onSave={addPoSession} />
                   ) : (
                     <CongressSpeech
-                      key={round.entries[selected].speeches.length}
+                      key={entries[selected].speeches.length}
                       speech={{}}
                       onSave={addSpeech}
                     />
                   )}
-                  {round.entries[selected].speeches.map((s, i) =>
+                  {entries[selected].speeches.map((s, i) =>
                     s.po ? (
                       <CongressPoSession
                         key={s.name}
@@ -540,12 +558,12 @@ function CongressBallotMain({
                   </span>
                 </div>
 
-                {round.errors.length > 0 && (
+                {errors.length > 0 && (
                   <div className="borderred centeralign martopmore marbottommore">
                     <h6 className="bluetext semibold">
                       Oh, drat. Your ballot had errors.
                     </h6>
-                    {round.errors.map((e) => (
+                    {errors.map((e) => (
                       <p className="bigger semibold redtext" key={e}>
                         {e}
                       </p>
@@ -639,7 +657,7 @@ function CongressBallotMain({
                       aria-live="polite"
                       aria-relevant="all"
                     >
-                      {round.entries.map((entry, i) => (
+                      {entries.map((entry, i) => (
                         <tr
                           key={entry.id}
                           className={

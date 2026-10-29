@@ -1,5 +1,5 @@
 import { createContext, Dispatch, SetStateAction } from "react";
-import { CongressEntry } from "./congress/types";
+import { CongressEntry, CongressRoundState } from "./congress/types";
 import { SpeechRound } from "./speech/useSpeechRoundState";
 import { DebateRoundState } from "./debate/types";
 
@@ -18,6 +18,6 @@ export type Round = SpeechRound | CongressRound;
 
 export const AppContext = createContext<{
   speechRound?: SpeechRound;
-  congressRound?: CongressRound;
+  congressRound?: CongressRoundState;
   debateRound?: DebateRoundState;
 }>({});

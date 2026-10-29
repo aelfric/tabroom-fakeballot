@@ -5,12 +5,14 @@ import { AppContext } from "../app-context";
 import { useSpeechRoundState } from "../speech/useSpeechRoundState";
 
 import { useDebateRoundState } from "../debate/use-debate-round-state";
+import { useCongressRoundState } from "../congress/use-congress-round-state";
 
 function AppRoot() {
   const speechRound = useSpeechRoundState();
   const debateRound = useDebateRoundState();
+  const congressRound = useCongressRoundState();
   return (
-    <AppContext value={{ speechRound, debateRound }}>
+    <AppContext value={{ speechRound, debateRound, congressRound }}>
       <Layout>
         <Outlet />
       </Layout>
