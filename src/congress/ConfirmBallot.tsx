@@ -1,16 +1,16 @@
 import Content from "../Content";
 import { Column, SortableTable } from "../SortableTable";
-import { CongressEntry } from "./types";
+import { CongressEntry } from "./congress.types";
 
 function EntryRow({
   rank,
   name,
   even,
-}: {
+}: Readonly<{
   rank?: number;
   name: string;
   even: boolean;
-}) {
+}>) {
   return (
     <tr role="row" className={even ? "even" : "odd"}>
       <td className="centeralign">{rank}</td>
@@ -21,15 +21,12 @@ function EntryRow({
 
 interface ConfirmSubmitProps {
   entries: CongressEntry[];
-  confirm: () => Promise<void>;
+  confirm: () => void;
+  unConfirm: () => void;
   rfd?: string;
 }
 
 export function ConfirmSubmit(props: Readonly<ConfirmSubmitProps>) {
-  const onSubmit = async () => {
-    await props.confirm();
-  };
-
   const columns: Column<CongressEntry>[] = [
     {
       label: "Rank",
@@ -53,7 +50,7 @@ export function ConfirmSubmit(props: Readonly<ConfirmSubmitProps>) {
             columns={columns}
             entries={props.entries}
             defaultSort="rank"
-            rowComponent={({ entry, i }) => (
+            renderRow={({ entry, i }) => (
               <EntryRow key={entry.id} {...entry} even={i % 2 === 0} />
             )}
           />
@@ -78,7 +75,7 @@ export function ConfirmSubmit(props: Readonly<ConfirmSubmitProps>) {
             <span className="pagehalf centeralign">
               <button
                 className="redtext buttonwhite invert full confirm"
-                onClick={props.confirm}
+                onClick={props.unConfirm}
               >
                 NO! RE-ENTER BALLOT
               </button>
@@ -87,7 +84,7 @@ export function ConfirmSubmit(props: Readonly<ConfirmSubmitProps>) {
             <span className="pagehalf centeralign">
               <button
                 className="greentext buttonwhite invert full confirm"
-                onClick={onSubmit}
+                onClick={props.confirm}
               >
                 YES! CORRECT! CONFIRM IT
               </button>

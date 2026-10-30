@@ -9,7 +9,7 @@ import {
 } from "react";
 import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
-import { CongressEntry, CongressRound, Speech } from "./types";
+import { CongressEntry, CongressRound, Speech } from "./congress.types";
 import { TabNav } from "../TabNav";
 import { AppContext } from "../app-context";
 import { useNavigate } from "@tanstack/react-router";
@@ -48,6 +48,7 @@ export function CongressBallotStarted() {
           setBallotState("confirmed");
           await navigate({ to: "/" });
         }}
+        unConfirm={() => setBallotState("started")}
       />
     );
   } else {

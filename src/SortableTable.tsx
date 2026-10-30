@@ -23,7 +23,7 @@ type SortableTableProps<T extends Record<string, unknown>> = {
   columns: Column<T>[];
   children?: ReactNode;
   entries: T[];
-  rowComponent: (o: { entry: T; i: number }) => ReactNode;
+  renderRow: (o: { entry: T; i: number }) => ReactNode;
 };
 
 export function SortableTable<T extends Record<string, unknown>>(
@@ -106,7 +106,7 @@ export function SortableTable<T extends Record<string, unknown>>(
       <tbody id="ballottable" aria-live="polite" aria-relevant="all">
         {[...props.entries]
           .sort(dynamicSort(sort, direction))
-          .map((entry, i) => props.rowComponent({ entry: entry, i: i }))}
+          .map((entry, i) => props.renderRow({ entry: entry, i: i }))}
       </tbody>
 
       {props.children}

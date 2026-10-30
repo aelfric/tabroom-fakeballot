@@ -2,7 +2,7 @@ import { ChangeEvent, Dispatch, SetStateAction, useState } from "react";
 import { CommentBox } from "../CommentBox";
 import { TabroomError } from "../TabroomError";
 import { TabNav } from "../TabNav";
-import { DebateRound } from "./types";
+import { DebateRound } from "./debate.types";
 
 type DebateBallotMainProps = {
   round: DebateRound;
@@ -14,7 +14,7 @@ export function DebateBallotMain({
   round,
   setRound,
   onSubmit,
-}: DebateBallotMainProps) {
+}: Readonly<DebateBallotMainProps>) {
   const { entries } = round;
   const [errors, setErrors] = useState<string[]>([]);
   const [comments, setComments] = useState<Record<string, string>>({
@@ -139,10 +139,11 @@ export function DebateBallotMain({
               Points Rules:
             </span>
             <span className="halfspacer"></span>
-            <span className="inline nospace bluetext semibold">Range:</span>
+            <span className="inline nospace bluetext semibold">
+              Range:
+            </span>{" "}
             0-30.
-            <span className="halfspacer"></span>
-            No ties.
+            <span className="halfspacer"></span> No ties.
             <span className="halfspacer"></span>
           </div>
         </span>
@@ -268,7 +269,7 @@ export function DebateBallotMain({
                       id="winner_1"
                       onChange={checkSide}
                       checked={winningSide === "0"}
-                    />
+                    />{" "}
                     Aff
                   </span>
                 </label>
@@ -283,7 +284,7 @@ export function DebateBallotMain({
                       id="winner_2"
                       onChange={checkSide}
                       checked={winningSide === "1"}
-                    />
+                    />{" "}
                     Neg
                   </span>
                 </label>
@@ -321,7 +322,7 @@ export function DebateBallotMain({
                     </span>
 
                     <span className="quarter rightalign semibold bluetext">
-                      Save Feedback
+                      Save Feedback{" "}
                       <button
                         type="button"
                         onClick={saveComments}
@@ -353,7 +354,7 @@ export function DebateBallotMain({
                     </span>
 
                     <span className="quarter rightalign semibold bluetext">
-                      Save Feedback
+                      Save Feedback{" "}
                       <button
                         type="button"
                         onClick={saveComments}

@@ -28,6 +28,9 @@ function dueDate() {
 export default function ConfirmedBallot() {
   const { congressRound } = useContext(AppContext);
   const { round } = congressRound!;
+  if (congressRound?.ballotState !== "confirmed") {
+    return null;
+  }
   return (
     <>
       <div className="full nospace martopmore odd bluebordertop thinborder flexrow">

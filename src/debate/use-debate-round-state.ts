@@ -1,4 +1,4 @@
-import { DebateRound, DebateRoundState } from "./types";
+import { DebateRound, DebateRoundState } from "./debate.types";
 import { useState } from "react";
 import { BallotState } from "../app-context";
 

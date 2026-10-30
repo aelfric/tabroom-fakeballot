@@ -77,7 +77,7 @@ export default function ConfirmSubmit(props: ConfirmSubmitProps) {
             columns={columns}
             entries={props.entries}
             defaultSort="ranks"
-            rowComponent={({ entry, i }) => (
+            renderRow={({ entry, i }) => (
               <EntryRow key={entry.code} {...entry} even={i % 2 === 0} />
             )}
           />

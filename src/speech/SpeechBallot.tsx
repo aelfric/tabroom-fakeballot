@@ -1,6 +1,8 @@
 import { Link } from "@tanstack/react-router";
 import { FakeLink } from "../FakeLink";
 import { SpeechEntry } from "./types";
+import { useContext } from "react";
+import { AppContext } from "../app-context";
 
 type SpeechBallotProps = {
   round: {
@@ -12,11 +14,15 @@ type SpeechBallotProps = {
 };
 
 export function SpeechBallot({ round }: Readonly<SpeechBallotProps>) {
+  const { speechRound } = useContext(AppContext);
+  if (speechRound?.ballotState === "confirmed") {
+    return null;
+  }
   return (
     <div
       className="bluebordertop odd marbottom "
       id="7146353"
-      title="Round at 49th University of Pennsylvania Tournament in Speech for Riccobono"
+      title="Round at Franks Test Tournament in Congress for Riccobono"
     >
       <div className="full">
         <span className="quarter semibold">Round</span>

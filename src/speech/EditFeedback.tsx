@@ -1,15 +1,16 @@
 import Content from "../Content";
 import { DefaultMenu } from "../CurrentBallots";
-import { useContext } from "react";
+import { Fragment, useContext } from "react";
 import { Events } from "tinymce";
 import { CommentBox } from "../CommentBox";
 import { EventHandler } from "@tinymce/tinymce-react/lib/cjs/main/ts/Events";
 import { AppContext } from "../app-context";
+import { useNavigate } from "@tanstack/react-router";
 
 export default function EditFeedback() {
   const { speechRound } = useContext(AppContext);
-  const { entries, setEntries, rfd, setRfd } = speechRound!; // TODO
-
+  const { entries, setEntries, rfd, setRfd } = speechRound!;
+  const navigate = useNavigate();
   const setComments: (
     code: string,
   ) => EventHandler<Events.EditorEventMap["blur"]> =
@@ -53,7 +54,13 @@ export default function EditFeedback() {
             </span>
           </div>
 
-          <form method="post">
+          <form
+            method="post"
+            onSubmit={async (e) => {
+              e.preventDefault();
+              await navigate({ to: "/" });
+            }}
+          >
             <p className="centeralign marleftmuchmore">
               <CommentBox
                 setComments={(evt) => {
@@ -66,11 +73,8 @@ export default function EditFeedback() {
             </p>
             {entries.map((entry) => {
               return (
-                <>
-                  <div
-                    key={entry.code}
-                    className="full flexrow martopmore padtop bordertop"
-                  >
+                <Fragment key={entry.code}>
+                  <div className="full flexrow martopmore padtop bordertop">
                     <span className="twofifths grow padleft nospace">
                       <h5>
                         Comments for {entry.code} – Name: {entry.name}
@@ -86,7 +90,7 @@ export default function EditFeedback() {
                     setComments={setComments(entry.code)}
                     currentComments={entry.comments}
                   />
-                </>
+                </Fragment>
               );
             })}
 

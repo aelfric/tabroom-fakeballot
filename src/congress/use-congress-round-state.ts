@@ -1,4 +1,4 @@
-import { CongressRound, CongressRoundState } from "./types";
+import { CongressRound, CongressRoundState } from "./congress.types";
 import { CONGRESS_ENTRIES } from "./CongressBallotStarted";
 import { useState } from "react";
 import { BallotState } from "../app-context";

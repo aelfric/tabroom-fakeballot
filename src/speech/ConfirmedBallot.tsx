@@ -28,6 +28,9 @@ function dueDate() {
 export default function ConfirmedBallot() {
   const { speechRound } = useContext(AppContext);
   const { entries } = speechRound!;
+  if (speechRound?.ballotState !== "confirmed") {
+    return null;
+  }
   return (
     <>
       <div className="full nospace martopmore odd bluebordertop thinborder flexrow">

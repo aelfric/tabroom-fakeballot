@@ -180,7 +180,7 @@ export function BallotStartedForm(props: BallotStartedFormProps) {
           entries={entries}
           defaultSort="order"
           columns={columns}
-          rowComponent={({ entry, i }) => (
+          renderRow={({ entry, i }) => (
             <BallotRow
               includePoints={includePoints}
               key={entry.code}
