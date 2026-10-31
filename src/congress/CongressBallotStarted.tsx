@@ -1,18 +1,19 @@
 import Content from "../Content";
 import { BallotStartedMenu } from "./BallotStartedMenu";
-import { useCallback, useState } from "react";
+import {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useState,
+} from "react";
 import { CommentBox } from "../CommentBox";
 import { ConfirmSubmit } from "./ConfirmBallot";
-import { CongressEntry, Speech } from "./types";
-import { Updater, useImmer } from "use-immer";
+import { CongressEntry, CongressRound, Speech } from "./congress.types";
 import { TabNav } from "../TabNav";
-
-type CongressRound = {
-  entries: CongressEntry[];
-  errors: string[];
-  speechNumber: number;
-  poNumber: number;
-};
+import { AppContext } from "../app-context";
+import { useNavigate } from "@tanstack/react-router";
+import { getString } from "../form-data";
 
 export const CONGRESS_NAMES = [
   "Alannah Meadows",
@@ -30,20 +31,24 @@ export const CONGRESS_NAMES = [
   "Susheela Innes",
 ];
 
-export function CongressBallotStarted() {
-  const [round, setRound] = useImmer<CongressRound>({
-    entries: CONGRESS_NAMES.map(generateEntry),
-    errors: [],
-    speechNumber: 1,
-    poNumber: 1,
-  });
+export const CONGRESS_ENTRIES = CONGRESS_NAMES.map((CONGRESS_NAME, index) =>
+  generateEntry(CONGRESS_NAME, index),
+);
 
-  const [confirming, setConfirming] = useState(false);
-  if (confirming) {
+export function CongressBallotStarted() {
+  const { congressRound } = useContext(AppContext);
+  const { round, setRound, ballotState, setBallotState } = congressRound!;
+  const navigate = useNavigate();
+
+  if (ballotState === "entered") {
     return (
       <ConfirmSubmit
         entries={round.entries}
-        confirm={() => setConfirming(false)}
+        confirm={async () => {
+          setBallotState("confirmed");
+          await navigate({ to: "/" });
+        }}
+        unConfirm={() => setBallotState("started")}
       />
     );
   } else {
@@ -53,7 +58,7 @@ export function CongressBallotStarted() {
           <CongressBallotMain
             round={round}
             setRound={setRound}
-            onSubmit={() => setConfirming(true)}
+            onSubmit={() => setBallotState("entered")}
           />
         }
         menu={<BallotStartedMenu />}
@@ -239,16 +244,10 @@ function CongressPoSession({
   );
 }
 
-function generateEntry(name: string): CongressEntry {
-  let hash = 0;
-  for (let i = 0; i < name.length; i++) {
-    const chr = name.charCodeAt(i);
-    hash = (hash << 5) - hash + chr;
-    hash |= 0; // Convert to 32bit integer
-  }
+function generateEntry(name: string, index: number): CongressEntry {
   return {
     name,
-    id: Math.abs(hash),
+    id: 1000 + index,
     speeches: [],
   };
 }
@@ -258,31 +257,44 @@ function CongressBallotMain({
   setRound,
   onSubmit,
 }: Readonly<{
-  round: {
-    errors: string[];
-    entries: CongressEntry[];
-  };
-  setRound: Updater<CongressRound>;
+  round: CongressRound;
+  setRound: Dispatch<SetStateAction<CongressRound>>;
   onSubmit: () => unknown;
 }>) {
+  const [errors, setErrors] = useState<string[]>([]);
   const [po, setPo] = useState(-1);
   const [selected, setSelected] = useState(0);
   const addSpeech = useCallback(
     (formData: FormData) => {
       console.log("Add speech");
-      const topic = String(formData.get("topic"));
+      const topic = getString(formData, "topic");
       const points = Number(formData.get("points"));
-      const side = String(formData.get("side")) as "1" | "2";
-      const comments = String(formData.get("comments"));
-      setRound((draft) => {
-        draft.entries[selected].speeches.push({
-          name: "Speech #" + draft.speechNumber,
-          topic,
-          points,
-          comments,
-          side,
-        });
-        draft.speechNumber = draft.speechNumber + 1;
+      const side = getString(formData, "side") as "1" | "2";
+      const comments = getString(formData, "comments");
+      setRound((previousState) => {
+        const nextSpeechNumber =
+          previousState.entries
+            .map((e) => e.speeches.filter((s) => !s.po).length)
+            .reduce((a, b) => a + b, 0) + 1;
+        return {
+          entries: previousState.entries.map((e, i) =>
+            i === selected
+              ? {
+                  ...e,
+                  speeches: [
+                    ...e.speeches,
+                    {
+                      name: "Speech #" + nextSpeechNumber,
+                      topic,
+                      points,
+                      comments,
+                      side,
+                    },
+                  ],
+                }
+              : e,
+          ),
+        };
       });
     },
     [selected],
@@ -291,16 +303,32 @@ function CongressBallotMain({
   const addPoSession = useCallback(
     (formData: FormData) => {
       const points = Number(formData.get("points"));
-      const comments = String(formData.get("comments"));
+      const comments = getString(formData, "comments");
 
-      setRound((draft) => {
-        draft.entries[selected].speeches.push({
-          name: "PO Session #" + draft.poNumber,
-          po: true,
-          points,
-          comments,
-        });
-        draft.poNumber = draft.poNumber + 1;
+      setRound((previousState) => {
+        const nextPoNumber =
+          previousState.entries
+            .map((e) => e.speeches.filter((s) => s.po).length)
+            .reduce((a, b) => a + b, 0) + 1;
+
+        return {
+          entries: previousState.entries.map((e, i) =>
+            i === selected
+              ? {
+                  ...e,
+                  speeches: [
+                    ...e.speeches,
+                    {
+                      name: "PO Session #" + nextPoNumber,
+                      po: true,
+                      points,
+                      comments,
+                    },
+                  ],
+                }
+              : e,
+          ),
+        };
       });
     },
     [selected],
@@ -308,33 +336,58 @@ function CongressBallotMain({
 
   function updateSpeech(idx: number) {
     return function (formData: FormData) {
-      const topic = String(formData.get("topic"));
+      const topic = getString(formData, "topic");
       const points = Number(formData.get("points"));
       const side = formData.get("side") as "1" | "2";
-      const comments = String(formData.get("comments"));
-
-      setRound((draft) => {
-        draft.entries[selected].speeches[idx] = {
-          name: draft.entries[selected].speeches[idx].name,
-          topic,
-          points,
-          comments,
-          side,
-        };
-      });
+      const comments = getString(formData, "comments");
+      setRound((previousState) => ({
+        entries: previousState.entries.map((e, i) =>
+          i === selected
+            ? {
+                ...e,
+                speeches: e.speeches.map((s, j) =>
+                  j === idx
+                    ? {
+                        ...s,
+                        topic,
+                        points,
+                        comments,
+                        side,
+                      }
+                    : s,
+                ),
+              }
+            : e,
+        ),
+      }));
     };
   }
 
   function updatePoSession(idx: number) {
     return function (formData: FormData) {
       const points = Number(formData.get("points"));
-      const comments = String(formData.get("comments"));
-      setRound((draft) => {
-        draft.entries[selected].speeches[idx] = {
-          name: draft.entries[selected].speeches[idx].name,
-          po: true,
-          points,
-          comments,
+      const comments = getString(formData, "comments");
+      setRound((previousState) => {
+        return {
+          entries: previousState.entries.map((entry, entryIndex) => {
+            if (entryIndex === selected) {
+              return {
+                ...entry,
+                speeches: entry.speeches.map((sp, i) =>
+                  i === idx
+                    ? {
+                        ...sp,
+                        po: true,
+                        points,
+                        comments,
+                      }
+                    : sp,
+                ),
+              };
+            } else {
+              return entry;
+            }
+          }),
         };
       });
     };
@@ -374,9 +427,9 @@ function CongressBallotMain({
       return {
         ...oldState,
         entries,
-        errors,
       };
     });
+    setErrors(errors);
     if (errors.length === 0) {
       onSubmit();
     }
@@ -533,12 +586,12 @@ function CongressBallotMain({
                   </span>
                 </div>
 
-                {round.errors.length > 0 && (
+                {errors.length > 0 && (
                   <div className="borderred centeralign martopmore marbottommore">
                     <h6 className="bluetext semibold">
                       Oh, drat. Your ballot had errors.
                     </h6>
-                    {round.errors.map((e) => (
+                    {errors.map((e) => (
                       <p className="bigger semibold redtext" key={e}>
                         {e}
                       </p>

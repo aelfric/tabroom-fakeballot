@@ -15,8 +15,11 @@ import { Route as rootRouteImport } from './routes/__root'
 const IndexLazyRouteImport = createFileRoute('/')()
 const AboutLazyRouteImport = createFileRoute('/about')()
 const CongressLazyRouteImport = createFileRoute('/congress')()
+const CongressFeedbackLazyRouteImport = createFileRoute('/congress-feedback')()
 const DebateLazyRouteImport = createFileRoute('/debate')()
+const DebateFeedbackLazyRouteImport = createFileRoute('/debate-feedback')()
 const SpeechLazyRouteImport = createFileRoute('/speech')()
+const SpeechFeedbackLazyRouteImport = createFileRoute('/speech-feedback')()
 
 const IndexLazyRoute = IndexLazyRouteImport.update({
   id: '/',
@@ -33,53 +36,111 @@ const CongressLazyRoute = CongressLazyRouteImport.update({
   path: '/congress',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/congress.lazy').then((d) => d.Route))
+const CongressFeedbackLazyRoute = CongressFeedbackLazyRouteImport.update({
+  id: '/congress-feedback',
+  path: '/congress-feedback',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/congress-feedback.lazy').then((d) => d.Route),
+)
 const DebateLazyRoute = DebateLazyRouteImport.update({
   id: '/debate',
   path: '/debate',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/debate.lazy').then((d) => d.Route))
+const DebateFeedbackLazyRoute = DebateFeedbackLazyRouteImport.update({
+  id: '/debate-feedback',
+  path: '/debate-feedback',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/debate-feedback.lazy').then((d) => d.Route),
+)
 const SpeechLazyRoute = SpeechLazyRouteImport.update({
   id: '/speech',
   path: '/speech',
   getParentRoute: () => rootRouteImport,
 } as any).lazy(() => import('./routes/speech.lazy').then((d) => d.Route))
+const SpeechFeedbackLazyRoute = SpeechFeedbackLazyRouteImport.update({
+  id: '/speech-feedback',
+  path: '/speech-feedback',
+  getParentRoute: () => rootRouteImport,
+} as any).lazy(() =>
+  import('./routes/speech-feedback.lazy').then((d) => d.Route),
+)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
+  '/congress-feedback': typeof CongressFeedbackLazyRoute
   '/debate': typeof DebateLazyRoute
+  '/debate-feedback': typeof DebateFeedbackLazyRoute
   '/speech': typeof SpeechLazyRoute
+  '/speech-feedback': typeof SpeechFeedbackLazyRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
+  '/congress-feedback': typeof CongressFeedbackLazyRoute
   '/debate': typeof DebateLazyRoute
+  '/debate-feedback': typeof DebateFeedbackLazyRoute
   '/speech': typeof SpeechLazyRoute
+  '/speech-feedback': typeof SpeechFeedbackLazyRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexLazyRoute
   '/about': typeof AboutLazyRoute
   '/congress': typeof CongressLazyRoute
+  '/congress-feedback': typeof CongressFeedbackLazyRoute
   '/debate': typeof DebateLazyRoute
+  '/debate-feedback': typeof DebateFeedbackLazyRoute
   '/speech': typeof SpeechLazyRoute
+  '/speech-feedback': typeof SpeechFeedbackLazyRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/congress' | '/debate' | '/speech'
+  fullPaths:
+    | '/'
+    | '/about'
+    | '/congress'
+    | '/congress-feedback'
+    | '/debate'
+    | '/debate-feedback'
+    | '/speech'
+    | '/speech-feedback'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/congress' | '/debate' | '/speech'
-  id: '__root__' | '/' | '/about' | '/congress' | '/debate' | '/speech'
+  to:
+    | '/'
+    | '/about'
+    | '/congress'
+    | '/congress-feedback'
+    | '/debate'
+    | '/debate-feedback'
+    | '/speech'
+    | '/speech-feedback'
+  id:
+    | '__root__'
+    | '/'
+    | '/about'
+    | '/congress'
+    | '/congress-feedback'
+    | '/debate'
+    | '/debate-feedback'
+    | '/speech'
+    | '/speech-feedback'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexLazyRoute: typeof IndexLazyRoute
   AboutLazyRoute: typeof AboutLazyRoute
   CongressLazyRoute: typeof CongressLazyRoute
+  CongressFeedbackLazyRoute: typeof CongressFeedbackLazyRoute
   DebateLazyRoute: typeof DebateLazyRoute
+  DebateFeedbackLazyRoute: typeof DebateFeedbackLazyRoute
   SpeechLazyRoute: typeof SpeechLazyRoute
+  SpeechFeedbackLazyRoute: typeof SpeechFeedbackLazyRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -105,11 +166,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CongressLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/congress-feedback': {
+      id: '/congress-feedback'
+      path: '/congress-feedback'
+      fullPath: '/congress-feedback'
+      preLoaderRoute: typeof CongressFeedbackLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/debate': {
       id: '/debate'
       path: '/debate'
       fullPath: '/debate'
       preLoaderRoute: typeof DebateLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/debate-feedback': {
+      id: '/debate-feedback'
+      path: '/debate-feedback'
+      fullPath: '/debate-feedback'
+      preLoaderRoute: typeof DebateFeedbackLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/speech': {
@@ -119,6 +194,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof SpeechLazyRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/speech-feedback': {
+      id: '/speech-feedback'
+      path: '/speech-feedback'
+      fullPath: '/speech-feedback'
+      preLoaderRoute: typeof SpeechFeedbackLazyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -126,8 +208,11 @@ const rootRouteChildren: RootRouteChildren = {
   IndexLazyRoute: IndexLazyRoute,
   AboutLazyRoute: AboutLazyRoute,
   CongressLazyRoute: CongressLazyRoute,
+  CongressFeedbackLazyRoute: CongressFeedbackLazyRoute,
   DebateLazyRoute: DebateLazyRoute,
+  DebateFeedbackLazyRoute: DebateFeedbackLazyRoute,
   SpeechLazyRoute: SpeechLazyRoute,
+  SpeechFeedbackLazyRoute: SpeechFeedbackLazyRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

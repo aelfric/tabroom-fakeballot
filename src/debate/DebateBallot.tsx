@@ -1,11 +1,17 @@
 import { FakeLink } from "../FakeLink";
 import { Link } from "@tanstack/react-router";
+import { useContext } from "react";
+import { AppContext } from "../app-context";
 
 export function DebateBallot({
   round = { name: "", room: "", time: "" },
 }: Readonly<{
   round: { name: string; room: string; time: string };
 }>) {
+  const { debateRound } = useContext(AppContext);
+  if (debateRound?.ballotState === "confirmed") {
+    return null;
+  }
   return (
     <div
       className="bluebordertop odd marbottom  flexkids"

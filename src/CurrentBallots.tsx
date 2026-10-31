@@ -5,6 +5,9 @@ import { CongressBallot } from "./congress/CongressBallot";
 import { DebateBallot } from "./debate/DebateBallot";
 import { SPEECH_ENTRIES } from "./speech/FakeSpeechBallot";
 import { TabNav } from "./TabNav";
+import SpeechConfirmedBallot from "./speech/ConfirmedBallot";
+import DebateConfirmedBallot from "./debate/ConfirmedBallot";
+import CongressConfirmedBallot from "./congress/ConfirmedBallot";
 
 export function DefaultMenu() {
   return (
@@ -86,6 +89,7 @@ export function DefaultMenu() {
     </>
   );
 }
+
 export default function CurrentBallots() {
   const rounds = [
     {
@@ -139,12 +143,59 @@ export default function CurrentBallots() {
                       <CongressBallot round={rounds[1]} />
                       <DebateBallot round={rounds[2]} />
                     </span>
+                    <span className="padleft pagehalf">
+                      <h6 className="semibold blueborderbottom padbottom martopmore">
+                        Tournament Live Docs
+                      </h6>
+                      <div className="padvertless wrap odd">
+                        <div className="flexrow padvertless italic padleft">
+                          Example Tournament
+                        </div>
+                        <div className="flexrow full">
+                          <span className="eighth semibold padvertless padleft">
+                            IE
+                          </span>
+                          <a
+                            href="https://www.example.com"
+                            target="_blank"
+                            className="plain white bluetext link-underline seveneighths"
+                            rel="noreferrer"
+                          >
+                            <div className="nospace flexrow">
+                              <span className="fivesixths padleft">
+                                Live Doc
+                              </span>
+
+                              <span className="sixth centeralign">
+                                <span className="fa fa-sm fa-file buttonwhite bluetext"></span>
+                              </span>
+                            </div>
+                          </a>
+                        </div>
+                      </div>
+                    </span>
                   </div>
                 ),
               },
               {
                 name: "Past scores and feedback",
-                children: null,
+                children: (
+                  <div className="screens darkscreen past_scores_and_feedback padtop">
+                    <div className="full martop">
+                      <span className="quarter nospace">
+                        <h5 className="nospace">Past Ballots</h5>
+                      </span>
+                      <span className="threequarters true rightalign semibold italic graytext nospace">
+                        You may edit comments until the tournament ends. <br />
+                        You cannot change scores once confirmed; contact
+                        tournament officials to fix errors
+                      </span>
+                    </div>
+                    <SpeechConfirmedBallot />
+                    <CongressConfirmedBallot />
+                    <DebateConfirmedBallot />
+                  </div>
+                ),
               },
             ]}
           />

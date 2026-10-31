@@ -28,7 +28,7 @@ function EntryRow({
 interface ConfirmSubmitProps {
   entries: SpeechEntry[];
   rfd: string;
-  confirm: MouseEventHandler<unknown>;
+  unConfirm: MouseEventHandler<unknown>;
   onSubmit: MouseEventHandler<unknown>;
 }
 
@@ -77,7 +77,7 @@ export default function ConfirmSubmit(props: ConfirmSubmitProps) {
             columns={columns}
             entries={props.entries}
             defaultSort="ranks"
-            rowComponent={({ entry, i }) => (
+            renderRow={({ entry, i }) => (
               <EntryRow key={entry.code} {...entry} even={i % 2 === 0} />
             )}
           />
@@ -102,7 +102,7 @@ export default function ConfirmSubmit(props: ConfirmSubmitProps) {
             <span className="pagehalf centeralign">
               <button
                 className="redtext buttonwhite invert full confirm"
-                onClick={props.confirm}
+                onClick={props.unConfirm}
               >
                 NO! RE-ENTER BALLOT
               </button>

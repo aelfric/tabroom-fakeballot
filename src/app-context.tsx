@@ -1,0 +1,20 @@
+import { createContext, Dispatch, SetStateAction } from "react";
+import { CongressRoundState } from "./congress/congress.types";
+import { SpeechRound } from "./speech/useSpeechRoundState";
+import { DebateRoundState } from "./debate/debate.types";
+
+export type BallotState = "unstarted" | "started" | "entered" | "confirmed";
+export interface RoundState<E> {
+  entries: E[];
+  setEntries: Dispatch<SetStateAction<E[]>>;
+  rfd: string;
+  setRfd: Dispatch<SetStateAction<string>>;
+  ballotState: BallotState;
+  setBallotState: Dispatch<SetStateAction<BallotState>>;
+}
+
+export const AppContext = createContext<{
+  speechRound?: SpeechRound;
+  congressRound?: CongressRoundState;
+  debateRound?: DebateRoundState;
+}>({});
