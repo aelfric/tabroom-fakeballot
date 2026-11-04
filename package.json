@@ -5,7 +5,7 @@
   "homepage": "https://nycfl.tech/ballot-example",
   "type": "module",
   "dependencies": {
-    "@tanstack/react-router": "^1.170.44",
+    "@tanstack/react-router": "^1.170.46",
     "@tinymce/tinymce-react": "^6.3.0",
     "alertifyjs": "^1.14.0",
     "immer": "^11.1.18",
@@ -41,7 +41,7 @@
     "@swc/cli": "^0.8.1",
     "@swc/core": "^1.15.47",
     "@tanstack/router-devtools": "1.167.2",
-    "@tanstack/router-plugin": "1.168.46",
+    "@tanstack/router-plugin": "1.168.48",
     "@testing-library/dom": "10.4.1",
     "@testing-library/jest-dom": "^7.0.0",
     "@testing-library/react": "^16.3.3",
