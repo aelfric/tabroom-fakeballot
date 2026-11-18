@@ -6,7 +6,7 @@
   "type": "module",
   "dependencies": {
     "@tanstack/react-router": "^1.170.44",
-    "@tinymce/tinymce-react": "^6.3.0",
+    "@tinymce/tinymce-react": "^6.3.1",
     "alertifyjs": "^1.14.0",
     "immer": "^11.1.18",
     "jquery": "^4.0.0",
@@ -14,7 +14,7 @@
     "moment": "^2.31.0",
     "react": "19.3.0",
     "react-dom": "19.3.0",
-    "tinymce": "^8.10.1",
+    "tinymce": "^8.10.2",
     "use-immer": "^0.11.0"
   },
   "scripts": {
